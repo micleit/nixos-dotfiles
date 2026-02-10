@@ -15,7 +15,7 @@
 
   {
   imports = [
-    ./git.nix
+	#add imports
   ];
 	home.username = "mic";
 	home.homeDirectory = "/home/mic";
