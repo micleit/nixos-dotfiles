@@ -28,7 +28,7 @@
         "dev/input/by-id/usb-VMware_VMware_Virtual_USB_Keyboard-hidraw"
       ];
 
-      config = builtins.readFile ./colemak.kbd;
+      config = builtins.readFile ./colemak-dh.kbd;
     };
   };
 }
