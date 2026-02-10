@@ -1,0 +1,44 @@
+#+title: Alacritty Config
+#+AUTHOR: Tony
+
+* Introduction
+This is my literately defined alacritty.toml readme using
+my first emacs org mode file.
+
+* Font
+Here I will define my font to be JetBrains Mono
+#+begin_src toml :tangle alacritty.toml
+[font]
+normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
+size = 20
+#+end_src
+
+* Colors
+Using a TokyoNight theme, I note why I like it here.
+
+#+BEGIN_SRC toml :tangle alacritty.toml
+[colors.primary]
+background = "#1a1b26"
+foreground = "#c0caf5"
+
+[colors.normal]
+black   = "#15161e"
+red     = "#f7768e"
+green   = "#9ece6a"
+yellow  = "#e0af68"
+blue    = "#7aa2f7"
+magenta = "#bb9af7"
+cyan    = "#7dcfff"
+white   = "#a9b1d6"
+#+END_SRC
+
+* Terminal Stuff
+This is required to set the terminal to /bin/bash instead of /bin/zsh, and login automatically to bash.
+#+begin_src toml :tangle alacritty.toml
+[terminal]
+
+[terminal.shell]
+program = "/bin/bash"
+args = ["--login"]
+
+#+end_src
