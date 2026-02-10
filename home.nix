@@ -9,7 +9,6 @@
       alacritty = "alacritty";
       mango = "mangowc-btw";
       waybar = "waybar";
-      git = "git";
     };
   in
 
@@ -19,7 +18,15 @@
   ];
 	home.username = "mic";
 	home.homeDirectory = "/home/mic";
-	programs.git.enable = true;
+	programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "micah leiterman";
+        email = "micah.leiterman@gmail.com";
+      };
+    };
+  };
 	home.stateVersion = "25.11";
 	programs.bash = {
 		enable = true;
