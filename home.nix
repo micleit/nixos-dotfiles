@@ -56,5 +56,6 @@
   wl-clipboard
   kitty
   thunar
+  kanata
    ];
   }
