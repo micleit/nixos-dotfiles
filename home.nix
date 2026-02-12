@@ -9,7 +9,8 @@
       alacritty = "alacritty";
       mango = "mangowc-btw";
       waybar = "waybar";
-    };
+      fish = "fish";
+      };
   in
 
   {
@@ -28,7 +29,7 @@
     };
   };
 	home.stateVersion = "25.11";
-	programs.bash = {
+	programs.fish = {
 		enable = true;
 		shellAliases = {
 			btw = "echo I use nixos, btw";
@@ -57,5 +58,6 @@
   kitty
   thunar
   kanata
+  eza
    ];
   }
