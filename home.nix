@@ -9,7 +9,6 @@
       alacritty = "alacritty";
       mango = "mangowc-btw";
       waybar = "waybar";
-      fish = "fish";
       };
   in
 
@@ -58,6 +57,5 @@
   kitty
   thunar
   kanata
-  eza
    ];
   }

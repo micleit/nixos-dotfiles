@@ -70,7 +70,6 @@
     wget
     git
     alacritty
-    kitty
     open-vm-tools
     foot
     wmenu
@@ -79,7 +78,6 @@
     slurp
     swaybg
     firefox
-    keyd
     gtk4
     xwayland
     kanata
