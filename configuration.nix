@@ -6,6 +6,7 @@
     [ 
       ./hardware-configuration.nix
       ./modules/kanata.nix
+      ./modules/fish.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
