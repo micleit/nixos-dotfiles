@@ -9,10 +9,11 @@
       ./modules/fish.nix
     ];
 
+  boot.supportedFilesystems = ["fuse"];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
    # Enable the uinput module
-  boot.kernelModules = [ "uinput" ];
+  boot.kernelModules = [ "uinput" "vmw_balloon" "vmwgfx" "vmw_vmci" "vsock"];
 
   # Enable uinput
   hardware.uinput.enable = true;
@@ -35,6 +36,7 @@
 
   networking.hostName = "nixos-btw"; # Define your hostname.
   virtualisation.vmware.guest.enable = true;
+  services.spice-vdagentd.enable = true;
   hardware.graphics.enable = true;
 
   networking.networkmanager.enable = true;
@@ -43,9 +45,9 @@
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # services.xserver.enable = true;
   services.displayManager.ly.enable = true;
   services.displayManager.sddm.wayland.enable = true;
+  programs.xwayland.enable = true;
 
   environment.etc = {
     "resolv.conf".text = "nameserver 1.1.1.1\n";
@@ -77,12 +79,11 @@
     grim
     slurp
     swaybg
-    firefox
-    gtk4
-    xwayland
+    gtk3
+    xwayland-satellite
     kanata
   ];
-
+  nixpkgs.config.allowUnfree = true;
 
   fonts.packages = with pkgs; [
 	nerd-fonts.jetbrains-mono

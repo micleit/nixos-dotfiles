@@ -27,7 +27,6 @@
       };
     };
   };
-	home.stateVersion = "25.11";
 	programs.fish = {
 		enable = true;
 		shellAliases = {
@@ -57,5 +56,7 @@
   kitty
   thunar
   kanata
+  brave
    ];
+	home.stateVersion = "25.11";
   }
