@@ -6,25 +6,27 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "xhci_pci" "nvme" "usbhid" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ehci_pci" "xhci_pci" "usbhid" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5132fe0e-ca51-43bb-b062-ea61949fef0d";
+    { device = "/dev/disk/by-uuid/40504a4d-11f8-4eb6-849c-17fc18ff0a37";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0BC7-666E";
+    { device = "/dev/disk/by-uuid/C53E-E0B5";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/f7f37828-bde6-4669-be7c-f8921d9710ec"; }
+    [ { device = "/dev/disk/by-uuid/914f0580-5c4e-4108-b6ab-8808909bdf0a"; }
     ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  hardware.parallels.enable = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "prl-tools" ];
 }
