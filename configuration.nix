@@ -34,6 +34,7 @@
     ];
   };
 
+
   networking.hostName = "nixos-btw"; # Define your hostname.
   virtualisation.vmware.guest.enable = true;
   services.spice-vdagentd.enable = true;
@@ -41,6 +42,7 @@
 
   networking.networkmanager.enable = true;
   networking.nameservers = ["1.1.1.1" "8.8.8.8"];
+  services.openssh.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -53,18 +55,18 @@
     "resolv.conf".text = "nameserver 1.1.1.1\n";
   };
 
+  # auto mounts new disks
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
-  
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.mic = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "uinput"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "uinput" "optical" "storage" "cdrom"]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
   };
-
   programs.firefox.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -82,6 +84,9 @@
     gtk3
     xwayland-satellite
     kanata
+    ffmpeg
+    unzip
+    brasero
   ];
   nixpkgs.config.allowUnfree = true;
 
