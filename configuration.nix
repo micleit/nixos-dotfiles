@@ -36,21 +36,6 @@
     ];
   };
 
-security.wrappers = {
-  cdrecord = {
-    source = "${pkgs.cdrtools}/bin/cdrecord";
-    owner = "root";
-    group = "cdrom";
-    capabilities = "cap_sys_rawio,cap_sys_nice,cap_ipc_lock+ep";
-    permissions = "u+rx,g+rx,o+rx,u+s";
-  };
-};
-
-
-security.pam.loginLimits = [
-  { domain = "@cdrom"; item = "memlock"; type = "-"; value = "unlimited"; }
-  { domain = "@cdrom"; item = "nice"; type = "-"; value = "-20"; }
-];
 
   networking.hostName = "nixos-btw"; # Define your hostname.
   hardware.graphics.enable = true;
@@ -106,6 +91,7 @@ security.pam.loginLimits = [
     unzip
     brasero
     vlc
+    cdrdao
   ];
   nixpkgs.config.allowUnfree = true;
 
