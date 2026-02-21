@@ -21,7 +21,9 @@
   # Set up udev rules for uinput
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
-  '';
+    KERNEL=="sr0", GROUP="cdrom", MODE="0660"
+ ''
+  ;
 
   # Ensure the uinput group exists
   users.groups.uinput = { };
@@ -34,6 +36,21 @@
     ];
   };
 
+security.wrappers = {
+  cdrecord = {
+    source = "${pkgs.cdrtools}/bin/cdrecord";
+    owner = "root";
+    group = "cdrom";
+    capabilities = "cap_sys_rawio,cap_sys_nice,cap_ipc_lock+ep";
+    permissions = "u+rx,g+rx,o+rx,u+s";
+  };
+};
+
+
+security.pam.loginLimits = [
+  { domain = "@cdrom"; item = "memlock"; type = "-"; value = "unlimited"; }
+  { domain = "@cdrom"; item = "nice"; type = "-"; value = "-20"; }
+];
 
   networking.hostName = "nixos-btw"; # Define your hostname.
   hardware.graphics.enable = true;
@@ -88,6 +105,7 @@
     ffmpeg
     unzip
     brasero
+    vlc
   ];
   nixpkgs.config.allowUnfree = true;
 

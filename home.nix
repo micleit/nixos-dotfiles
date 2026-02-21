@@ -58,6 +58,7 @@
   thunar
   kanata
   brave
+  nicotine-plus
    ];
 	home.stateVersion = "25.11";
   }
