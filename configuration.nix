@@ -36,9 +36,8 @@
 
 
   networking.hostName = "nixos-btw"; # Define your hostname.
-  virtualisation.vmware.guest.enable = true;
-  services.spice-vdagentd.enable = true;
   hardware.graphics.enable = true;
+  
 
   networking.networkmanager.enable = true;
   networking.nameservers = ["1.1.1.1" "8.8.8.8"];
@@ -68,10 +67,12 @@
     ];
   };
   programs.firefox.enable = true;
+  hardware.parallels.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
     wget
+    librewolf
     git
     alacritty
     open-vm-tools

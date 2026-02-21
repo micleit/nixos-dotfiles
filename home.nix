@@ -9,6 +9,7 @@
       alacritty = "alacritty";
       mango = "mangowc-btw";
       waybar = "waybar";
+      kitty = "kitty";
       };
   in
 
