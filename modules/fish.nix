@@ -15,43 +15,56 @@
         civic-burn = {
           body = 
           ''
-            set files (command ls -1 *.{flac,mp3} 2>/dev/null)
-            if test -z "$files"
-                echo (set_color red)"No FLAC or MP3 files found in this directory."(set_color normal)
-                return 1
-            end
+  set files (command ls -1 *.{flac,mp3} 2>/dev/null)
+              if test -z "$files"
+                  echo (set_color red)"No FLAC or MP3 files found."(set_color normal); return 1
+              end
 
-            echo (set_color cyan)"--- Preparing & Normalizing tracks for the Civic ---"(set_color normal)
-            
-            for f in $files
-                # Use quoted variables to handle spaces in filenames
-                set title (ffprobe -v error -show_entries format_tags=title -of default=noprint_wrappers=1:nokey=1 "$f")
-                set artist (ffprobe -v error -show_entries format_tags=artist -of default=noprint_wrappers=1:nokey=1 "$f")
-                
-                # If no metadata, use the filename minus extension
-                if test -z "$title"
-                    set title (string replace -r '\.(flac|mp3)$' "" "$f")
-                end
-                
-                echo (set_color blue)"Processing: "(set_color normal)"$title - $artist"
+              # 1. Grab the Album Name from the first file
+              set first_file $files[1]
+              set album_name (ffprobe -v error -show_entries format_tags=album -of default=noprint_wrappers=1:nokey=1 "$first_file")
+              
+              # Fallback if no album tag exists
+              if test -z "$album_name"
+                  set album_name "Civic Mix"
+              end
 
-                # Conversion + Normalization
-                set output (string replace -r '\.(flac|mp3)$' '.wav' "$f")
-                ffmpeg -i "$f" -af "loudnorm=I=-16:TP=-1.5:LRA=11" -ar 44100 -ac 2 -y "$output" >/dev/null 2>&1
-            end
+              # Header with the Dynamic Album Title
+              echo "TITLE \"$album_name\"" > civic.cue
+              echo "PERFORMER \"Various Artists\"" >> civic.cue
 
-            echo "---"
-            echo (set_color yellow)"Normalization complete."(set_color normal)
-            read -l -P "Ready to burn to /dev/sr0? [y/N] " confirm
-            
-            if test "$confirm" = "y" -o "$confirm" = "Y"
-                echo (set_color green)"Starting burn... Keep the laptop still!"(set_color normal)
-                sudo cdrecord -v dev=/dev/sr0 -dao -pad -text *.wav
-                echo (set_color green)"Success! Ejecting disc and cleaning up..."(set_color normal)
-                rm *.wav
-            else
-                echo (set_color red)"Burn cancelled. Temporary WAV files preserved."(set_color normal)
-            end
+              set track_num 1
+              for f in $files
+                  set title (ffprobe -v error -show_entries format_tags=title -of default=noprint_wrappers=1:nokey=1 "$f")
+                  set artist (ffprobe -v error -show_entries format_tags=artist -of default=noprint_wrappers=1:nokey=1 "$f")
+                  
+                  if test -z "$title"; set title (string replace -r '\.(flac|mp3)$' "" "$f"); end
+                  if test -z "$artist"; set artist "Unknown Artist"; end
+
+                  echo (set_color blue)"Processing: "(set_color normal)"$title"
+
+                  set wav_file (printf "track%02d.wav" $track_num)
+                  ffmpeg -i "$f" -af "loudnorm=I=-16:TP=-1.5:LRA=11" -ar 44100 -ac 2 -y "$wav_file" >/dev/null 2>&1
+
+                  echo "TRACK "$(printf "%02d" $track_num)" AUDIO" >> civic.cue
+                  echo "  TITLE \"$title\"" >> civic.cue
+                  echo "  PERFORMER \"$artist\"" >> civic.cue
+                  echo "  FILE \"$wav_file\" WAVE" >> civic.cue
+                  echo "    INDEX 01 00:00:00" >> civic.cue
+
+                  set track_num (math $track_num + 1)
+              end
+
+              echo "---"
+              echo (set_color green)"Album: $album_name"(set_color normal)
+              read -l -P "CUE sheet generated. Ready to burn with CD-Text? [y/N] " confirm
+              if test "$confirm" = "y" -o "$confirm" = "Y"
+                  sudo cdrecord -v dev=/dev/sr0 -dao -text civic.cue
+                  rm *.wav civic.cue
+                  echo (set_color green)"Burn complete! Enjoy $album_name in the Civic."(set_color normal)
+              else
+                  rm *.wav civic.cue
+              end
           '';
         };
 
