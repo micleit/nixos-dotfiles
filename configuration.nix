@@ -39,11 +39,24 @@
 
   networking.hostName = "nixos-btw"; # Define your hostname.
   hardware.graphics.enable = true;
+  #for laptop 
+  services.logind.lidSwitch = "ignore";
   
 
   networking.networkmanager.enable = true;
   networking.nameservers = ["1.1.1.1" "8.8.8.8"];
   services.openssh.enable = true;
+  services.tailscale.enable = true;
+
+
+  services.immich = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 2283;
+    mediaLocation = "/var/lib/immich";
+  };
+  services.immich.openFirewall = true;
+  users.users.immich.extraGroups = [ "users" ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
