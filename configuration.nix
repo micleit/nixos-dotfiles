@@ -40,7 +40,7 @@
   networking.hostName = "nixos-btw"; # Define your hostname.
   hardware.graphics.enable = true;
   #for laptop 
-  services.logind.lidSwitch = "ignore";
+  # services.logind.lidSwitch = "ignore";
   
 
   networking.networkmanager.enable = true;
@@ -48,15 +48,15 @@
   services.openssh.enable = true;
   services.tailscale.enable = true;
 
-
-  services.immich = {
-    enable = true;
-    host = "0.0.0.0";
-    port = 2283;
-    mediaLocation = "/var/lib/immich";
-  };
-  services.immich.openFirewall = true;
-  users.users.immich.extraGroups = [ "users" ];
+#immich setup
+  # services.immich = {
+  #   enable = true;
+  #   host = "0.0.0.0";
+  #   port = 2283;
+  #   mediaLocation = "/var/lib/immich";
+  # };
+  # services.immich.openFirewall = true;
+  # users.users.immich.extraGroups = [ "users" ];
 
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -81,8 +81,8 @@
       tree
     ];
   };
-  programs.firefox.enable = true;
-  hardware.parallels.enable = true;
+  # programs.firefox.enable = true;
+  # hardware.parallels.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
@@ -90,7 +90,7 @@
     librewolf
     git
     alacritty
-    open-vm-tools
+    # open-vm-tools
     foot
     wmenu
     wl-clipboard
@@ -102,9 +102,9 @@
     kanata
     ffmpeg
     unzip
-    brasero
+    # brasero
     vlc
-    cdrdao
+    # cdrdao
   ];
   nixpkgs.config.allowUnfree = true;
 
