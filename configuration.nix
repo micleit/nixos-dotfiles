@@ -4,6 +4,7 @@
 {
   imports =
     [ 
+      ./hostname.nix
       /etc/nixos/hardware-configuration.nix
       ./modules/kanata.nix
       ./modules/fish.nix
@@ -37,9 +38,6 @@
   };
 
 
-  networking.hostName = "nixos-btw"; # Define your hostname.
-  #for laptop 
-  # services.logind.lidSwitch = "ignore";
   
 
   networking.networkmanager.enable = true;
