@@ -10,6 +10,7 @@
       mango = "mangowc-btw";
       waybar = "waybar";
       kitty = "kitty";
+      hypr = "hypr";
       };
   in
 

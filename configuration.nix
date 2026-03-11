@@ -38,7 +38,6 @@
 
 
   networking.hostName = "nixos-btw"; # Define your hostname.
-  hardware.graphics.enable = true;
   #for laptop 
   # services.logind.lidSwitch = "ignore";
   
@@ -63,7 +62,21 @@
 
   services.displayManager.ly.enable = true;
   services.displayManager.sddm.wayland.enable = true;
-  programs.xwayland.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";
+    NIXOS_OZONE_WL = "1";
+  };
+
+  hardware.nvidia.modesetting.enable = true;
+  hardware.graphics.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   environment.etc = {
     "resolv.conf".text = "nameserver 1.1.1.1\n";
@@ -82,7 +95,7 @@
     ];
   };
   # programs.firefox.enable = true;
-  # hardware.parallels.enable = true;
+  hardware.parallels.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim 
