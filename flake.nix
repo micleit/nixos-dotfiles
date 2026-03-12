@@ -10,6 +10,7 @@
       url = "github:DreamMaoMao/mangowc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
 	};
   	outputs = {self, nixpkgs, home-manager, mangowc, ...}: {
 		nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {

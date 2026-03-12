@@ -16,6 +16,7 @@
 
   {
   imports = [
+  ./modules/noctalia.nix
 	#add imports
   ];
 	home.username = "mic";

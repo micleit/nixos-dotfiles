@@ -6,7 +6,6 @@
     [ 
       ./hostname.nix
       /etc/nixos/hardware-configuration.nix
-      ./modules/kanata.nix
       ./modules/fish.nix
     ];
 
@@ -44,7 +43,7 @@
   };
 
   environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";
+    # WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
   };
 
@@ -91,6 +90,7 @@
     # brasero
     vlc
     # cdrdao
+    inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
   nixpkgs.config.allowUnfree = true;
 
