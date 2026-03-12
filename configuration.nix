@@ -13,29 +13,6 @@
   boot.supportedFilesystems = ["fuse"];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-   # Enable the uinput module
-  boot.kernelModules = [ "uinput" "vmw_balloon" "vmwgfx" "vmw_vmci" "vsock"];
-
-  # Enable uinput
-  hardware.uinput.enable = true;
-
-  # Set up udev rules for uinput
-  services.udev.extraRules = ''
-    KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
-    KERNEL=="sr0", GROUP="cdrom", MODE="0660"
- ''
-  ;
-
-  # Ensure the uinput group exists
-  users.groups.uinput = { };
-
-  # Add the Kanata service user to necessary groups
-  systemd.services.kanata-internalKeyboard.serviceConfig = {
-    SupplementaryGroups = [
-      "input"
-      "uinput"
-    ];
-  };
 
 
   
@@ -87,12 +64,11 @@
 
   users.users.mic = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "uinput" "optical" "storage" "cdrom"]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "optical" "storage" "cdrom"]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
   };
-  # programs.firefox.enable = true;
   hardware.parallels.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -110,7 +86,6 @@
     swaybg
     gtk3
     xwayland-satellite
-    kanata
     ffmpeg
     unzip
     # brasero

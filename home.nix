@@ -56,7 +56,7 @@
   wmenu
   wl-clipboard
   kitty
-  thunar
+  nautilus
   kanata
   brave
   nicotine-plus
