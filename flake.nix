@@ -17,6 +17,7 @@
 			system = "aarch-64-linux";
 			modules = [
 				./configuration.nix
+        ./noctalia.nix
         mangowc.nixosModules.mango
         {
           programs.mango.enable = true;
