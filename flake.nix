@@ -1,37 +1,37 @@
 {
-	description = "nixOS";
-	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";	
-		home-manager = {
-			url = "github:nix-community/home-manager/release-25.11";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-    mangowc = {
-      url = "github:DreamMaoMao/mangowc";
+  description = "nixOS";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    quickshell.url = "github:outfoxxed/quickshell";
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
+    noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
+
+    home-manager = {
+      # Updated to unstable to match your nixpkgs/Noctalia requirements
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
-	};
-  	outputs = {self, nixpkgs, home-manager, mangowc, ...}: {
-		nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
-			system = "aarch-64-linux";
-			modules = [
-				./configuration.nix
-        ./noctalia.nix
-        mangowc.nixosModules.mango
+
+  };
+
+  outputs = inputs @ { self, nixpkgs, home-manager, ... }: {
+    nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+      # specialArgs allows you to use 'inputs' inside home.nix or configuration.nix
+      specialArgs = { inherit inputs; }; 
+      modules = [
+        ./configuration.nix
+        home-manager.nixosModules.home-manager
         {
-          programs.mango.enable = true;
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.mic = import ./home.nix;
+            extraSpecialArgs = { inherit inputs; }; # Passes inputs to home.nix
+            backupFileExtension = "backup";
+          };
         }
-				home-manager.nixosModules.home-manager
-				{
-					home-manager = {
-						useGlobalPkgs = true;
-						useUserPackages = true;
-						users.mic = import ./home.nix;
-						backupFileExtension = "backup";
-					};
-				}
-			];
-		};
-	}; 
+      ];
+    };
+  };
 }
