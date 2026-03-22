@@ -9,7 +9,7 @@ x = 6
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font Propo", style = "Regular" }
-size = 8
+size = 10
 
 [colors.primary]
 # Hard dark background for better contrast

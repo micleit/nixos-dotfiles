@@ -33,6 +33,10 @@
     "udev.log_priority=3"
   ];
 
+  #** when typing sudo password
+  security.sudo.extraConfig = ''
+    Defaults pwfeedback
+  '';
 
   
 
@@ -56,38 +60,7 @@
 
 
   services.displayManager.sddm.wayland.enable = true;
-  services.greetd.enable = true;
-  programs.regreet = {
-    enable = true;
-    
-    # Theme settings (Ensure these match your installed packages)
-    settings = {
-      background = {
-        path = "home/mic/nixos-dotfiles/walls/wall1.png"; # Change to your path
-        fit = "Cover";
-      };
-      GTK = {
-        theme_name = "Gruvbox-Retro";
-        icon_theme_name = "Gruvbox-Dark";
-        font_name = "Lexend 12";
-        cursor_theme_name = "Capitaine-Cursors-Gruvbox";
-      };
-    };
-  };
-
-  services.displayManager.sessionPackages = [ pkgs.hyprland ];
-
-
-  # services.displayManager.ly.enable = true;
-# services.displayManager.ly.settings = {
-#   fg = 6;            # 3 is typically Yellow/Gold in terminal palettes
-#   bg = 0;            # 0 is Black/Background
-#   margin = 2;
-#   input_len = 20;
-#   bigclock = true;
-#   clock = "%H:%M:%S";
-#   animation = 2; # 1 = PSX-style fire, 2 = Matrix
-# };
+  services.displayManager.ly.enable = true;
 
   programs.hyprland = {
     enable = true;
@@ -180,11 +153,11 @@
     geary #email
     seahorse
     adi1090x-plymouth-themes
-    gruvbox-gtk-theme
-    capitaine-cursors-themed
-    lexend
-    cage # ReGreet needs this to run as a Wayland compositor
+    hyprpolkitagent
+    apple-cursor
+    jq
   ];
+  
   nixpkgs.config.allowUnfree = true;
 
   #GAMING THINGS

@@ -11,11 +11,17 @@
       kitty = "kitty";
       hypr = "hypr";
       noctalia = "noctalia";
+      btop = "btop";
       };
   in
 
   {
   imports = [
+  ];
+
+  home.sessionPath = [
+    "$HOME/nixos-dotfiles/scripts"
+    "$HOME/.local/bin"
   ];
 
 	home.username = "mic";
@@ -50,6 +56,10 @@
    })
     configs;
 
+    home.file.".local/share/icons/macOS-hypr" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/icons/macOS-hypr";
+    };
+
    home.packages = with pkgs; [
 	neovim
 	ripgrep
@@ -69,6 +79,7 @@
   nicotine-plus
   protonup-ng
   noctalia-shell
+  btop
    ];
 	home.stateVersion = "25.11";
   }

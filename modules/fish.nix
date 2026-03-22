@@ -12,61 +12,6 @@
       
       # Using the functions attribute is cleaner than interactiveShellInit
       functions = {
-        civic-burn = {
-          body = 
-          ''
-            set files (command ls -1 *.{flac,mp3} 2>/dev/null)
-            if test -z "$files"
-                echo (set_color red)"No FLAC or MP3 files found."(set_color normal); return 1
-            end
-
-            # 1. Grab the Album Name from the first file
-            set first_file $files[1]
-            set album_name (ffprobe -v error -show_entries format_tags=album -of default=noprint_wrappers=1:nokey=1 "$first_file")
-            
-            if test -z "$album_name"
-                set album_name "Civic Mix"
-            end
-
-            # Header
-            echo "TITLE \"$album_name\"" > civic.cue
-            echo "PERFORMER \"Various Artists\"" >> civic.cue
-
-            set track_num 1
-            for f in $files
-                set title (ffprobe -v error -show_entries format_tags=title -of default=noprint_wrappers=1:nokey=1 "$f")
-                set artist (ffprobe -v error -show_entries format_tags=artist -of default=noprint_wrappers=1:nokey=1 "$f")
-                
-                if test -z "$title"; set title (string replace -r '\.(flac|mp3)$' "" "$f"); end
-                if test -z "$artist"; set artist "Unknown Artist"; end
-
-                echo (set_color blue)"Processing: "(set_color normal)"$title"
-
-                set wav_file (printf "track%02d.wav" $track_num)
-                ffmpeg -i "$f" -af "loudnorm=I=-16:TP=-1.5:LRA=11" -ar 44100 -ac 2 -y "$wav_file" >/dev/null 2>&1
-
-                echo "TRACK "$(printf "%02d" $track_num)" AUDIO" >> civic.cue
-                echo "  TITLE \"$title\"" >> civic.cue
-                echo "  PERFORMER \"$artist\"" >> civic.cue
-                echo "  FILE \"$wav_file\" WAVE" >> civic.cue
-                echo "    INDEX 01 00:00:00" >> civic.cue
-
-                set track_num (math $track_num + 1)
-            end
-
-            echo "---"
-            echo (set_color green)"Album: $album_name"(set_color normal)
-            read -l -P "CUE sheet generated. Ready to burn? [y/N] " confirm
-            if test "$confirm" = "y" -o "$confirm" = "Y"
-                # Added -audio flag to prevent the '0 MB Data' error
-                sudo cdrecord -v dev=/dev/sr0 -dao -text -useinfo -audio civic.cue
-                echo (set_color green)"Burn complete! Files have been preserved in the folder."(set_color normal)
-            else
-                echo "Burn cancelled. Files preserved."
-            end
-          '';
-        };
-
         y = {
           body = ''
             set tmp (mktemp -t "yazi-cwd.XXXXXX")
@@ -88,6 +33,11 @@
         set -gx ROFI_FUZZY true
         set -gx AERC_CONFIG_DIR "$HOME/.config/aerc"
         set -gx fish_greeting ""
+
+        set -x DRIFT_TIMEOUT 120
+        if type -q drift
+            drift shell-init fish | source
+        end
 
         if status is-interactive
             if type -q pokeget
@@ -126,6 +76,5 @@
     yazi
     pokeget-rs
     ffmpeg      # Added for audio conversion
-    cdrtools    # Added for cdrecord
   ];
 }
