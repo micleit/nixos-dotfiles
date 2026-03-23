@@ -1,0 +1,11 @@
+{
+  "thumbCacheReady": true,
+  "enabled": false,
+  "wallpapersFolder": "/home/mic/nixos-dotfiles/walls",
+  "DP-2": {
+    "currentWallpaper": "/home/mic/nixos-dotfiles/walls/japanese-pixel-city-live-wallpaper.mp4",
+    "noctaliaWallpaper": "/home/mic/nixos-dotfiles/walls/wallhaven_yx7w8g.jpg",
+    "isPlaying": true,
+    "isMuted": true
+  }
+}

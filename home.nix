@@ -12,6 +12,7 @@
       hypr = "hypr";
       noctalia = "noctalia";
       btop = "btop";
+      yazi = "yazi";
       };
   in
 

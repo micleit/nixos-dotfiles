@@ -1,0 +1,20 @@
+[manager]
+show_hidden = true
+sort_by = "natural"
+
+[opener]
+edit = [
+    { run = 'nvim "$@"', block = true, desc = "Edit in Neovim" }
+]
+
+[open]
+rules = [
+    { name = "*.txt", use = "edit" },
+    { name = "*.nix", use = "edit" },
+    { name = "*.conf", use = "edit" },
+    { name = "*.lua", use = "edit" },
+    { name = "*.md",  use = "edit" },
+    { name = "*.sh",  use = "edit" },
+    # Fallback for all other files
+    { mime = "*", use = "edit" }
+]
