@@ -6,18 +6,17 @@
     quickshell.url = "github:outfoxxed/quickshell";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
+    nixvim.url = "github:nix-community/nixvim";
 
     home-manager = {
-      # Updated to unstable to match your nixpkgs/Noctalia requirements
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, ... }: {
+  outputs = inputs @ { self, nixpkgs, home-manager, nixvim, ... }: {
     nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
-      # specialArgs allows you to use 'inputs' inside home.nix or configuration.nix
       specialArgs = { inherit inputs; }; 
       modules = [
         ./configuration.nix
@@ -26,8 +25,14 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.mic = import ./home.nix;
-            extraSpecialArgs = { inherit inputs; }; # Passes inputs to home.nix
+            users.mic = {
+              imports = [ 
+                ./home.nix 
+                ./modules/nixvim.nix 
+                inputs.nixvim.homeManagerModules.nixvim 
+              ];
+            };
+            extraSpecialArgs = { inherit inputs; };
             backupFileExtension = "backup";
           };
         }

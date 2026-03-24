@@ -5,7 +5,7 @@
     #NEW CONFIGS GO HERE !!!
     configs = {
       qtile = "qtile";
-      nvim = "nvim";
+      # nvim = "nvim";
       alacritty = "alacritty";
       waybar = "waybar";
       kitty = "kitty";
@@ -62,7 +62,7 @@
     };
 
    home.packages = with pkgs; [
-	neovim
+	# neovim
 	ripgrep
 	nil
 	nixpkgs-fmt
