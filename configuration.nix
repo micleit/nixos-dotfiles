@@ -142,6 +142,22 @@
     # Theming / Cursors
     apple-cursor
     adi1090x-plymouth-themes
+    lua-language-server          # For lua_ls
+  basedpyright                 # For Python (better than standard pyright)
+  nodePackages.typescript-language-server # For ts_ls
+  vscode-langservers-extracted # For html, css, json, eslint
+  texlab                       # For LaTeX (better LSP than just Vimtex)
+  nil                          # High-performance Nix LSP
+  stylua                       # Lua formatting
+  black                        # Python formatting
+  nodePackages.prettier        # HTML/JS/TS formatting
+  gcc
+  gnumake
+  curl
+  tree-sitter
+  zathura             # The viewer
+  texliveFull         # Includes pdflatex, bibtex, and latexmk
+  xdotool
   ];
 
   environment.sessionVariables = {
