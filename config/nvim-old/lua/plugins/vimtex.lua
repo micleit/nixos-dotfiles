@@ -4,14 +4,11 @@ return {
   config = function()
     -- PDF Viewer settings
     vim.g.vimtex_view_method = "zathura"
-    
     -- SyncTeX settings (Forward/Backward search)
     -- This allows Neovim to tell Zathura where the cursor is
     vim.g.vimtex_view_general_viewer = "zathura"
-    
     -- Automatic compilation on save
     vim.g.vimtex_compiler_method = "latexmk"
-    
     -- Clean up auxiliary files (log, aux, etc.) on exit
     vim.g.vimtex_clean_enabled = 1
 

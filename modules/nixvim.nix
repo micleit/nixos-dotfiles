@@ -80,6 +80,28 @@
         '';
         options.desc = "Harpoon List in Telescope";
       }
+      {
+        mode = [ "n" "v" ];
+        key = "<leader>fd";
+        action.__raw = ''
+          function()
+            require("conform").format({
+              lsp_fallback = true,
+              async = false,
+              timeout_ms = 1000,
+            })
+          end
+        '';
+        options.desc = "Format file or range";
+      }
+
+      # 2. EXPLORER: <leader>cd to open Netrw
+      {
+        mode = "n";
+        key = "<leader>cd";
+        action = ":Ex<CR>";
+        options.desc = "Open Netrw Explorer";
+      }
     ];
 
     # 1. THEME
@@ -101,7 +123,7 @@
       enable = true;
       extensions.zoxide.enable = true;
       keymaps = {
-        "<leader>fs" = "find_files";
+        "<leader>ff" = "find_files";
         "<leader>fg" = "live_grep";
       };
     };

@@ -29,7 +29,7 @@
               imports = [ 
                 ./home.nix 
                 ./modules/nixvim.nix 
-                inputs.nixvim.homeManagerModules.nixvim 
+                inputs.nixvim.homeModules.nixvim 
               ];
             };
             extraSpecialArgs = { inherit inputs; };
