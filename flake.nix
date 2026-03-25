@@ -7,6 +7,8 @@
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
     nixvim.url = "github:nix-community/nixvim";
+    darwin.url = "github:LnL7/nix-darwin";
+    darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,6 +23,7 @@
       nixpkgs,
       home-manager,
       nixvim,
+      darwin,
       ...
     }:
     {
@@ -36,6 +39,28 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
+      darwinConfigurations.macbook = darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/darwin/default.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/home/darwin.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
