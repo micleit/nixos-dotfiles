@@ -1,10 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [ 
-    ./hostname.nix
-    /etc/nixos/hardware-configuration.nix
-    ./modules/fish.nix
+  imports = [
+    ./hardware-configuration.nix
+    # Other system-wide modules
   ];
 
   # ============================================================================
@@ -36,6 +35,7 @@
   # ============================================================================
   # NETWORKING & SERVICES
   # ============================================================================
+  networking.hostName = "desktop-nixos";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   
@@ -54,19 +54,7 @@
   services.udisks2.enable = true;
 
   # ============================================================================
-  # IMMICH SETUP (Uncomment to enable on specific machines)
-  # ============================================================================
-  # services.immich = {
-  #   enable = true;
-  #   host = "0.0.0.0";
-  #   port = 2283;
-  #   mediaLocation = "/var/lib/immich";
-  #   openFirewall = true;
-  # };
-  # users.users.immich.extraGroups = [ "users" ];
-
-  # ============================================================================
-  # GRAPHICS & HYPRLAND
+  # GRAPHICS & HYPRLAND (System Level)
   # ============================================================================
   services.xserver.videoDrivers = [ "nvidia" ];
   
@@ -77,7 +65,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    open = false; # Set to true for 1660 Super if using Open modules, but false is safer for stable
+    open = false; 
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
@@ -92,7 +80,7 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  # Display Manager (SDDM for Wayland, Ly as fallback/TUI)
+  # Display Manager
   services.displayManager.sddm.wayland.enable = true;
   services.displayManager.ly.enable = true;
 
@@ -114,8 +102,10 @@
   users.users.mic = {
     isNormalUser = true;
     extraGroups = [ "wheel" "optical" "storage" "cdrom" ];
-    packages = with pkgs; [ tree ];
+    shell = pkgs.fish;
   };
+
+  programs.fish.enable = true; # System level enable
 
   security.sudo.extraConfig = "Defaults pwfeedback";
   security.polkit.enable = true;
@@ -123,61 +113,21 @@
   services.gnome.gnome-keyring.enable = true;
 
   # ============================================================================
-  # SYSTEM PACKAGES
+  # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    # Core
     vim wget git librewolf alacritty 
-    
-    # Utilities
-    jq unzip ffmpeg wl-clipboard wmenu mpvpaper
-    
-    # Desktop / Media
-    vlc geary seahorse pavucontrol wireplumber
-    
-    # Hyprland / Wayland Tools
-    quickshell hyprpolkitagent xwayland-satellite
-    grim slurp swaybg gtk3 hyprshot
-    
-    # Theming / Cursors
-    apple-cursor
     adi1090x-plymouth-themes
-    lua-language-server          # For lua_ls
-  basedpyright                 # For Python (better than standard pyright)
-  nodePackages.typescript-language-server # For ts_ls
-  vscode-langservers-extracted # For html, css, json, eslint
-  texlab                       # For LaTeX (better LSP than just Vimtex)
-  nil                          # High-performance Nix LSP
-  stylua                       # Lua formatting
-  black                        # Python formatting
-  nodePackages.prettier        # HTML/JS/TS formatting
-  gcc
-  gnumake
-  curl
-  tree-sitter
-  zathura             # The viewer
-  texliveFull         # Includes pdflatex, bibtex, and latexmk
-  xdotool
+    gcc gnumake curl
   ];
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    QUICKSHELL_PLUGIN_PATH = "${inputs.noctalia-qs.packages.${pkgs.system}.default}/lib/quickshell/plugins";
+    QUICKSHELL_PLUGIN_PATH = "${inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/quickshell/plugins";
   };
-
-
-  # Set Neovim as the system-wide default editor
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true; # This sets $EDITOR to nvim automatically
-    viAlias = true;       # Optional: types 'vi' opens nvim
-    vimAlias = true;      # Optional: types 'vim' opens nvim
-  };
-
-  programs.yazi.enable = true;
 
   # ============================================================================
-  # GAMING & FONTS
+  # GAMING & FONTS (System Level support)
   # ============================================================================
   programs.steam = {
     enable = true;
@@ -186,18 +136,11 @@
   programs.gamemode.enable = true;
   programs.localsend.enable = true;
 
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-  ];
-
   # ============================================================================
   # NIX SETTINGS
   # ============================================================================
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-
-  # Compatibility / Drivers
-  # hardware.parallels.enable = true;
 
   system.stateVersion = "25.11"; 
 }

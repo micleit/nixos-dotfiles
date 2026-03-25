@@ -27,7 +27,7 @@
       nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./configuration.nix
+          ./hosts/nixos-btw/default.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -35,9 +35,7 @@
               useUserPackages = true;
               users.mic = {
                 imports = [
-                  ./home.nix
-                  ./modules/nixvim.nix
-                  inputs.nixvim.homeModules.nixvim
+                  ./home/mic/default.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
