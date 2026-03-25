@@ -20,6 +20,19 @@
 
     # KEYMAPS
     keymaps = [
+      {
+        mode = [ "n" "v" ];
+        key = "<leader>y";
+        action = "\"+y";
+        options = {
+          desc = "Yank to system clipboard";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>lg";
+        action = ":LazyGit<CR>"; # Standard command if the plugin is loaded
+      }
       # Harpoon 2 Essentials
       {
         mode = "n";
@@ -102,6 +115,18 @@
         action = ":Ex<CR>";
         options.desc = "Open Netrw Explorer";
       }
+      {
+        mode = "n";
+        key = "<leader>ll";
+        action = ":VimtexCompile<CR>";
+        options.desc = "Vimtex: Toggle Compilation";
+      }
+      {
+        mode = "n";
+        key = "<leader>lv";
+        action = ":VimtexView<CR>";
+        options.desc = "Vimtex: View PDF";
+      }
     ];
 
     # 1. THEME
@@ -143,6 +168,7 @@
         texlab.enable = true;
         ts_ls.enable = true;
         html.enable = true;
+        nil.enable = true;
       };
     };
 
@@ -174,7 +200,24 @@
           lua = [ "stylua" ];
           python = [ "black" ];
           java = [ "google-java-format" ];
+          nix = ["nixfmt"];
         };
+      };
+    };
+
+    plugins.vimtex = {
+      enable = true;
+      
+      # Nixvim handles the package, but we set the settings here
+      settings = {
+        # Use Zathura as the PDF viewer
+        view_method = "zathura";
+        
+        # Continuous compilation (requires latexmk, which Nixvim pulls in)
+        compiler_method = "latexmk";
+        
+        # Clean up auxiliary files after compilation
+        clean_enabled = true;
       };
     };
 
@@ -183,6 +226,10 @@
       enable = true;
       settings.win.border = "rounded";
     };
+
+    plugins.lazygit.enable = true;
+
+
 
     # 6. CUSTOM LUA LOGIC (The Toggle & Keybinds)
     # This section allows you to inject the specific Lua logic we wrote earlier
@@ -197,5 +244,12 @@
       -- Keybind for your Telescope-Harpoon list
       vim.keymap.set("n", "<leader>fl", ":Telescope harpoon marks<CR>", { desc = "Harpoon List" })
     '';
+    extraPackages = with pkgs; [
+      zathura
+      xdotool # Required for inverse search (clicking PDF to jump to code)
+      lazygit
+      nixfmt
+    ];
+
   };
 }

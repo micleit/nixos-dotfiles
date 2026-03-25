@@ -15,28 +15,36 @@
 
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixvim, ... }: {
-    nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; }; 
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.mic = {
-              imports = [ 
-                ./home.nix 
-                ./modules/nixvim.nix 
-                inputs.nixvim.homeModules.nixvim 
-              ];
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      ...
+    }:
+    {
+      nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home.nix
+                  ./modules/nixvim.nix
+                  inputs.nixvim.homeModules.nixvim
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
             };
-            extraSpecialArgs = { inherit inputs; };
-            backupFileExtension = "backup";
-          };
-        }
-      ];
+          }
+        ];
+      };
     };
-  };
 }

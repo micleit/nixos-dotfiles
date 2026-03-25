@@ -81,6 +81,7 @@
   protonup-ng
   noctalia-shell
   btop
+  gemini-cli
    ];
 	home.stateVersion = "25.11";
   }
