@@ -41,6 +41,7 @@
 
       decoration = {
         rounding = 20;
+        rounding_power = 2;
         active_opacity = 1.0;
         shadow = {
           enabled = true;
@@ -78,6 +79,10 @@
         preserve_split = true;
       };
 
+      master = {
+        new_status = "master";
+      };
+
       input = {
         kb_layout = "us,us";
         kb_variant = "colemak_dh,";
@@ -102,6 +107,7 @@
         "mod5, comma, exec, $ipc controlCenter toggle"
         "mod5, equal, exec, $ipc settings toggle"
         "mod5, period, exec, $ipc wallpaper toggle"
+        "$mainMod SHIFT SUPER, a, exec, hyprctl keyword animations:enabled $(expr 1 - $(hyprctl getoption animations:enabled -j | jq '.int'))"
         "$mainMod, a, movefocus, l"
         "$mainMod, s, movefocus, r"
         "$mainMod, w, movefocus, u"
@@ -110,15 +116,21 @@
         "$mainMod shift, s, movewindow, r"
         "$mainMod shift, w, movewindow, u"
         "$mainMod shift, r, movewindow, d"
-      ] ++ (
+      ]
+      ++ (
         # Workspaces
-        builtins.concatLists (builtins.genList (i:
-          let ws = i + 1;
-          in [
-            "$mainMod, ${toString (if ws == 10 then 0 else ws)}, workspace, ${toString ws}"
-            "$mainMod SHIFT, ${toString (if ws == 10 then 0 else ws)}, movetoworkspacesilent, ${toString ws}"
-          ]
-        ) 10)
+        builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              ws = i + 1;
+            in
+            [
+              "$mainMod, ${toString (if ws == 10 then 0 else ws)}, workspace, ${toString ws}"
+              "$mainMod SHIFT, ${toString (if ws == 10 then 0 else ws)}, movetoworkspacesilent, ${toString ws}"
+            ]
+          ) 10
+        )
       );
 
       bindm = [
@@ -141,32 +153,44 @@
         ", XF86AudioPrev, exec, playerctl previous"
       ];
 
-      windowrulev2 = [
-        "opacity 0.85 0.75, class:(Alacritty)"
-        "opacity 0.95 0.9, class:(brave-browser)"
-        "opacity 0.85 0.8, class:(steam)"
-        "float, title:(yazi-float)"
-        "size 1000 700, title:(yazi-float)"
-        "center, title:(yazi-float)"
-        "suppressmaximize, class:.*"
-        "no_focus, xwayland:1, floating:1, class:^$, title:^$"
-        "move 20 monitor_h-120, class:(hyprland-run)"
-        "float, class:(hyprland-run)"
+      windowrule = [
+        "match:class Alacritty, opacity 0.85 0.75"
+        "match:class brave-browser, opacity 0.95 0.9"
+        "match:class steam, opacity 0.85 0.8"
+        {
+          name = "yazi-floating-config";
+          "match:title" = "yazi-float";
+          float = "on";
+          size = "1000 700";
+          center = "on";
+        }
+        {
+          name = "suppress-maximize-events";
+          "match:class" = ".*";
+          suppress_event = "maximize";
+        }
+        {
+          name = "fix-xwayland-drags";
+          "match:class" = "^$";
+          "match:title" = "^$";
+          "match:xwayland" = true;
+          "match:float" = true;
+          no_focus = true;
+        }
+        {
+          name = "move-hyprland-run";
+          "match:class" = "hyprland-run";
+          move = "20 monitor_h-120";
+          float = "yes";
+        }
       ];
 
       layerrule = [
-        "blur, match:namespace noctalia-background-.*$"
+        "blur on, match:namespace noctalia-background-.*$"
         "ignore_alpha 0.5, match:namespace noctalia-background-.*$"
-        "blur_popups, match:namespace noctalia-background-.*$"
+        "blur_popups on, match:namespace noctalia-background-.*$"
       ];
     };
-  };
-
-  # Waybar
-  programs.waybar = {
-    enable = true;
-    # settings = ... (from config.jsonc)
-    # style = ... (from style.css)
   };
 
   # Fonts
@@ -186,6 +210,15 @@
     xwayland-satellite
     grim
     slurp
+    wl-clipboard
+    tesseract
+    imagemagick
+    curl
+    zbar
+    translate-shell
+    wf-recorder
+    ffmpeg
+    gifski
     swaybg
     gtk3
     hyprshot

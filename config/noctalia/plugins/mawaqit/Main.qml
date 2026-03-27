@@ -65,8 +65,9 @@ Item {
   readonly property var notificationKeys: ["Imsak", "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"]
 
   // ── Audio ─────────────────────────────────────────────────────────────────
-  // Using paplay instead of QtMultimedia to avoid PipeWire session conflict
-  // with the shell's native audio service introduced in v4.7.1
+  // Using paplay/pw-cat instead of QtMultimedia to avoid PipeWire session
+  // conflict with the shell's native audio service introduced in v4.7.1.
+  // Falls back to pw-cat for pure PipeWire setups without pipewire-pulse.
   Process {
     id: azanPlayer
     onExited: {
@@ -84,13 +85,20 @@ Item {
     if (!pluginApi?.pluginDir) return
     const filePath = pluginApi.pluginDir + "/assets/" + fileName
     azanPlayer.exec({
-      command: ["paplay", filePath]
+      command: [
+        "bash", "-c",
+        "if command -v paplay >/dev/null 2>&1; then " +
+        "paplay '" + filePath + "'; " +
+        "elif command -v pw-cat >/dev/null 2>&1; then " +
+        "pw-cat -p '" + filePath + "'; " +
+        "fi"
+      ]
     })
     root.azanPlaying = true
   }
   function stopAzanFile() {
     stopAzanProc.exec({
-      command: ["bash", "-c", "pkill -f 'paplay.*azan' 2>/dev/null || true"]
+      command: ["bash", "-c", "pkill -f 'paplay.*azan' 2>/dev/null; pkill -f 'pw-cat.*azan' 2>/dev/null || true"]
     })
     root.azanPlaying = false
   }

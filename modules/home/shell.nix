@@ -72,7 +72,9 @@
     ffmpeg
     ripgrep
     nil
+    nixd
     nixpkgs-fmt
+    nixfmt
     nodejs
     gcc
     fastfetch

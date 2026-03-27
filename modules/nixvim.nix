@@ -168,7 +168,8 @@
         texlab.enable = true;
         ts_ls.enable = true;
         html.enable = true;
-        nil.enable = true;
+        nil_ls.enable = true;
+        nixd.enable = true;
       };
     };
 
@@ -249,6 +250,8 @@
       xdotool # Required for inverse search (clicking PDF to jump to code)
       lazygit
       nixfmt
+      nil
+      nixd
     ];
 
   };

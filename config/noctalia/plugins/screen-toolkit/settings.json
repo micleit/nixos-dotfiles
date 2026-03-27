@@ -1,5 +1,6 @@
 {
   "stateIsRunning": false,
   "stateActiveTool": "",
-  "transAvailable": false
+  "transAvailable": false,
+  "stateMirrorVisible": false
 }

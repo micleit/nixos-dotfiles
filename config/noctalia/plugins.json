@@ -8,7 +8,7 @@
     ],
     "states": {
         "mawaqit": {
-            "enabled": false,
+            "enabled": true,
             "sourceUrl": "https://github.com/noctalia-dev/noctalia-plugins"
         },
         "screen-toolkit": {

@@ -83,20 +83,6 @@
                 },
                 {
                     "defaultSettings": {
-                        "colorHistory": [
-                        ],
-                        "installedLangs": [
-                            "eng"
-                        ],
-                        "paletteColors": [
-                        ],
-                        "selectedOcrLang": "eng",
-                        "transAvailable": false
-                    },
-                    "id": "plugin:screen-toolkit"
-                },
-                {
-                    "defaultSettings": {
                         "mode": "region"
                     },
                     "id": "plugin:screenshot"

@@ -64,13 +64,19 @@ Item {
     }
 
     // ── Bash helpers ──────────────────────────────────────────
-    // Builds a grim command from the confirmed QML region coords.
-    // Region is already scaled for HiDPI by RegionSelector.
+    // Builds a grim command. RegionSelector emits screen-local physical pixels;
+    // grim -g expects global logical coordinates (same space as slurp output).
+    // We divide by devicePixelRatio and add the screen's global offset.
 
     function _grimRegionCmd(outFile) {
-        return "grim -g \"" +
-               root._regionX + "," + root._regionY + " " +
-               root._regionW + "x" + root._regionH + "\" " +
+        var scale = root._regionScreen?.devicePixelRatio ?? 1.0
+        var sx    = root._regionScreen?.x ?? 0
+        var sy    = root._regionScreen?.y ?? 0
+        var gx = sx + Math.round(root._regionX / scale)
+        var gy = sy + Math.round(root._regionY / scale)
+        var gw = Math.round(root._regionW / scale)
+        var gh = Math.round(root._regionH / scale)
+        return "grim -g \"" + gx + "," + gy + " " + gw + "x" + gh + "\" " +
                outFile + " 2>/dev/null"
     }
 
@@ -92,14 +98,10 @@ Item {
             var lines = detectLangsProc.stdout.text.trim().split("\n")
             root._detectedLangs = []
             for (var i = 0; i < lines.length; i++) {
-                var file = lines[i].trim()
-                if (file === "") continue
-                var match = file.match(/\/([a-zA-Z_]+)\.traineddata$/)
-                if (match) {
-                    var lang = match[1]
-                    if (lang !== "osd" && lang !== "equ" && !root._detectedLangs.includes(lang))
-                        root._detectedLangs.push(lang)
-                }
+                var lang = lines[i].trim()
+                if (lang === "" || lang === "osd" || lang === "equ") continue
+                if (!root._detectedLangs.includes(lang))
+                    root._detectedLangs.push(lang)
             }
             if (pluginApi && root._detectedLangs.length > 0) {
                 pluginApi.pluginSettings.installedLangs = root._detectedLangs.slice()
@@ -170,7 +172,10 @@ Item {
                 pluginApi.saveSettings()
             }
             root.activeTool = "colorpicker"
-            if (pluginApi) pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+            if (pluginApi) {
+                pluginApi.pluginSettings.stateActiveTool = "colorpicker"
+                pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+            }
         }
     }
 
@@ -188,7 +193,10 @@ Item {
                     pluginApi.saveSettings()
                 }
                 root.activeTool = "ocr"
-                if (pluginApi) pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+                if (pluginApi) {
+                    pluginApi.pluginSettings.stateActiveTool = "ocr"
+                    pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+                }
             } else {
                 root.activeTool = ""
                 ToastService.showError(pluginApi.tr("messages.no-text"))
@@ -209,7 +217,10 @@ Item {
                     pluginApi.saveSettings()
                 }
                 root.activeTool = "qr"
-                if (pluginApi) pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+                if (pluginApi) {
+                    pluginApi.pluginSettings.stateActiveTool = "qr"
+                    pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
+                }
             } else {
                 root.activeTool = ""
                 ToastService.showError(pluginApi.tr("messages.no-qr"))
@@ -289,6 +300,7 @@ Item {
                     pluginApi.pluginSettings.paletteColors = colors
                     pluginApi.saveSettings()
                     root.activeTool = "palette"
+                    pluginApi.pluginSettings.stateActiveTool = "palette"
                     pluginApi.withCurrentScreen(screen => pluginApi.openPanel(screen))
                 }
             } else {
@@ -387,7 +399,7 @@ Item {
                     "GX=$((X-5)); GY=$((Y-5)); " +
                     "FILE=/tmp/screen-toolkit-colorpicker.png; " +
                     "grim -g \"${GX},${GY} 11x11\" \"$FILE\" 2>/dev/null || exit 1; " +
-                    "HEX=$(magick \"$FILE\" -format '#%[hex:p{5,5}]' info:- 2>/dev/null); " +
+                    "HEX=$(magick \"$FILE\" -alpha off -format '#%[hex:p{5,5}]' info:- 2>/dev/null); " +
                     "[ -n \"$HEX\" ] && printf '%s|%s' \"$HEX\" \"$FILE\" || exit 1"
                 ]
             })
@@ -447,8 +459,12 @@ Item {
         id: launchAnnotate
         interval: 50; repeat: false
         onTriggered: {
-            // Store region string for annotateOverlay.parseAndShow
-            var regionStr = root._regionX + "," + root._regionY + " " + root._regionW + "x" + root._regionH
+            // parseAndShow positions the overlay in screen-local logical pixels
+            var scale = root._regionScreen?.devicePixelRatio ?? 1.0
+            var regionStr = Math.round(root._regionX / scale) + "," +
+                            Math.round(root._regionY / scale) + " " +
+                            Math.round(root._regionW / scale) + "x" +
+                            Math.round(root._regionH / scale)
             annotateRegionProc._pendingRegion = regionStr
             annotateProc.exec({
                 command: [
@@ -466,10 +482,18 @@ Item {
             pinGrimProc.exec({
                 command: [
                     "bash", "-c",
-                    "FILE=/tmp/screen-toolkit-pin-$(date +%s%3N).png; " +
-                    "grim -s 2 -g \"" + root._regionX + "," + root._regionY + " " +
-                    root._regionW + "x" + root._regionH + "\" \"$FILE\" 2>/dev/null || exit 1; " +
-                    "echo \"$FILE|" + root._regionW + "x" + root._regionH + "\""
+                    (function() {
+                        var scale = root._regionScreen?.devicePixelRatio ?? 1.0
+                        var sx = root._regionScreen?.x ?? 0
+                        var sy = root._regionScreen?.y ?? 0
+                        var gx = sx + Math.round(root._regionX / scale)
+                        var gy = sy + Math.round(root._regionY / scale)
+                        var gw = Math.round(root._regionW / scale)
+                        var gh = Math.round(root._regionH / scale)
+                        return "FILE=/tmp/screen-toolkit-pin-$(date +%s%3N).png; " +
+                               "grim -s 2 -g \"" + gx + "," + gy + " " + gw + "x" + gh + "\" \"$FILE\" 2>/dev/null || exit 1; " +
+                               "echo \"$FILE|" + gw + "x" + gh + "\""
+                    })()
                 ]
             })
         }
@@ -482,8 +506,8 @@ Item {
             paletteProc.exec({
                 command: [
                     "bash", "-c",
-                    _grimRegionCmd("/tmp/screen-toolkit-palette.png") + " || exit 1; " +
-                    "magick /tmp/screen-toolkit-palette.png +dither -colors 8 -unique-colors txt:- 2>/dev/null " +
+                    _grimRegionCmd("/tmp/screen-toolkit-palette.png") + "; " +
+                    "magick /tmp/screen-toolkit-palette.png -alpha off +dither -colors 8 -unique-colors txt:- 2>/dev/null " +
                     "| grep -v '^#' | grep -oP '#[0-9a-fA-F]{6}' | head -8"
                 ]
             })
@@ -494,7 +518,13 @@ Item {
         id: launchRecord
         interval: 50; repeat: false
         onTriggered: {
-            var region = root._regionX + "," + root._regionY + " " + root._regionW + "x" + root._regionH
+            var scale = root._regionScreen?.devicePixelRatio ?? 1.0
+            var sx = root._regionScreen?.x ?? 0
+            var sy = root._regionScreen?.y ?? 0
+            var region = (sx + Math.round(root._regionX / scale)) + "," +
+                         (sy + Math.round(root._regionY / scale)) + " " +
+                         Math.round(root._regionW / scale) + "x" +
+                         Math.round(root._regionH / scale)
             root.isRunning = false
             root.activeTool = "record"
             recordOverlay.startRecording(region, root.pendingRecordFormat, root.pendingRecordAudioOut, root.pendingRecordAudioIn)
@@ -623,7 +653,7 @@ Item {
     function detectCapabilities() {
         root._detectedLangs = []
         detectLangsProc.exec({
-            command: ["bash", "-c", "ls /usr/share/tessdata/*.traineddata 2>/dev/null"]
+            command: ["bash", "-c", "tesseract --list-langs 2>/dev/null | tail -n +2"]
         })
         detectTransProc.exec({
             command: ["bash", "-c", "which trans 2>/dev/null"]
