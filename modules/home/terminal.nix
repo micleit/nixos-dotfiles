@@ -2,7 +2,7 @@
 
 {
   programs.alacritty = {
-    enable = true;
+    enable = pkgs.stdenv.isLinux;
   };
 
   programs.btop = {

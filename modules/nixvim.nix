@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.nixvim = {
@@ -247,12 +247,11 @@
     '';
     extraPackages = with pkgs; [
       zathura
-      xdotool # Required for inverse search (clicking PDF to jump to code)
       lazygit
       nixfmt
       nil
       nixd
-    ];
+    ] ++ (lib.optionals stdenv.isLinux [ xdotool ]);
 
   };
 }

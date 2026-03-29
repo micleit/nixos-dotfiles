@@ -10,7 +10,7 @@
   ];
 
   home.username = "mic";
-  home.homeDirectory = "/home/mic";
+  home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/mic" else "/home/mic";
   home.stateVersion = "25.11";
 
   home.sessionPath = [

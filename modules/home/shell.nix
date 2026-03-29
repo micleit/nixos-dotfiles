@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.fish = {
@@ -81,11 +81,12 @@
     tree
     jq
     unzip
-    wl-clipboard
-    wmenu
-    mpvpaper
     curl
     gnumake
     tree-sitter
-  ];
+  ] ++ (lib.optionals stdenv.isLinux [
+    wl-clipboard
+    wmenu
+    mpvpaper
+  ]);
 }

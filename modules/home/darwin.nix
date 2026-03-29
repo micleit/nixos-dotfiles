@@ -1,12 +1,23 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   # macOS specific Home Manager settings
-  home.homeDirectory = "/Users/mic";
 
-  # Symlink existing configs
+  home.packages = with pkgs; [
+    # Add any other macOS specific CLI tools here
+  ];
+
+  # Symlink existing configs from the repo
+  home.file = {
+    ".yabairc".source = ../../config/yabai/yabairc;
+    ".skhdrc".source = ../../config/skhd/skhdrc;
+    ".config/yabai/create_spaces.sh" = {
+      source = ../../config/yabai/create_spaces.sh;
+      executable = true;
+    };
+  };
+
   xdg.configFile = {
-    "yabai/yabairc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/yabai/yabairc";
-    "skhd/skhdrc".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/skhd/skhdrc";
+    "sketchybar".source = ../../config/sketchybar;
   };
 }

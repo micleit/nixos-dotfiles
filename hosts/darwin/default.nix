@@ -9,15 +9,28 @@
   ];
 
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
+  # services.nix-daemon.enable = true; # Managed unconditionally now
 
-  # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
+  system.primaryUser = "mic";
+
+  # nix-darwin management of Nix is disabled for compatibility with Determinate
+  nix.enable = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
   programs.fish.enable = true;
+
+  # Manually source nix environment if nix.enable = false
+  programs.zsh.shellInit = ''
+    if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    fi
+  '';
+  programs.fish.shellInit = ''
+    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+      source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
+    end
+  '';
 
   # Set System Version
   system.stateVersion = 4;
@@ -30,14 +43,41 @@
   # Homebrew management
   homebrew = {
     enable = true;
-    onActivation.cleanup = "zap"; # Removes unlisted brews/casks
+    onActivation.cleanup = "uninstall"; # Safer than "zap"
+    taps = [
+      "felixkratz/formulae"
+      "koekeishiya/formulae"
+    ];
     casks = [
       "visual-studio-code"
       "discord"
       "spotify"
+      "raycast"
+      "alacritty"
+      "karabiner-elements"
+      "brave-browser"
+      "font-sf-pro"
+      "font-sf-mono"
+      "sf-symbols"
+      "font-hack-nerd-font"
+      "font-sketchybar-app-font"
       # Add your other Mac apps here
     ];
+    brews = [
+      "gemini-cli"
+      "sketchybar" # Often better from brew for permissions/updates
+      "borders"
+      "cliclick"
+      "switchaudio-osx"
+      "nowplaying-cli"
+      "lua"
+    ];
   };
+
+  # Services
+  services.sketchybar.enable = true;
+  services.yabai.enable = true;
+  services.skhd.enable = true;
 
   # macOS System Settings
   system.defaults = {
