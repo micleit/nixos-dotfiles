@@ -39,37 +39,21 @@
   networking.hostName = "desktop-nixos";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  
-  services.openssh.enable = true;
-  services.tailscale.enable = true;
-  services.tuned.enable = true;
-  services.upower.enable = true;
-  
-  # Time & Locale
-  time.timeZone = "America/New_York";
-  services.timesyncd.enable = true;
 
-  # Mounting / Storage Services
-  services.devmon.enable = true;
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
+  networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [ 21115 21116 21117 21118 21119 ];
+        allowedUDPPorts = [ 21116 ];
+      };
 
-  # ============================================================================
-  # GRAPHICS & HYPRLAND (System Level)
-  # ============================================================================
-  services.xserver.videoDrivers = [ "nvidia" ];
-  
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    open = false; 
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  systemd.services.rustdesk = {
+        description = "RustDesk Remote Desktop Server";
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          ExecStart = "${pkgs.rustdesk}/bin/rustdesk --service";
+          Restart = "always";
+        };
+      };
 
   programs.hyprland = {
     enable = true;
@@ -78,7 +62,11 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ 
+      pkgs.xdg-desktop-portal-gtk 
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    config.common.default = "*";
   };
 
   # Display Manager
@@ -120,7 +108,7 @@
     vim wget git librewolf alacritty 
     adi1090x-plymouth-themes
     gcc gnumake curl
-    rustdesk-bin
+    rustdesk
   ];
 
   environment.sessionVariables = {
