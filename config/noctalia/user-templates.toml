@@ -2,12 +2,6 @@
 
 [templates]
 
-[[template]]
-name = "Hyprland Borders"
-input_path = "~/nixos-dotfiles/scripts/dummy_template.conf" # Can be an empty file
-output_path = "/tmp/hyprland_colors"
-post_hook = "~/nixos-dotfiles/scripts/update_borders.sh"
-
 # User-defined templates
 # Add your custom templates below
 # Example:

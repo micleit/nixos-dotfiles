@@ -390,7 +390,7 @@
         "screenUnlock": "",
         "session": "",
         "startup": "",
-        "wallpaperChange": "/home/mic/nixos-dotfiles/scripts/update_borders.sh"
+        "wallpaperChange": ""
     },
     "location": {
         "analogClockInCalendar": false,
