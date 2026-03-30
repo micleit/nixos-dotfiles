@@ -120,6 +120,7 @@
     vim wget git librewolf alacritty 
     adi1090x-plymouth-themes
     gcc gnumake curl
+    rustdesk-bin
   ];
 
   environment.sessionVariables = {

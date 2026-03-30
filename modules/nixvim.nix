@@ -211,9 +211,13 @@
       
       # Nixvim handles the package, but we set the settings here
       settings = {
-        # Use Zathura as the PDF viewer
-        view_method = "zathura";
+        # Use Skim on macOS, Zathura on Linux
+        view_method = if pkgs.stdenv.isDarwin then "skim" else "zathura";
         
+        # Skim specific settings for better sync
+        view_skim_sync = 1;
+        view_skim_activate = 1;
+
         # Continuous compilation (requires latexmk, which Nixvim pulls in)
         compiler_method = "latexmk";
         
@@ -246,12 +250,12 @@
       vim.keymap.set("n", "<leader>fl", ":Telescope harpoon marks<CR>", { desc = "Harpoon List" })
     '';
     extraPackages = with pkgs; [
-      zathura
       lazygit
       nixfmt
       nil
       nixd
-    ] ++ (lib.optionals stdenv.isLinux [ xdotool ]);
+      neovim-remote
+    ] ++ (lib.optionals stdenv.isLinux [ zathura zathura-pdf-mupdf xdotool ]);
 
   };
 }

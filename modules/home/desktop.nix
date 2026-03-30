@@ -12,7 +12,7 @@
     gifski
     imagemagick
     texliveFull
-    zathura
+    neovim-remote
     gemini-cli
   ];
 }

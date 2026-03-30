@@ -44,9 +44,11 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall"; # Safer than "zap"
+    onActivation.autoUpdate = true;
+    onActivation.upgrade = true;
     taps = [
       "felixkratz/formulae"
-      "koekeishiya/formulae"
+      "asmvik/formulae"
     ];
     casks = [
       "visual-studio-code"
@@ -56,16 +58,20 @@
       "alacritty"
       "karabiner-elements"
       "brave-browser"
+      "skim"
       "font-sf-pro"
       "font-sf-mono"
       "sf-symbols"
       "font-hack-nerd-font"
       "font-sketchybar-app-font"
+      "rustdesk"
       # Add your other Mac apps here
     ];
     brews = [
       "gemini-cli"
       "sketchybar" # Often better from brew for permissions/updates
+      "asmvik/formulae/yabai"
+      "asmvik/formulae/skhd"
       "borders"
       "cliclick"
       "switchaudio-osx"
@@ -76,8 +82,8 @@
 
   # Services
   services.sketchybar.enable = true;
-  services.yabai.enable = true;
-  services.skhd.enable = true;
+  services.yabai.enable = false;
+  services.skhd.enable = false;
 
   # macOS System Settings
   system.defaults = {

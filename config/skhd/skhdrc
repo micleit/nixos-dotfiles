@@ -1,15 +1,15 @@
 # === Session defaults ===
-# Set PATH for skhd
-path /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin
+# Define modifiers
+# hyper = cmd + shift + ctrl + alt
 
 # reset border color in default mode
 
 
 :: default : yabai -m config active_window_border_color 0xE0f5c2e7
 # kickstart yabai 
-ralt - y : /bin/launchctl kickstart -k "gui/${UID}/org.nixos.yabai"
+ralt - y : yabai --restart-service
 # restart skhd
-ralt + shift - y : /bin/launchctl kickstart -k "gui/${UID}/org.nixos.skhd"
+ralt + shift - y : skhd --restart-service
 
 # logout
 # ralt + shift - f : /usr/bin/osascript -e 'tell app "System Events" to log out'
@@ -25,16 +25,14 @@ hyper - escape : /usr/bin/osascript -e 'tell application "System Events" to slee
 
 # === launch commands ===
 # open alacritty terminal
-hyper - return : /usr/bin/open -na /Applications/Alacritty.app
+ralt - return : /usr/bin/open -na /Applications/Alacritty.app
 
-# open raycast
-hyper - space : /usr/bin/open -na /Applications/Raycast.app
 
 # open vscode
 hyper - v : /usr/bin/open -na /Applications/Visual\ Studio\ Code.app
 
 # open brave
-hyper - b : /usr/bin/open -na "/Applications/Brave Browser.app"
+hyper - b : /usr/bin/open -na "Brave Browser"
 
 # open finder (opens home folder in new window)
 hyper - f : /usr/bin/open $HOME

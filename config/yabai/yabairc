@@ -17,12 +17,12 @@ yabai -m signal --add event=window_moved action="yabai -m space --balance"
 $HOME/.config/yabai/create_spaces.sh
 
 yabai -m config external_bar               all:33:0     \
-                window_border              on           \
+#               window_border              on           \
                 mouse_follows_focus        off          \
                 focus_follows_mouse        off          \
                 window_zoom_persist        off          \
                 window_placement           second_child \
-                window_topmost             on           \
+#               window_topmost             on           \
                 window_shadow              float        \
                 window_opacity             on           \
                 window_opacity_duration    0.2          \
