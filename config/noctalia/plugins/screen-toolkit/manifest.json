@@ -1,7 +1,7 @@
 {
   "id": "screen-toolkit",
   "name": "Screen Toolkit",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "minNoctaliaVersion": "4.5.0",
   "author": "ycf-anon",
   "license": "MIT",
@@ -26,9 +26,12 @@
     "defaultSettings": {
       "colorHistory": [],
       "paletteColors": [],
-      "installedLangs": ["eng"],
+      "installedLangs": [
+        "eng"
+      ],
       "transAvailable": false,
-      "selectedOcrLang": "eng"
+      "selectedOcrLang": "eng",
+      "detectedRecorder": ""
     }
   }
 }

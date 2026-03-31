@@ -255,7 +255,7 @@
       nil
       nixd
       neovim-remote
-    ] ++ (lib.optionals stdenv.isLinux [ zathura zathura-pdf-mupdf xdotool ]);
+    ] ++ (lib.optionals stdenv.isLinux [ zathura xdotool ]);
 
   };
 }

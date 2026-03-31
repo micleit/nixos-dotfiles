@@ -101,6 +101,19 @@
     "weekStartDay": {
       "label": "First day of week",
       "desc": "Choose which day starts the calendar week."
+    },
+    "methodCustom": {
+      "label": "Custom Method ID",
+      "desc": "Enter the numeric method ID from the Aladhan API (e.g. 19 for Algeria / MESRS)."
+    },
+    "tune": {
+      "header": "Prayer Time Offsets",
+      "desc": "Minute adjustments applied per prayer (negative = earlier, positive = later).",
+      "fajr":    "Fajr offset (min)",
+      "dhuhr":   "Dhuhr offset (min)",
+      "asr":     "Asr offset (min)",
+      "maghrib": "Maghrib offset (min)",
+      "isha":    "Isha offset (min)"
     }
   },
   "error": {
