@@ -64,7 +64,6 @@
       "sf-symbols"
       "font-hack-nerd-font"
       "font-sketchybar-app-font"
-      "rustdesk"
       # Add your other Mac apps here
     ];
     brews = [

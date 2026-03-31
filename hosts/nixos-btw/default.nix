@@ -60,18 +60,11 @@
     allowedUDPPorts = [ 21116 ];
   };
 
-  systemd.services.rustdesk = {
-    description = "RustDesk Remote Desktop Server";
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.rustdesk}/bin/rustdesk --service";
-      Restart = "always";
-    };
-  };
 
   # ============================================================================
   # GRAPHICS & HYPRLAND (System Level)
   # ============================================================================
+  services.sunshine.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
@@ -139,7 +132,6 @@
     vim wget git librewolf alacritty 
     adi1090x-plymouth-themes
     gcc gnumake curl
-    rustdesk
   ];
 
   environment.sessionVariables = {
