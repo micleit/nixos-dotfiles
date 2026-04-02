@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ../../modules/yabai.nix
+    ../../modules/skhd.nix
+  ];
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = [
@@ -69,8 +74,6 @@
     brews = [
       "gemini-cli"
       "sketchybar" # Often better from brew for permissions/updates
-      "asmvik/formulae/yabai"
-      "asmvik/formulae/skhd"
       "borders"
       "cliclick"
       "switchaudio-osx"
@@ -81,8 +84,7 @@
 
   # Services
   services.sketchybar.enable = true;
-  services.yabai.enable = false;
-  services.skhd.enable = false;
+  # services.yabai and services.skhd are now managed in modules/*.nix
 
   # macOS System Settings
   system.defaults = {
