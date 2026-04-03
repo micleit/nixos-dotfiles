@@ -41,3 +41,25 @@ Support for photography workflows (Fujifilm X-T3/GoPro) via Nix-wrapped scripts.
 Maintain configurations for self-hosted services like Immich.
 
 Manage Hyprland and Waybar for the NixOS desktop environment.
+
+6. Bootstrap & Migration (New MacBook Setup)
+When setting up a fresh macOS machine, follow this sequence:
+
+1. Install Nix (Determinate Systems):
+   `curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install`
+
+2. Install Homebrew:
+   `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+3. Clone Dotfiles:
+   `git clone <repo_url> ~/nixos-dotfiles`
+
+4. Initial Darwin Switch:
+   `nix run nix-darwin -- switch --flake ~/nixos-dotfiles#macbook`
+
+5. Manual Migration Checklist:
+   - SSH/GPG Keys: Move to `~/.ssh` and GPG keychain.
+   - Secrets: Restore `.env` files for CLI tools.
+   - Browser: Sign in to Brave for sync.
+   - Karabiner: Symlink `~/.config/karabiner/karabiner.json` if not yet in Nix.
+   - Photography: Migrate local media from old machine.

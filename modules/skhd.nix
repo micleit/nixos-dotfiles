@@ -48,21 +48,6 @@
       # second test with a different key
       hyper - z : /usr/bin/touch /tmp/skhd_z_test
 
-      # === Resize Mode ===
-      # Set resize border color 
-      :: resize @ : yabai -m config active_window_border_color 0xFFFF00FF
-      # toggle resize mode 
-      resize < ralt - p ; default
-      default < ralt - p ; resize
-      # resize commands
-      resize < left : yabai -m window --resize left:-50:0; \
-                        yabai -m window --resize right:-50:0
-      resize < down : yabai -m window --resize bottom:0:50; \
-                        yabai -m window --resize top:0:50
-      resize < up   : yabai -m window --resize top:0:-50; \
-                        yabai -m window --resize bottom:0:-50
-      resize < right : yabai -m window --resize right:50:0; \
-                        yabai -m window --resize left:50:0
 
       # === Navigation ===
       # window focus
