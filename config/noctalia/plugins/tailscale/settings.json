@@ -5,7 +5,6 @@
   "showPeerCount": true,
   "hideDisconnected": false,
   "hideMullvadExitNodes": true,
-  "terminalCommand": "alacritty",
-  "pingCount": 5,
+  "terminalCommand": "ghostty",  "pingCount": 5,
   "defaultPeerAction": "copy-ip"
 }

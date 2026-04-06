@@ -11,7 +11,7 @@ This configuration follows a modular approach as mandated by [GEMINI.md](./GEMIN
     - `hosts/`: Machine-specific system configurations (NixOS, Darwin).
     - `home/`: User-specific Home Manager profiles.
     - `modules/`: Shared logic, services, and application settings.
-- **Home Manager Dominance**: Most user-facing applications (Fish, Alacritty, Hyprland) are managed at the user level for maximum portability.
+- **Home Manager Dominance**: Most user-facing applications (Fish, Ghostty, Hyprland) are managed at the user level for maximum portability.
 
 ## 📂 Directory Structure
 
@@ -28,7 +28,7 @@ This configuration follows a modular approach as mandated by [GEMINI.md](./GEMIN
 ├── modules/
 │   ├── home/               # Home Manager modules (Cross-platform)
 │   │   ├── shell.nix       # Fish, Git, Yazi, and core CLI utilities
-│   │   ├── terminal.nix    # Alacritty and Btop configurations
+│   │   ├── terminal.nix    # Ghostty and Btop configurations
 │   │   └── desktop.nix     # Hyprland, fonts, and desktop applications
 │   └── nixvim.nix          # Neovim configuration via Nixvim
 ├── config/                 # Source for non-Nix symlinked configurations
@@ -55,7 +55,7 @@ nixos-rebuild build --flake .#nixos-btw
 - **Window Manager**: [Hyprland](https://hyprland.org/) with a custom [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell) setup.
 - **Shell**: [Fish](https://fishshell.com/) with Zoxide, Eza, and Yazi integration.
 - **Editor**: [Neovim](https://neovim.io/) managed via [Nixvim](https://github.com/nix-community/nixvim).
-- **Terminal**: [Alacritty](https://alacritty.org/) with a Gruvbox/Noctalia-inspired theme.
+- **Terminal**: [Ghostty](https://ghostty.org/) with a Gruvbox/Noctalia-inspired theme.
 - **File Manager**: [Yazi](https://yazi-rs.github.io/) (terminal) and Nautilus (GUI).
 - **Gaming**: Steam and Gamemode enabled.
 

@@ -7,7 +7,7 @@
       xwayland.enable = true;
       settings = {
         monitor = ",1920x1080@144,0x0, 1";
-        "$terminal" = "alacritty";
+        "$terminal" = "ghostty";
         "$fileManager" = "nautilus";
         "$browser" = "brave";
         "$ipc" = "noctalia-shell ipc call";
@@ -102,7 +102,7 @@
           "$mainMod, V, togglefloating,"
           "$mainMod, m, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"
           "mod5 Shift, F, fullscreen,"
-          "$mainMod, y, exec, alacritty --title \"yazi-float\" -e fish -c \"y\""
+          "$mainMod, y, exec, ghostty --title \"yazi-float\" -e fish -c \"y\""
           "mod5, SPACE, exec, $ipc launcher toggle"
           "mod5, comma, exec, $ipc controlCenter toggle"
           "mod5, equal, exec, $ipc settings toggle"
@@ -154,7 +154,7 @@
         ];
 
         windowrule = [
-          "match:class Alacritty, opacity 0.85 0.75"
+          "match:class com.mitchellh.ghostty, opacity 0.85 0.75"
           "match:class brave-browser, opacity 0.95 0.9"
           "match:class steam, opacity 0.85 0.8"
           {

@@ -129,7 +129,7 @@
   # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    vim wget git librewolf alacritty 
+    vim wget git librewolf 
     adi1090x-plymouth-themes
     gcc gnumake curl
   ];

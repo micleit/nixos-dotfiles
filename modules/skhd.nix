@@ -25,8 +25,8 @@
       hyper - escape : /usr/bin/osascript -e 'tell application "System Events" to sleep'
 
       # === launch commands ===
-      # open alacritty terminal
-      ralt - return : /usr/bin/open -na /Applications/Alacritty.app
+      # open ghostty terminal
+      ralt - return : /usr/bin/open -na /Applications/Ghostty.app
 
       # open vscode
       hyper - v : /usr/bin/open -na /Applications/Visual\ Studio\ Code.app
@@ -37,8 +37,8 @@
       # open finder (opens home folder in new window)
       hyper - f : /usr/bin/open $HOME
 
-      # open yazi in alacritty
-      hyper - y : /Applications/Alacritty.app/Contents/MacOS/alacritty -e yazi
+      # open yazi in ghostty
+      hyper - y : /Applications/Ghostty.app/Contents/MacOS/ghostty -e yazi
 
       # open system preferences
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'

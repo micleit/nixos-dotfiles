@@ -58,36 +58,31 @@
     };
   };
 
-  programs.yazi = {
-    enable = true;
-    enableFishIntegration = true;
-    shellWrapperName = "y";
-  };
-
   home.packages = with pkgs; [
+    # Core CLI
     eza
     fzf
     zoxide
-    pokeget-rs
-    ffmpeg
-    ffmpegthumbnailer
-    p7zip
-    poppler-utils
-    fd
     ripgrep
+    fd
+    jq
+    unzip
+    curl
+    gnumake
+
+    # Dev
     nil
     nixd
     nixpkgs-fmt
     nixfmt
     nodejs
     gcc
+    tree-sitter
+
+    # Fun & Misc
+    pokeget-rs
     fastfetch
     tree
-    jq
-    unzip
-    curl
-    gnumake
-    tree-sitter
   ] ++ (lib.optionals stdenv.isLinux [
     wl-clipboard
     wmenu

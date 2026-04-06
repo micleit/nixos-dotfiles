@@ -49,7 +49,7 @@
         ];
       };
 
-      darwinConfigurations.macbook = darwin.lib.darwinSystem {
+      darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/darwin/default.nix

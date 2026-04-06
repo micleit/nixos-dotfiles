@@ -60,7 +60,6 @@
       "discord"
       "spotify"
       "raycast"
-      "alacritty"
       "karabiner-elements"
       "brave-browser"
       "skim"

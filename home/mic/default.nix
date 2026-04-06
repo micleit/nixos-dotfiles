@@ -5,6 +5,7 @@
     ../../modules/home/shell.nix
     ../../modules/home/terminal.nix
     ../../modules/home/desktop.nix
+    ../../modules/home/yazi.nix
     ../../modules/nixvim.nix # Reuse existing or move to modules/home
     inputs.nixvim.homeModules.nixvim
   ];
@@ -25,11 +26,8 @@
   # Symlinks for manual configs / large folders
   xdg.configFile = {
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/noctalia";
-    "alacritty/themes".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/alacritty/themes";
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/btop";
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/yazi";
-    "qtile".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/qtile";
-    "kitty".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/kitty";
   };
 
   # Let Home Manager install and manage itself.
