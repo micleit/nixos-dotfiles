@@ -1,4 +1,4 @@
-exec-once = /nix/store/c9cnbxhxbagj7gfpc1g5hl4x4f8dzayv-dbus-1.16.2/bin/dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target
+exec-once = /nix/store/5gln2rkcjx93cr5x0rr3wqrxjdmshd2f-dbus-1.16.2/bin/dbus-update-activation-environment --systemd DISPLAY HYPRLAND_INSTANCE_SIGNATURE WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target
 $browser=brave
 $fileManager=nautilus
 $ipc=noctalia-shell ipc call

@@ -194,6 +194,7 @@
     };
 
     home.packages = map (n: pkgs.${n}) [
+      "anki"
       "apple-cursor"
       "nautilus"
       "brave"

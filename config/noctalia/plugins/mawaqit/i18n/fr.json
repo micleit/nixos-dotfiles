@@ -52,6 +52,14 @@
       "label": "Méthode de calcul",
       "desc": "Détermine comment les temps de prières sont calculés."
     },
+    "fajrAngle": {
+      "label": "Angle du Fajr",
+      "desc": "L'angle du soleil sous l'horizon auquel commence l'heure de la prière du Fajr."
+    },
+    "ishaAngle": {
+      "label": "Angle de l'Isha",
+      "desc": "L'angle du soleil sous l'horizon auquel commence l'heure de la prière de l'Isha."
+    },
     "display": {
       "header": "Affichage"
     },

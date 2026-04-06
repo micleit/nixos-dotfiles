@@ -80,12 +80,6 @@
                     "showBadge": true,
                     "showLabelsOnlyWhenOccupied": false,
                     "unfocusedIconsOpacity": 1
-                },
-                {
-                    "defaultSettings": {
-                        "mode": "region"
-                    },
-                    "id": "plugin:screenshot"
                 }
             ],
             "left": [
@@ -567,10 +561,6 @@
         "activeTemplates": [
             {
                 "enabled": true,
-                "id": "alacritty"
-            },
-            {
-                "enabled": true,
                 "id": "btop"
             },
             {
@@ -586,7 +576,7 @@
                 "id": "yazi"
             }
         ],
-        "enableUserTheming": true
+        "enableUserTheming": false
     },
     "ui": {
         "bluetoothDetailsViewMode": "grid",
@@ -614,6 +604,11 @@
         "fillMode": "crop",
         "hideWallpaperFilenames": true,
         "monitorDirectories": [
+            {
+                "directory": "/home/mic/nixos-dotfiles/walls",
+                "name": "DP-2",
+                "wallpaper": ""
+            }
         ],
         "overviewBlur": 0.4,
         "overviewEnabled": false,

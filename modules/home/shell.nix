@@ -70,6 +70,10 @@
     zoxide
     pokeget-rs
     ffmpeg
+    ffmpegthumbnailer
+    p7zip
+    poppler-utils
+    fd
     ripgrep
     nil
     nixd
