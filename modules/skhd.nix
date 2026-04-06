@@ -3,7 +3,6 @@
 {
   services.skhd = {
     enable = true;
-    package = pkgs.skhd;
     skhdConfig = ''
       # === Session defaults ===
       # Define modifiers
@@ -26,7 +25,7 @@
 
       # === launch commands ===
       # open ghostty terminal
-      ralt - return : /usr/bin/open -na /Applications/Ghostty.app
+      ralt - return : ghostty
 
       # open vscode
       hyper - v : /usr/bin/open -na /Applications/Visual\ Studio\ Code.app
@@ -38,7 +37,7 @@
       hyper - f : /usr/bin/open $HOME
 
       # open yazi in ghostty
-      hyper - y : /Applications/Ghostty.app/Contents/MacOS/ghostty -e yazi
+      hyper - y : ghostty -e yazi
 
       # open system preferences
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'

@@ -55,5 +55,6 @@
 
   home.packages = with pkgs; [
     kitty # Keep kitty as a backup
+    lazygit
   ];
 }
