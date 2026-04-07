@@ -9,6 +9,7 @@
       # Font
       font-family = "JetBrainsMono Nerd Font Propo";
       font-size = if pkgs.stdenv.isDarwin then 14 else 10;
+      confirm-close-surface=false;
       
       # Visuals
       background = "#282828";
