@@ -68,8 +68,9 @@
       "sf-symbols"
       "font-hack-nerd-font"
       "font-sketchybar-app-font"
+      "colemak-dh"
       # Add your other Mac apps here
-    ];
+      ];
     brews = [
       "gemini-cli"
       "sketchybar" # Often better from brew for permissions/updates

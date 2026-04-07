@@ -52,7 +52,29 @@
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/darwin/default.nix
+          ./hosts/mbp-m4/default.nix
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/home/darwin.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
+      darwinConfigurations.headless-m1 = darwin.lib.darwinSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/headlessm1/default.nix
           home-manager.darwinModules.home-manager
           {
             home-manager = {
