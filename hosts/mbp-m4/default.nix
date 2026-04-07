@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ../../modules/yabai.nix
-    ../../modules/skhd.nix
+    ../../modules/darwin/yabai.nix
+    ../../modules/darwin/skhd.nix
   ];
 
   # List packages installed in system profile. To search by name, run:

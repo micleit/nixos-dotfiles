@@ -3,10 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/immich.nix
-    ../../modules/samba.nix
-    ../../modules/nextcloud.nix
-    ../../modules/navidrome.nix
+    ../../modules/server/immich.nix
+    ../../modules/server/samba.nix
+    ../../modules/server/nextcloud.nix
+    ../../modules/server/navidrome.nix
   ];
 
   # ============================================================================

@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/samba.nix
+    ../../modules/server/samba.nix
     # Other system-wide modules
   ];
 

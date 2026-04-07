@@ -62,5 +62,5 @@ nixos-rebuild build --flake .#nixos-btw
 ## 🍎 macOS Readiness
 The configuration is structured to support `nix-darwin`. To add a MacBook:
 1. Create a new host in `hosts/`.
-2. Reference the shared modules in `modules/home/`.
+2. Reference the shared modules in `modules/`.
 3. Add a new output in `flake.nix` under `darwinConfigurations`.

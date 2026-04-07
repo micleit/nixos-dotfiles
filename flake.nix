@@ -39,7 +39,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/desktop-linux.nix
+                  ./modules/linux/desktop-linux.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -61,7 +61,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/desktop-linux.nix
+                  # ./modules/linux/desktop-linux.nix don't need it on a server
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -83,7 +83,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/darwin.nix
+                  ./modules/darwin/darwin.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -105,7 +105,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/darwin.nix
+                  ./modules/darwin/darwin.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };

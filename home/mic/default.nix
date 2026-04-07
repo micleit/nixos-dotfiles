@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ../../modules/home/shell.nix
-    ../../modules/home/terminal.nix
-    ../../modules/home/shared.nix
-    ../../modules/home/yazi.nix
-    ../../modules/nixvim.nix # Reuse existing or move to modules/home
+    ../../modules/shell.nix
+    ../../modules/terminal.nix
+    ../../modules/shared.nix
+    ../../modules/yazi.nix
+    ../../modules/nixvim.nix # Reuse existing or move to modules/
     inputs.nixvim.homeModules.nixvim
   ];
 
