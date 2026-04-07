@@ -49,6 +49,28 @@
         ];
       };
 
+      nixosConfigurations.optiplex-server = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/optiplex-server/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/home/desktop-linux.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [

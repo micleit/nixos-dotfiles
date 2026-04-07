@@ -6,6 +6,7 @@
     ../../modules/immich.nix
     ../../modules/samba.nix
     ../../modules/nextcloud.nix
+    ../../modules/navidrome.nix
   ];
 
   # ============================================================================
@@ -93,6 +94,8 @@
   # ============================================================================
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
+
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   system.stateVersion = "26.05"; 
 }
