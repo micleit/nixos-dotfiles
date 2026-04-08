@@ -15,7 +15,6 @@
   home.stateVersion = "25.11";
 
   home.sessionPath = [
-    "$HOME/nixos-dotfiles/scripts"
     "$HOME/.local/bin"
   ];
 
@@ -28,6 +27,7 @@
     "noctalia".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/noctalia";
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/btop";
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/yazi";
+    "drift".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/drift";
   };
 
   # Let Home Manager install and manage itself.
