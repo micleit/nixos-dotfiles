@@ -25,9 +25,17 @@ Item {
   property var cfg:      pluginApi?.pluginSettings || ({})
   property var defaults: pluginApi?.manifest?.metadata?.defaultSettings || ({})
 
-  readonly property bool showCountdown: cfg.showCountdown ?? defaults.showCountdown ?? true
-  readonly property bool use12h:        Settings.data.location.use12hourFormat
-  readonly property bool isJumuah:      new Date().getDay() === 5
+  readonly property bool showCountdown:  cfg.showCountdown  ?? defaults.showCountdown  ?? true
+  readonly property bool showElapsed:    cfg.showElapsed    ?? defaults.showElapsed    ?? false
+  readonly property bool hidePrayerName: cfg.hidePrayerName ?? defaults.hidePrayerName ?? false
+
+  readonly property string widgetIcon:   cfg.widgetIcon     ?? defaults.widgetIcon     ?? "building-mosque"
+  readonly property bool   dynamicIcon:  cfg.dynamicIcon    ?? defaults.dynamicIcon    ?? false
+  readonly property string textColor:    cfg.textColor      ?? defaults.textColor      ?? "none"
+  readonly property string iconColor:    cfg.iconColor      ?? defaults.iconColor      ?? "none"
+  readonly property string activeColor:  cfg.activeColor    ?? defaults.activeColor    ?? "primary"
+
+  readonly property bool use12h:   Settings.data.location.use12hourFormat
 
   readonly property var    mainInstance:   pluginApi?.mainInstance
   readonly property var    prayerTimings:  mainInstance?.prayerTimings  ?? null
@@ -37,11 +45,17 @@ Item {
   readonly property int    secondsToNext:  mainInstance?.secondsToNext  ?? -1
   readonly property string nextPrayerName: mainInstance?.nextPrayerName ?? ""
   readonly property bool   azanPlaying:    mainInstance?.azanPlaying    ?? false
-  readonly property bool   prayerNow:      secondsToNext === 0 && nextPrayerName !== ""
+  readonly property bool   isJumuah:       mainInstance?.isJumuah       ?? false
+
+  readonly property int    secondsElapsed:  mainInstance?.secondsElapsed ?? -1
+  readonly property string lastPrayerName:  mainInstance?.lastPrayerName ?? ""
+  readonly property bool   isElapsed:       showElapsed && secondsElapsed >= 0
+
+  readonly property bool prayerNow: secondsToNext === 0 && nextPrayerName !== ""
 
   Timer {
     interval: 1000
-    running: secondsToNext > 0 && secondsToNext <= 3600
+    running: (secondsToNext > 0 && secondsToNext <= 3600) || isElapsed
     repeat: true
     onTriggered: mainInstance?.updateCountdown()
   }
@@ -49,6 +63,12 @@ Item {
   readonly property string nextPrayerLabel: {
     if (nextPrayerName === "Dhuhr" && isJumuah) return "Jumu'ah"
     return nextPrayerName
+  }
+
+  readonly property string lastPrayerLabel: {
+    const key = mainInstance?.getPrayer(lastPrayerName)?.labelKey ?? ""
+    if (!key) return ""
+    return pluginApi?.tr(key)
   }
 
   readonly property string nextPrayerTimeStr: {
@@ -73,12 +93,46 @@ Item {
     return pluginApi?.tr("widget.soon")
   }
 
+  readonly property string elapsedStr: {
+    if (secondsElapsed < 0) return ""
+    if (secondsElapsed < 60) return pluginApi?.tr("widget.now")
+    const h = Math.floor(secondsElapsed / 3600)
+    const m = Math.floor((secondsElapsed % 3600) / 60)
+    if (h > 0) return `+${h}h ${m}m`
+    return `+${m}m`
+  }
+
+  readonly property string tooltipText: {
+    if (!prayerTimings) return pluginApi?.tr("widget.tooltip.noData")
+    return `${nextPrayerLabel}: ${nextPrayerTimeStr}\n${pluginApi?.tr("widget.tooltip.countdown")}: ${countdownStr}`
+  }
+
+  readonly property string displayIcon: {
+    if (!dynamicIcon || (!nextPrayerName && !lastPrayerName)) return root.widgetIcon
+    return mainInstance?.getPrayer(isElapsed ? lastPrayerName : nextPrayerName)?.icon ?? root.widgetIcon
+  }
+
   readonly property string displayText: {
     if (isLoading && !prayerTimings) return "..."
     if (hasError) return "!"
     if (!prayerTimings || !nextPrayerName) return "—"
-    if (prayerNow) return `${nextPrayerLabel} · ${pluginApi?.tr("widget.now")}`
-    if (showCountdown && secondsToNext > 0) return `${nextPrayerLabel} ${countdownStr}`
+
+    if (isElapsed) {
+      if (hidePrayerName) return elapsedStr
+      return `${lastPrayerLabel} ${elapsedStr}`
+    }
+
+    if (prayerNow) {
+      if (hidePrayerName) return pluginApi?.tr("widget.now")
+      return `${nextPrayerLabel} · ${pluginApi?.tr("widget.now")}`
+    }
+
+    if (showCountdown && secondsToNext > 0) {
+      if (hidePrayerName) return countdownStr
+      return `${nextPrayerLabel} ${countdownStr}`
+    }
+
+    if (hidePrayerName) return nextPrayerTimeStr
     return `${nextPrayerLabel} ${nextPrayerTimeStr}`
   }
 
@@ -86,18 +140,23 @@ Item {
     if (isLoading && !prayerTimings) return "..."
     if (hasError) return "!"
     if (!prayerTimings || !nextPrayerName) return "—"
+
+    if (isElapsed)    return hidePrayerName ? elapsedStr    : lastPrayerLabel
+    if (hidePrayerName) {
+      if (prayerNow)                          return pluginApi?.tr("widget.now")
+      if (showCountdown && secondsToNext > 0) return countdownStr
+      return nextPrayerTimeStr
+    }
     return nextPrayerLabel
   }
+
   readonly property string verticalLine2: {
     if (!prayerTimings || !nextPrayerName) return ""
-    if (prayerNow) return pluginApi?.tr("widget.now")
+    if (isElapsed)      return hidePrayerName ? "" : elapsedStr
+    if (hidePrayerName) return ""
+    if (prayerNow)      return pluginApi?.tr("widget.now")
     if (showCountdown && secondsToNext > 0) return countdownStr
     return nextPrayerTimeStr
-  }
-
-  readonly property string tooltipText: {
-    if (!prayerTimings) return pluginApi?.tr("widget.tooltip.noData")
-    return `${nextPrayerLabel}: ${nextPrayerTimeStr}\n${pluginApi?.tr("widget.tooltip.countdown")}: ${countdownStr}`
   }
 
   readonly property real iconSize: Style.toOdd(capsuleHeight * 0.55)
@@ -122,7 +181,7 @@ Item {
     width:  root.contentWidth
     height: root.contentHeight
     radius: Style.radiusL
-    color:        mouseArea.containsMouse ? Color.mHover : Style.capsuleColor
+    color:        Style.capsuleColor
     border.color: azanPlaying ? Color.mPrimary : Style.capsuleBorderColor
     border.width: Style.capsuleBorderWidth
 
@@ -139,9 +198,9 @@ Item {
       visible: !isVertical
 
       NIcon {
-        icon: "building-mosque"
+        icon: root.displayIcon
         pointSize: root.iconSize
-        color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
+        color: Color.resolveColorKey(prayerNow || isElapsed ? root.activeColor : root.iconColor)
         Layout.alignment: Qt.AlignVCenter
       }
 
@@ -164,7 +223,7 @@ Item {
         text: root.displayText
         pointSize: root.barFontSize
         applyUiScale: false
-        color: mouseArea.containsMouse ? Color.mOnHover : (prayerNow ? Color.mPrimary : Color.mOnSurface)
+        color: Color.resolveColorKey(prayerNow || isElapsed ? root.activeColor : root.textColor)
         Layout.alignment: Qt.AlignVCenter
         Behavior on color { ColorAnimation { duration: 300 } }
       }
@@ -190,9 +249,9 @@ Item {
         spacing: Style.marginXS
 
         NIcon {
-          icon: "building-mosque"
+          icon: root.displayIcon
           pointSize: Style.toOdd(root.capsuleHeight * 0.45)
-          color: mouseArea.containsMouse ? Color.mOnHover : Color.mPrimary
+          color: Color.resolveColorKey(prayerNow || isElapsed ? root.activeColor : root.iconColor)
         }
 
         NIcon {
@@ -214,16 +273,17 @@ Item {
         pointSize: root.barFontSize * 0.7
         applyUiScale: false
         font.weight: Font.Medium
-        color: mouseArea.containsMouse ? Color.mOnHover : (prayerNow ? Color.mPrimary : Color.mOnSurface)
+        color: Color.resolveColorKey(prayerNow || isElapsed ? root.activeColor : root.textColor)
         Layout.alignment: Qt.AlignHCenter
         Behavior on color { ColorAnimation { duration: 300 } }
       }
+
       NText {
         text: root.verticalLine2
-        pointSize: root.barFontSize * 0.8
+        pointSize: root.barFontSize * 0.7
         applyUiScale: false
         opacity: 0.75
-        color: mouseArea.containsMouse ? Color.mOnHover : (prayerNow ? Color.mPrimary : Color.mOnSurface)
+        color: Color.resolveColorKey(prayerNow || isElapsed ? root.activeColor : root.textColor)
         Layout.alignment: Qt.AlignHCenter
         visible: root.verticalLine2 !== ""
         Behavior on color { ColorAnimation { duration: 300 } }
@@ -297,7 +357,7 @@ Item {
   NPopupContextMenu {
     id: contextMenu
     model: [
-      { "label": pluginApi?.tr("menu.openPanel"), "action": "open", "icon": "building-mosque" },
+      { "label": pluginApi?.tr("menu.openPanel"), "action": "open", "icon": root.widgetIcon },
       { "label": pluginApi?.tr("menu.settings"),  "action": "settings", "icon": "settings" }
     ]
     onTriggered: function(action) {

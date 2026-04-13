@@ -117,11 +117,43 @@
     "tune": {
       "header": "Prayer Time Offsets",
       "desc": "Minute adjustments applied per prayer (negative = earlier, positive = later).",
-      "fajr":    "Fajr offset (min)",
-      "dhuhr":   "Dhuhr offset (min)",
-      "asr":     "Asr offset (min)",
+      "enable": "Enable",
+      "fajr": "Fajr offset (min)",
+      "dhuhr": "Dhuhr offset (min)",
+      "asr": "Asr offset (min)",
       "maghrib": "Maghrib offset (min)",
-      "isha":    "Isha offset (min)"
+      "isha": "Isha offset (min)"
+    },
+    "showElapsed": {
+      "label": "Show elapsed time after prayer",
+      "desc": "After a prayer begins, count up (+) for up to 1 hour. Capped at the time remaining to the next prayer. Replaces the countdown during that window."
+    },
+    "hidePrayerName": {
+      "label": "Hide prayer name in bar",
+      "desc": "Show only the time or countdown in the bar widget, without the prayer name label."
+    },
+    "styling": {
+      "header": "Styling"
+    },
+    "widgetIcon": {
+      "label": "Default bar icon",
+      "desc": "Default icon to be used by the widget"
+    },
+    "dynamicIcon": {
+      "label": "Dynamic prayer icon",
+      "desc": "Use next/previous prayer in the bar widget"
+    },
+    "textColor": {
+      "label": "Bar text color",
+      "desc": "Color used for text in the bar widget"
+    },
+    "iconColor": {
+      "label": "Bar icon color",
+      "desc": "Color used for the icon in the bar widget"
+    },
+    "activeColor": {
+      "label": "Active Color",
+      "desc": "Color used when prayer is Now or Elapsed"
     }
   },
   "error": {

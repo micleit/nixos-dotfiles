@@ -7,6 +7,7 @@
     ../../modules/server/samba.nix
     ../../modules/server/nextcloud.nix
     ../../modules/server/navidrome.nix
+    ../../modules/server/ollama.nix
   ];
 
   # ============================================================================

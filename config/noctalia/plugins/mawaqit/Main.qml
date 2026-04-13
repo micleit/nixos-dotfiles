@@ -8,17 +8,32 @@ Item {
   property var pluginApi: null
 
   // ── Prayer data ───────────────────────────────────────────────────────────
-  property var    prayerTimings:    null
-  property string hijriDateStr:     ""
-  property string gregorianDateStr: ""
-  property int    hijriDayRaw:      0
-  property int    hijriDay:         0
-  property int    hijriMonth:       0
-  property int    hijriYear:        0
-  property string hijriMonthNameEn: ""
-  property string hijriMonthNameAr: ""
-  property int    hijriMonthDays:   30
-  property bool   isRamadan:        hijriMonth === 9
+  property var      prayerTimings:    null
+  property string   hijriDateStr:     ""
+  property string   gregorianDateStr: ""
+  property int      hijriDayRaw:      0
+  property int      hijriDay:         0
+  property int      hijriMonth:       0
+  property int      hijriYear:        0
+  property string   hijriMonthNameEn: ""
+  property string   hijriMonthNameAr: ""
+  property int      hijriMonthDays:   30
+  property bool     isRamadan:        hijriMonth === 9
+  readonly property bool isJumuah:    new Date().getDay() === 5
+
+  readonly property var prayerOrder: [
+    { key: "Imsak",   labelKey: "panel.imsak",   icon: "moon" },
+    { key: "Fajr",    labelKey: "panel.fajr",    icon: "sun-moon" },
+    { key: "Sunrise", labelKey: "panel.sunrise", icon: "sunrise" },
+    { key: "Dhuhr",   labelKey: isJumuah ? "panel.jumuah" : "panel.dhuhr", icon: isJumuah ? "building-mosque" : "sun-high" },
+    { key: "Asr",     labelKey: "panel.asr",     icon: "sun-low" },
+    { key: "Maghrib", labelKey: "panel.maghrib", icon: "sunset" },
+    { key: "Isha",    labelKey: "panel.isha",    icon: "moon-stars" }
+  ]
+
+  function getPrayer(key) {
+    return prayerOrder.find(p => p.key === key) ?? null
+  }
 
   // ── Fetch state ───────────────────────────────────────────────────────────
   property bool   isLoading:    false
@@ -30,6 +45,9 @@ Item {
   property int    secondsToNext:  -1
   property string nextPrayerName: ""
 
+  property int    secondsElapsed:  -1
+  property string lastPrayerName:  ""
+
   // ── Azan state ────────────────────────────────────────────────────────────
   property bool azanPlaying: false
 
@@ -40,12 +58,15 @@ Item {
   readonly property string city:              cfg.city              ?? defaults.city              ?? "London"
   readonly property string country:           cfg.country           ?? defaults.country           ?? "UK"
   readonly property int    method:            cfg.method            ?? defaults.method            ?? 3
+
+  readonly property bool   tune:        cfg.tune        ?? defaults.tune        ?? false
   readonly property int    tuneFajr:    cfg.tuneFajr    ?? defaults.tuneFajr    ?? 0
   readonly property int    tuneDhuhr:   cfg.tuneDhuhr   ?? defaults.tuneDhuhr   ?? 0
   readonly property int    tuneAsr:     cfg.tuneAsr     ?? defaults.tuneAsr     ?? 0
   readonly property int    tuneMaghrib: cfg.tuneMaghrib ?? defaults.tuneMaghrib ?? 0
   readonly property int    tuneIsha:    cfg.tuneIsha    ?? defaults.tuneIsha    ?? 0
-  readonly property string tune: `0,${tuneFajr},0,${tuneDhuhr},${tuneAsr},${tuneMaghrib},0,${tuneIsha},0`
+  readonly property string tuneParam:   tune ? `0,${tuneFajr},0,${tuneDhuhr},${tuneAsr},${tuneMaghrib},0,${tuneIsha},0` : "0,0,0,0,0,0,0,0,0"
+
   readonly property int    school:            cfg.school            ?? defaults.school            ?? 0
   readonly property bool   showNotifications: cfg.showNotifications ?? defaults.showNotifications ?? true
   readonly property bool   playAzan:          cfg.playAzan          ?? defaults.playAzan          ?? false
@@ -400,16 +421,31 @@ Item {
     }
   }
 
-  // ── Countdown ─────────────────────────────────────────────────────────────
+  // ── Countdown / elapsed ───────────────────────────────────────────────────
+  //
+  // Logic flow:
+  //   1. Build prayers[] from prayerKeys for today.
+  //   2. Find the next upcoming prayer (nextIdx).
+  //   3. If showElapsed is enabled and there is a previous prayer today,
+  //      check whether now falls within the elapsed window:
+  //        elapsed  = now - prevPrayer.time  (seconds)
+  //        maxElap  = min(3600, timeToNext)
+  //      If elapsed ∈ [0, maxElap] → elapsed mode: set secondsElapsed,
+  //      lastPrayerName; secondsToNext is already the real distance to
+  //      the next prayer so the panel/tooltip stay accurate.
+  //   4. Otherwise clear secondsElapsed and fall through to the legacy
+  //      5-minute grace-period ("prayer is now") check.
+  //   5. Finally, normal countdown to next prayer.
+  //
   function updateCountdown() {
-    if (!prayerTimings) { secondsToNext = -1; return }
+    if (!prayerTimings) { secondsToNext = -1; secondsElapsed = -1; return }
     const now = new Date()
-    const gracePeriodMs = 5 * 60 * 1000
 
     function timeToday(timeStr) {
       if (!timeStr) return null
       const parts = timeStr.split(":")
-      const d = new Date(); d.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0)
+      const d = new Date()
+      d.setHours(parseInt(parts[0]), parseInt(parts[1]), 0, 0)
       return d
     }
 
@@ -418,14 +454,7 @@ Item {
       const t = prayerTimings[key]; if (!t) continue
       const d = timeToday(t); if (d) prayers.push({ name: key, time: d })
     }
-    if (prayers.length === 0) { secondsToNext = -1; return }
-
-    for (let i = 0; i < prayers.length; i++) {
-      const ms = now - prayers[i].time
-      if (ms >= 0 && ms < gracePeriodMs) {
-        nextPrayerName = prayers[i].name; secondsToNext = 0; return
-      }
-    }
+    if (prayers.length === 0) { secondsToNext = -1; secondsElapsed = -1; return }
 
     let nextIdx = -1
     for (let i = 0; i < prayers.length; i++) {
@@ -443,6 +472,34 @@ Item {
     const diff = Math.floor((next.time - now) / 1000)
     nextPrayerName = next.name
     secondsToNext  = diff > 0 ? diff : 0
+
+    const prevIdx = nextIdx === -1 ? prayers.length - 1 : nextIdx - 1
+
+    if (showElapsed && prevIdx >= 0) {
+      const prevPrayer  = prayers[prevIdx]
+      const elapsed     = Math.floor((now - prevPrayer.time) / 1000)
+      const maxElapsed  = Math.min(3600, secondsToNext)
+
+      if (elapsed >= 0 && elapsed <= maxElapsed) {
+        secondsElapsed = elapsed
+        lastPrayerName = prevPrayer.name
+        // secondsToNext / nextPrayerName already set above — return early
+        // so the grace-period block below does NOT fire
+        return
+      }
+    }
+
+    secondsElapsed = -1
+
+    const gracePeriodMs = 5 * 60 * 1000
+    for (let i = 0; i < prayers.length; i++) {
+      const ms = now - prayers[i].time
+      if (ms >= 0 && ms < gracePeriodMs) {
+        nextPrayerName = prayers[i].name
+        secondsToNext  = 0
+        return
+      }
+    }
   }
 
   // ── Startup ───────────────────────────────────────────────────────────────
