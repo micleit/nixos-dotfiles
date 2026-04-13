@@ -7,6 +7,7 @@
     ../../modules/shared.nix
     ../../modules/yazi.nix
     ../../modules/nixvim.nix # Reuse existing or move to modules/
+    ../../modules/caveman.nix
     inputs.nixvim.homeModules.nixvim
   ];
 
