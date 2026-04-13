@@ -1,0 +1,9 @@
+#!/usr/bin/env lua
+
+-- Add config directory to Lua path
+local config_dir = os.getenv("HOME") .. "/.config/sketchybar"
+package.path = config_dir .. "/?.lua;" .. config_dir .. "/?/init.lua;" .. package.path
+
+-- Load the sketchybar-package and prepare the helper binaries
+require("helpers")
+require("init")
