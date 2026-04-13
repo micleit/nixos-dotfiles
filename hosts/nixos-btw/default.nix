@@ -132,6 +132,7 @@
     vim wget git librewolf 
     adi1090x-plymouth-themes
     gcc gnumake curl
+    mosh
   ];
 
   environment.sessionVariables = {

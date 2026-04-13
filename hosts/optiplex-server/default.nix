@@ -26,6 +26,7 @@
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   
   services.openssh.enable = true;
+  services.mosh.enable = true;
   services.tailscale.enable = true;
   
   # Sound
