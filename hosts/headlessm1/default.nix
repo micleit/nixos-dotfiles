@@ -9,6 +9,7 @@
   environment.systemPackages = [
     pkgs.vim
     pkgs.git
+    pkgs.nodejs_22
   ];
 
   system.primaryUser = "mic";

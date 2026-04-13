@@ -32,6 +32,9 @@ Item {
   property var cfg: pluginApi?.pluginSettings || ({})
   property var defaults: pluginApi?.manifest?.metadata?.defaultSettings || ({})
   readonly property bool use12h: Settings.data.location.use12hourFormat
+  readonly property string widgetIcon: (pluginApi?.pluginSettings?.widgetIcon)
+    ?? (pluginApi?.manifest?.metadata?.defaultSettings?.widgetIcon)
+    ?? "building-mosque"
 
   readonly property var    mainInstance:     pluginApi?.mainInstance
   readonly property var    prayerTimings:    mainInstance?.prayerTimings    ?? null
@@ -50,12 +53,14 @@ Item {
   readonly property string hijriMonthNameEn: mainInstance?.hijriMonthNameEn ?? ""
   readonly property int    hijriMonthDays:   mainInstance?.hijriMonthDays   ?? 30
   readonly property string gregorianDateStr: mainInstance?.gregorianDateStr ?? ""
+  readonly property var    prayerOrder:      mainInstance?.prayerOrder      ?? []
+  readonly property bool   isJumuah:         mainInstance?.isJumuah         ?? false
+
 
   readonly property bool prayerNow: secondsToNext === 0 && nextPrayerName !== ""
 
   // ── Week / Jumu'ah ────────────────────────────────────────────────────
   readonly property int  weekStartDay: parseInt(cfg.weekStartDay ?? defaults.weekStartDay ?? 1)
-  readonly property bool isJumuah:     new Date().getDay() === 5
 
   readonly property color countdownColor: {
     if (nextPrayerName === "Imsak"   && isRamadan) return Color.mSecondary
@@ -328,16 +333,6 @@ Item {
     return `${s}s`
   }
 
-  readonly property var prayerOrder: [
-    { key: "Imsak",   labelKey: "panel.imsak",   icon: "moon"       },
-    { key: "Fajr",    labelKey: "panel.fajr",    icon: "sunrise"    },
-    { key: "Sunrise", labelKey: "panel.sunrise", icon: "sun"        },
-    { key: "Dhuhr",   labelKey: isJumuah ? "panel.jumuah" : "panel.dhuhr", icon: isJumuah ? "sun-high" : "sun-high" },
-    { key: "Asr",     labelKey: "panel.asr",     icon: "sun-low"    },
-    { key: "Maghrib", labelKey: "panel.maghrib", icon: "sunset"     },
-    { key: "Isha",    labelKey: "panel.isha",    icon: "moon-stars" }
-  ]
-
   Rectangle {
     id: panelContainer
     anchors.fill: parent
@@ -351,7 +346,7 @@ Item {
       // ── Header ─────────────────────────────────────────────────────────
       RowLayout {
         Layout.fillWidth: true; spacing: Style.marginM
-        NIcon { icon: "building-mosque"; pointSize: Style.fontSizeXL; color: Color.mPrimary; Layout.alignment: Qt.AlignVCenter }
+        NIcon { icon: widgetIcon; pointSize: Style.fontSizeXL; color: Color.mPrimary; Layout.alignment: Qt.AlignVCenter }
         NText { text: pluginApi?.tr("panel.title"); pointSize: Style.fontSizeL; font.weight: Font.Bold; color: Color.mOnSurface; Layout.alignment: Qt.AlignVCenter }
         Item { Layout.fillWidth: true }
         NIconButton {
@@ -538,7 +533,7 @@ Item {
             visible: prayerTimings === null && !isLoading && !hasError
             ColumnLayout {
               anchors.centerIn: parent; spacing: Style.marginM
-              NIcon { icon: "building-mosque"; pointSize: Style.fontSizeXXXL; color: Color.mSecondary; Layout.alignment: Qt.AlignHCenter }
+              NIcon { icon: widgetIcon; pointSize: Style.fontSizeXXXL; color: Color.mSecondary; Layout.alignment: Qt.AlignHCenter }
               NText { text: pluginApi?.tr("panel.configure"); color: Color.mSecondary; pointSize: Style.fontSizeM; wrapMode: Text.Wrap; horizontalAlignment: Text.AlignHCenter; Layout.alignment: Qt.AlignHCenter }
             }
           }

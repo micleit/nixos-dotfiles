@@ -7,6 +7,7 @@
     ../../modules/server/samba.nix
     ../../modules/server/nextcloud.nix
     ../../modules/server/navidrome.nix
+    ../../modules/server/ollama.nix
   ];
 
   # ============================================================================
@@ -26,7 +27,6 @@
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   
   services.openssh.enable = true;
-  services.mosh.enable = true;
   services.tailscale.enable = true;
   
   # Sound

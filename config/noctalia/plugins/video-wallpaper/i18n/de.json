@@ -39,6 +39,9 @@
       }
     }
   },
+  "main": {
+    "no_backend_found": "{backend} wurde nicht gefunden!"
+  },
   "panel": {
     "title": "Video Hintergrund-Manager",
     "tool_row": {
@@ -49,6 +52,12 @@
       "refresh": {
         "text": "Aktualisieren",
         "tooltip": "Thumbnails aktualisieren, alte entfernen und neue erstellen"
+      },
+      "monitor_specific": {
+        "tooltip": "Aktiviere/deaktiviere die monitorspezifische Einstellung."
+      },
+      "enabled": {
+        "label": "Aktiviert"
       }
     },
     "loading": "Laden...",
@@ -61,9 +70,20 @@
       "label": "Video-Hintergrundbilder aktivieren",
       "description": "Aktiviere Video-Hintergrundbilder, die mit QtMultimedia angezeigt werden"
     },
+    "backend": {
+      "label": "Aktives Backend",
+      "description": "Was zum Rendern der Videohintergründe verwendet wird.",
+      "qt6_multimedia": "Qt6 Multimedia",
+      "mpvpaper": "Mpvpaper"
+    },
+    "monitor_specific": {
+      "label": "Monitor spezifische Einstellungen",
+      "description": "Wähle aus, ob bestimmte Einstellungen für bestimmte Monitore gelten sollen. (Nur bei Multi-Monitor-Setups verfügbar)"
+    },
     "tab_bar": {
       "general": "Allgemein",
-      "automation": "Automatisierung"
+      "automation": "Automatisierung",
+      "advanced": "Erweitert"
     },
     "general": {
       "wallpapers_folder": {
@@ -94,11 +114,11 @@
         }
       },
       "fill_mode": {
-        "label": "Ausfüllmodus",
+        "label": "Füllmodus",
         "description": "Der Modus, in dem das Hintergrundbild in den Hintergrund eingefügt wird",
-        "stretch": "Dehnen",
-        "fit": "Einpassen",
-        "crop": "Zuschneiden"
+        "fit": "Passform",
+        "crop": "Zuschneiden",
+        "stretch": "Dehnen"
       },
       "orientation": {
         "label": "Orientierung",
@@ -122,13 +142,57 @@
       },
       "time": {
         "label": "Zeit",
-        "description": "Wie lange es dauern sollte, das Hintergrundbild zu wechseln",
-        "5m": "5m",
-        "10m": "10m",
-        "30m": "30m",
-        "1h": "1h",
-        "1h30m": "1h 30m",
-        "2h": "2h"
+        "description": "Wie lange es dauern soll den Hintergrund zu wechseln.",
+        "m": "{minute}m",
+        "h": "{hour}h",
+        "hour": "{count} Stunde",
+        "hour-plural": "{count} Stunden",
+        "minute": "{count} Minute",
+        "minute-plural": "{count} Minuten",
+        "custom": {
+          "create": {
+            "tooltip": "Erstelle eine individuelle Zeit",
+            "label": "Benutzerdefinierte Zeit hinzufügen",
+            "description": "Zeit im Format HH:MM eingeben (z. B. 1:20)",
+            "placeholder": "Beispiel, 1:15",
+            "save": "Speichern",
+            "cancel": "Abbrechen"
+          },
+          "remove": "Entfernen"
+        }
+      }
+    },
+    "advanced": {
+      "fill_mode": {
+        "label": "Füllmodus",
+        "description": "Der Modus, in dem das Hintergrundbild in den Hintergrund eingefügt wird",
+        "fit": "Passform",
+        "crop": "Zuschneiden",
+        "stretch": "Dehnen"
+      },
+      "profile": {
+        "label": "Mpv Profil",
+        "description": "Das von mpv verwendete Profil. Verwende Schnell für bessere Leistung.",
+        "default": "Standard",
+        "fast": "Schnell",
+        "high_quality": "Hone Qualität",
+        "low_latency": "Niedrige Latenz"
+      },
+      "hardware_acceleration": {
+        "label": "Hardwarebeschleunigung",
+        "description": "Verlagert die Videodekodierung von der CPU auf die GPU bzw. auf dedizierte Hardware."
+      },
+      "mpv_socket": {
+        "label": "Mpvpaper Socket",
+        "description": "Der mpvpaper Socket, mit dem Noctalia verbunden ist.",
+        "input_placeholder": "Beispiel: /tmp/mpv-socket"
+      },
+      "orientation": {
+        "label": "Ausrichtung",
+        "description": "Die Ausrichtung des abgespielten Videos kann ein beliebiges Vielfaches von 90 Grad betragen."
+      },
+      "no_backend": {
+        "label": "Kein aktives Backend..."
       }
     }
   }

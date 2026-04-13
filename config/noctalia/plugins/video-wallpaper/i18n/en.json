@@ -165,7 +165,7 @@
     "advanced": {
       "fill_mode": {
         "label": "Fill mode",
-        "description": "",
+        "description": "The mode that the wallpaper is fitted into the background.",
         "fit": "Fit",
         "crop": "Crop",
         "stretch": "Stretch"
