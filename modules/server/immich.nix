@@ -11,6 +11,7 @@
   # 2. Reach inside the old /var/lib/immich and map it to the new one
   fileSystems."/var/lib/immich" = {
     device = "/mnt/old-laptop/var/lib/immich";
+    fsType = "none";
     options = ["bind" "nofail"];
     depends = ["/mnt/old-laptop"];
   };

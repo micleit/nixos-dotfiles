@@ -16,6 +16,7 @@
   # This bypasses the home directory's restricted permissions.
   fileSystems."/var/lib/navidrome/music" = {
     device = "/home/mic/Sorted";
+    fsType = "none";
     options = [ "bind" "ro" ];
   };
 
