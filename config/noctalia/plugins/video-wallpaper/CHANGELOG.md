@@ -2,6 +2,11 @@
 
 Here I'll try to document all changes for the video-wallpaper plugin.
 
+## 2.0.6 - 2026-04-08
+
+- fix: Fixed `InnerService` which was running into a fault with the light/dark mode.
+- fix: Fixed `Thumbnails` to create a faster thumbnail and more accurate thumbnail in terms of colors.
+
 ## 2.0.4 - 2026-03-07
 
 - fix: Code cleanup and some small bug fixes.

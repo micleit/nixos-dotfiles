@@ -6,6 +6,7 @@
     quickshell.url = "github:outfoxxed/quickshell";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
+    copilot-cli.url = "github:scarisey/copilot-cli-flake";
     nixvim.url = "github:nix-community/nixvim";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";

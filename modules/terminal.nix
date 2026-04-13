@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   programs.tmux.enable = true;
@@ -56,6 +56,7 @@
   };
 
   home.packages = with pkgs; [
+    inputs.copilot-cli.packages.${pkgs.system}.default
     kitty # Keep kitty as a backup
     lazygit
       (buildGoModule {

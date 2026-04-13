@@ -1,7 +1,14 @@
 {
+  "activeBackend": "qt6-multimedia",
+  "automationMode": "random",
+  "automationTime": 300,
+  "fillMode": "fit",
+  "mpvSocket": "/tmp/mpv-socket",
+  "profile": "default",
+  "volume": 1,
+  "wallpapersFolder": "/home/mic/nixos-dotfiles/walls",
   "thumbCacheReady": true,
   "enabled": false,
-  "wallpapersFolder": "/home/mic/nixos-dotfiles/walls",
   "DP-2": {
     "currentWallpaper": "/home/mic/nixos-dotfiles/walls/japanese-pixel-city-live-wallpaper.mp4",
     "noctaliaWallpaper": "/home/mic/nixos-dotfiles/walls/wallhaven_yx7w8g.jpg",
@@ -9,3 +16,4 @@
     "isMuted": true
   }
 }
+

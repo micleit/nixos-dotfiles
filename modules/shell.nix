@@ -75,6 +75,10 @@
     };
   };
 
+  programs.gh = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     # Core CLI
     eza

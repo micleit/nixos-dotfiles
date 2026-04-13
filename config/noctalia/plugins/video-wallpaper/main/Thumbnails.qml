@@ -72,7 +72,7 @@ Item {
 
                 // With scale
                 //thumbProc.command = ["sh", "-c", `ffmpeg -y -i ${videoUrl} -vf "scale=1080:-1" -vframes:v 1 ${thumbUrl}`]
-                thumbGenerationProc.command = ["sh", "-c", `ffmpeg -y -i "${videoPath}" -vframes:v 1 "${thumbPath}"`]
+                thumbGenerationProc.command = ["sh", "-c", `ffmpeg -y -i "${videoPath}" -vf "scale=iw/2:-1, format=rgb24" -vframes:v 1 "${thumbPath}"`]
                 thumbGenerationProc.running = true;
                 return;
             }
