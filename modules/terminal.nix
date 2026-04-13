@@ -1,6 +1,7 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
+  programs.tmux.enable = true;
   programs.ghostty = {
     enable = true;
     package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
@@ -8,6 +9,7 @@
       # Font
       font-family = "JetBrainsMono Nerd Font Propo";
       font-size = if pkgs.stdenv.isDarwin then 14 else 10;
+      confirm-close-surface=false;
       
       # Visuals
       background = "#282828";
@@ -54,7 +56,30 @@
   };
 
   home.packages = with pkgs; [
+    inputs.copilot-cli.packages.${pkgs.system}.default
     kitty # Keep kitty as a backup
     lazygit
+      (buildGoModule {
+        pname = "drift";
+        version = "0.7.0"; # v0.7.0 is latest
+
+        src = fetchFromGitHub {
+          owner = "phlx0";
+          repo = "drift";
+          rev = "v0.7.0";
+          sha256 = "sha256-3Mho1Z4KT/F+7tza4vXTEu6liI5tVh7TOHIJy7bHQMw=";
+        };
+
+        vendorHash = "sha256-FsNa9qp2MnPk1onv/O13mFi+82yP7D4LdILZsNzHs+4=";
+
+        env.CGO_ENABLED = "0";
+
+        meta = with lib; {
+          description = "Terminal screensaver and ambient visualiser";
+          homepage = "https://github.com/phlx0/drift";
+          license = licenses.mit;
+          mainProgram = "drift";
+      };
+    })
   ];
 }

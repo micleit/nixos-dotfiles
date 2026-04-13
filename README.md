@@ -29,7 +29,7 @@ This configuration follows a modular approach as mandated by [GEMINI.md](./GEMIN
 │   ├── home/               # Home Manager modules (Cross-platform)
 │   │   ├── shell.nix       # Fish, Git, Yazi, and core CLI utilities
 │   │   ├── terminal.nix    # Ghostty and Btop configurations
-│   │   └── desktop.nix     # Hyprland, fonts, and desktop applications
+│   │   └── shared.nix      # Fonts, and shared cross-platform applications
 │   └── nixvim.nix          # Neovim configuration via Nixvim
 ├── config/                 # Source for non-Nix symlinked configurations
 ├── scripts/                # Custom helper scripts (e.g., drift, borders)
@@ -62,5 +62,5 @@ nixos-rebuild build --flake .#nixos-btw
 ## 🍎 macOS Readiness
 The configuration is structured to support `nix-darwin`. To add a MacBook:
 1. Create a new host in `hosts/`.
-2. Reference the shared modules in `modules/home/`.
+2. Reference the shared modules in `modules/`.
 3. Add a new output in `flake.nix` under `darwinConfigurations`.

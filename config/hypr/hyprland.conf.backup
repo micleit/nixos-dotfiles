@@ -3,7 +3,7 @@ $browser=brave
 $fileManager=nautilus
 $ipc=noctalia-shell ipc call
 $mainMod=mod5
-$terminal=alacritty
+$terminal=ghostty
 animations {
   bezier=myBezier, 0.05, 0.9, 0.1, 1.05
   animation=windows, 1, 5, myBezier, popin 80%
@@ -25,7 +25,7 @@ bind=$mainMod, f, exec, $fileManager
 bind=$mainMod, V, togglefloating,
 bind=$mainMod, m, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit
 bind=mod5 Shift, F, fullscreen,
-bind=$mainMod, y, exec, alacritty --title "yazi-float" -e fish -c "y"
+bind=$mainMod, y, exec, ghostty --title "yazi-float" -e fish -c "y"
 bind=mod5, SPACE, exec, $ipc launcher toggle
 bind=mod5, comma, exec, $ipc controlCenter toggle
 bind=mod5, equal, exec, $ipc settings toggle
@@ -140,7 +140,7 @@ master {
   new_status=master
 }
 
-windowrule=match:class Alacritty, opacity 0.85 0.75
+windowrule=match:class com.mitchellh.ghostty, opacity 0.85 0.75
 windowrule=match:class brave-browser, opacity 0.95 0.9
 windowrule=match:class steam, opacity 0.85 0.8
 windowrule {

@@ -6,6 +6,7 @@
     quickshell.url = "github:outfoxxed/quickshell";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
+    copilot-cli.url = "github:scarisey/copilot-cli-flake";
     nixvim.url = "github:nix-community/nixvim";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +40,29 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/desktop-linux.nix
+                  ./modules/linux/desktop-linux.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
+      nixosConfigurations.optiplex-server = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/optiplex-server/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  # ./modules/linux/desktop-linux.nix don't need it on a server
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -61,7 +84,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/darwin.nix
+                  ./modules/darwin/darwin.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -83,7 +106,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/home/darwin.nix
+                  ./modules/darwin/darwin.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };

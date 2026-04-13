@@ -3,7 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/samba.nix
+    ../../modules/server/samba.nix
     # Other system-wide modules
   ];
 
@@ -132,6 +132,7 @@
     vim wget git librewolf 
     adi1090x-plymouth-themes
     gcc gnumake curl
+    mosh
   ];
 
   environment.sessionVariables = {

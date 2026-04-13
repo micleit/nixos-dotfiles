@@ -3,9 +3,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/immich.nix
-    ../../modules/samba.nix
-    ../../modules/nextcloud.nix
+    ../../modules/server/immich.nix
+    ../../modules/server/samba.nix
+    ../../modules/server/nextcloud.nix
+    ../../modules/server/navidrome.nix
   ];
 
   # ============================================================================
@@ -25,6 +26,7 @@
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
   
   services.openssh.enable = true;
+  services.mosh.enable = true;
   services.tailscale.enable = true;
   
   # Sound
@@ -93,6 +95,8 @@
   # ============================================================================
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
+
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   system.stateVersion = "26.05"; 
 }

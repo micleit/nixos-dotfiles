@@ -42,7 +42,8 @@ Item {
             return;
         }
 
-        const noctaliaWallpaper = WallpaperService.currentWallpapers[root.screenName];
+        const mode = Settings.data.colorSchemes.darkMode ? "dark" : "light";
+        const noctaliaWallpaper = WallpaperService.currentWallpapers[root.screenName][mode];
 
         // Check if the wallpaper name is VERY similar to how the thumbnail generation works,
         // aka if the last characters are ".extension.bmp", in that case just don't do anything, just as a fail safe.
