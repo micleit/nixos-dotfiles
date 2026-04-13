@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../modules/skhd.nix
+    ../../modules/darwin/skhd.nix
   ];
 
   # List packages installed in system profile.
