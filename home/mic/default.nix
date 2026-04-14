@@ -32,6 +32,37 @@
     "drift".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/drift";
   };
 
+  # OpenClaw configuration
+  programs.openclaw = {
+    documents = "${config.home.homeDirectory}/code/openclaw-local/documents";
+
+    config = {
+      gateway = {
+        mode = "local";
+        auth = {
+          token = "LnKPL4bm2quluvUexgtLxTCOt6tcnujLryc/nvs5q7c=";
+        };
+      };
+
+      channels.telegram = {
+        tokenFile = "${config.home.homeDirectory}/.secrets/telegram-bot-token";
+        allowFrom = [ 8763430768 ];
+        groups = {
+          "*" = {
+            requireMention = true;
+          };
+        };
+      };
+    };
+
+    instances.default = {
+      enable = true;
+      plugins = [
+        # Add plugins here as needed
+      ];
+    };
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
