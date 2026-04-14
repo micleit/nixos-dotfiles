@@ -3,12 +3,10 @@
 {
   imports = [
     ../../modules/darwin/skhd.nix
+    nix-openclaw.darwinModules.openclaw
   ];
 
-  # Apply nix-openclaw overlay so Home Manager can access it
-  nixpkgs.overlays = [
-    nix-openclaw.overlays.default
-  ];
+  # The nix-openclaw darwin module handles the overlay and configuration
 
   # List packages installed in system profile.
   environment.systemPackages = [
