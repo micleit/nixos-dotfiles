@@ -12,10 +12,6 @@
     inputs.nix-openclaw.homeManagerModules.openclaw
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "openclaw-2026.4.2"
-  ];
-
   home.username = "mic";
   home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/mic" else "/home/mic";
   home.stateVersion = "25.11";
