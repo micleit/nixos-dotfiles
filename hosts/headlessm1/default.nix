@@ -1,8 +1,13 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, nix-openclaw, ... }:
 
 {
   imports = [
     ../../modules/darwin/skhd.nix
+  ];
+
+  # Apply nix-openclaw overlay so Home Manager can access it
+  nixpkgs.overlays = [
+    nix-openclaw.overlays.default
   ];
 
   # List packages installed in system profile.

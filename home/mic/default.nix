@@ -13,10 +13,6 @@
     inputs.nix-openclaw.homeManagerModules.openclaw
   ];
 
-  nixpkgs.overlays = [
-    nix-openclaw.overlays.default
-  ];
-
   nixpkgs.config.permittedInsecurePackages = [
     "openclaw-2026.4.2"
   ];
