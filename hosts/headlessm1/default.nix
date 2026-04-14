@@ -3,10 +3,15 @@
 {
   imports = [
     ../../modules/darwin/skhd.nix
-    nix-openclaw.darwinModules.openclaw
   ];
 
-  # The nix-openclaw darwin module handles the overlay and configuration
+  nixpkgs.overlays = [
+    nix-openclaw.overlays.default
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openclaw-2026.4.2"
+  ];
 
   # List packages installed in system profile.
   environment.systemPackages = [

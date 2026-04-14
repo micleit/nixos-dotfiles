@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, nix-openclaw, ... }:
 
 {
   imports = [
@@ -6,10 +6,10 @@
     ../../modules/terminal.nix
     ../../modules/shared.nix
     ../../modules/yazi.nix
-    ../../modules/nixvim.nix # Reuse existing or move to modules/
+    ../../modules/nixvim.nix
     ../../modules/caveman.nix
-    ../../modules/openclaw.nix
     inputs.nixvim.homeModules.nixvim
+    inputs.nix-openclaw.homeManagerModules.openclaw
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
