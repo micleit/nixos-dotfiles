@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, nix-openclaw, ... }:
 
 {
   imports = [
@@ -8,7 +8,17 @@
     ../../modules/yazi.nix
     ../../modules/nixvim.nix # Reuse existing or move to modules/
     ../../modules/caveman.nix
+    ../../modules/openclaw.nix
     inputs.nixvim.homeModules.nixvim
+    inputs.nix-openclaw.homeManagerModules.openclaw
+  ];
+
+  nixpkgs.overlays = [
+    nix-openclaw.overlays.default
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openclaw-2026.4.2"
   ];
 
   home.username = "mic";

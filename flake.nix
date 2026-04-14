@@ -10,6 +10,7 @@
     nixvim.url = "github:nix-community/nixvim";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -25,11 +26,12 @@
       home-manager,
       nixvim,
       darwin,
+      nix-openclaw,
       ...
     }:
     {
       nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs nix-openclaw; };
         modules = [
           ./hosts/nixos-btw/default.nix
           home-manager.nixosModules.home-manager
@@ -43,7 +45,7 @@
                   ./modules/linux/desktop-linux.nix
                 ];
               };
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = { inherit inputs nix-openclaw; };
               backupFileExtension = "backup";
             };
           }
@@ -51,7 +53,7 @@
       };
 
       nixosConfigurations.optiplex-server = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs nix-openclaw; };
         modules = [
           ./hosts/optiplex-server/default.nix
           home-manager.nixosModules.home-manager
@@ -65,7 +67,7 @@
                   # ./modules/linux/desktop-linux.nix don't need it on a server
                 ];
               };
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = { inherit inputs nix-openclaw; };
               backupFileExtension = "backup";
             };
           }
@@ -73,7 +75,7 @@
       };
 
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs nix-openclaw; };
         modules = [
           ./hosts/mbp-m4/default.nix
           home-manager.darwinModules.home-manager
@@ -87,7 +89,7 @@
                   ./modules/darwin/darwin.nix
                 ];
               };
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = { inherit inputs nix-openclaw; };
               backupFileExtension = "backup";
             };
           }
@@ -95,7 +97,7 @@
       };
 
       darwinConfigurations.headless-m1 = darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs nix-openclaw; };
         modules = [
           ./hosts/headlessm1/default.nix
           home-manager.darwinModules.home-manager
@@ -109,7 +111,7 @@
                   ./modules/darwin/darwin.nix
                 ];
               };
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = { inherit inputs nix-openclaw; };
               backupFileExtension = "backup";
             };
           }
