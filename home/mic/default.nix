@@ -34,7 +34,7 @@
 
   # OpenClaw configuration
   programs.openclaw = {
-    documents = "${config.home.homeDirectory}/code/openclaw-local/documents";
+    documents = ../../config/openclaw-documents;
 
     config = {
       gateway = {
