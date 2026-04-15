@@ -51,6 +51,7 @@
       cd = "z";
       ssh = "test \"$TERM\" = \"xterm-kitty\"; and kitty +kitten ssh; or command ssh";
       btw = "echo I use nixos, btw";
+      lg = "lazygit";
     };
 
     plugins = [
