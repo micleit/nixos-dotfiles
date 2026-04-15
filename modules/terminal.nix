@@ -1,7 +1,10 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  programs.tmux.enable = true;
+  programs.tmux = {
+    enable = true;
+    extraConfig = builtins.readFile ../config/tmux/tmux.conf;
+  };
   programs.ghostty = {
     enable = true;
     package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
