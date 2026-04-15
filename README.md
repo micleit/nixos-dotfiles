@@ -19,7 +19,7 @@ This configuration follows a modular approach as mandated by [GEMINI.md](./GEMIN
 .
 ├── flake.nix               # Entry point for the entire configuration
 ├── hosts/
-│   └── nixos-btw/          # NixOS Desktop (nixos-btw)
+│   └── desktop-nixos/          # NixOS Desktop (desktop-nixos)
 │       ├── default.nix     # System-level services, hardware, and users
 │       └── hardware-configuration.nix # Auto-generated hardware config
 ├── home/
@@ -41,13 +41,13 @@ This configuration follows a modular approach as mandated by [GEMINI.md](./GEMIN
 ### NixOS (Build & Switch)
 To apply changes to your NixOS system:
 ```bash
-sudo nixos-rebuild switch --flake .#nixos-btw
+sudo nixos-rebuild switch --flake .#desktop-nixos
 ```
 
 ### Dry Run (Verification)
 To verify changes without applying them:
 ```bash
-nixos-rebuild build --flake .#nixos-btw
+nixos-rebuild build --flake .#desktop-nixos
 ```
 
 ## ✨ Key Components

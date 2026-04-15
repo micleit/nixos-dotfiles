@@ -28,10 +28,10 @@
       ...
     }:
     {
-      nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.desktop-nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/nixos-btw/default.nix
+          ./hosts/desktop-nixos/default.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -44,7 +44,6 @@
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
-              backupFileExtension = "backup";
             };
           }
         ];
@@ -66,7 +65,6 @@
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
-              backupFileExtension = "backup";
             };
           }
         ];
@@ -88,7 +86,6 @@
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
-              backupFileExtension = "backup";
             };
           }
         ];
@@ -110,7 +107,6 @@
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
-              backupFileExtension = "backup";
             };
           }
         ];
