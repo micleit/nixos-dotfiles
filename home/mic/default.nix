@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, nix-openclaw, ... }:
 
 {
   imports = [
@@ -6,9 +6,10 @@
     ../../modules/terminal.nix
     ../../modules/shared.nix
     ../../modules/yazi.nix
-    ../../modules/nixvim.nix # Reuse existing or move to modules/
+    ../../modules/nixvim.nix
     ../../modules/caveman.nix
     inputs.nixvim.homeModules.nixvim
+    inputs.nix-openclaw.homeManagerModules.openclaw
   ];
 
   home.username = "mic";
@@ -29,6 +30,38 @@
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/btop";
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/yazi";
     "drift".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/drift";
+    "tmux".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/tmux";
+  };
+
+  # OpenClaw configuration
+  programs.openclaw = {
+    documents = ../../config/openclaw-documents;
+
+    config = {
+      gateway = {
+        mode = "local";
+        auth = {
+          token = "LnKPL4bm2quluvUexgtLxTCOt6tcnujLryc/nvs5q7c=";
+        };
+      };
+
+      channels.telegram = {
+        tokenFile = "${config.home.homeDirectory}/.secrets/telegram-bot-token";
+        allowFrom = [ 8763430768 ];
+        groups = {
+          "*" = {
+            requireMention = true;
+          };
+        };
+      };
+    };
+
+    instances.default = {
+      enable = true;
+      plugins = [
+        # Add plugins here as needed
+      ];
+    };
   };
 
   # Let Home Manager install and manage itself.

@@ -1,8 +1,16 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, nix-openclaw, ... }:
 
 {
   imports = [
     ../../modules/darwin/skhd.nix
+  ];
+
+  nixpkgs.overlays = [
+    nix-openclaw.overlays.default
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openclaw-2026.4.2"
   ];
 
   # List packages installed in system profile.
@@ -43,7 +51,7 @@
   system.stateVersion = 4;
 
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin"; 
+  nixpkgs.system = "aarch64-darwin"; 
 
   users.users.mic.home = "/Users/mic";
 

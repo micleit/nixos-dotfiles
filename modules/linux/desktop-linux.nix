@@ -86,7 +86,7 @@
         input = {
           kb_layout = "us,us";
           kb_variant = "colemak_dh,";
-          kb_options = "grp:alt_shift_toggle";
+          kb_options = "altwin:swap_lalt_lwin";
           follow_mouse = 1;
           sensitivity = -0.6;
           touchpad = {
@@ -103,6 +103,7 @@
           "$mainMod, m, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"
           "mod5 Shift, F, fullscreen,"
           "$mainMod, y, exec, ghostty --title \"yazi-float\" -e fish -c \"y\""
+          "$mainMod, backspace, exec, hyprctl switchxkblayout all next"
           "mod5, SPACE, exec, $ipc launcher toggle"
           "mod5, comma, exec, $ipc controlCenter toggle"
           "mod5, equal, exec, $ipc settings toggle"
