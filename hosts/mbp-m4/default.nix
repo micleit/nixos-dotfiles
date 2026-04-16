@@ -41,7 +41,7 @@
   system.stateVersion = 4;
 
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin"; # Adjust to "x86_64-darwin" if intel
+  nixpkgs.system = "aarch64-darwin"; # Adjust to "x86_64-darwin" if intel
 
   users.users.mic.home = "/Users/mic";
 

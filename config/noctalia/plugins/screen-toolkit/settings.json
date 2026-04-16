@@ -132,7 +132,11 @@
   ],
   "transAvailable": true,
   "selectedOcrLang": "eng",
+  "screenshotPath": "",
+  "videoPath": "",
+  "filenameFormat": "",
   "detectedRecorder": "wf-recorder",
+  "detectedCompositor": "hyprland",
   "stateIsRunning": false,
   "stateActiveTool": "",
   "stateMirrorVisible": false

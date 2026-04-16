@@ -10,30 +10,7 @@
       fish_add_path $HOME/go/bin
       fish_add_path $HOME/.cargo/bin
       
-      set -gx DRIFT_TIMEOUT 120
       set -gx fish_greeting ""
-
-      function _drift_cancel
-        if set -q _drift_timer_pid
-          kill $_drift_timer_pid 2>/dev/null
-          set -e _drift_timer_pid
-        end
-      end
-
-      function _drift_schedule
-        set -l timeout (set -q DRIFT_TIMEOUT; and echo $DRIFT_TIMEOUT; or echo 120)
-        fish -c "sleep $timeout; and command -v drift >/dev/null 2>&1; and drift" &
-        set -g _drift_timer_pid $last_pid
-      end
-
-      function _drift_on_prompt --on-event fish_prompt
-        _drift_cancel
-        _drift_schedule
-      end
-
-      function _drift_on_preexec --on-event fish_preexec
-        _drift_cancel
-      end
 
 
       if status is-interactive
@@ -51,6 +28,13 @@
       cd = "z";
       ssh = "test \"$TERM\" = \"xterm-kitty\"; and kitty +kitten ssh; or command ssh";
       btw = "echo I use nixos, btw";
+      lg = "lazygit";
+    };
+
+    functions = {
+      s = builtins.readFile (pkgs.writeText "sesh-function.fish" ''
+        sesh connect "$(sesh list --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' --preview-window 'right:55%' --preview 'sesh preview {})')"
+      '');
     };
 
     plugins = [
@@ -59,6 +43,12 @@
       { name = "done"; src = pkgs.fishPlugins.done.src; }
     ];
   };
+
+  xdg.configFile."fish/completions/sesh.fish".text = builtins.readFile (
+    pkgs.runCommand "sesh-completion" {} ''
+      ${pkgs.sesh}/bin/sesh completion fish > $out
+    ''
+  );
 
   programs.zoxide = {
     enable = true;
@@ -90,6 +80,7 @@
     unzip
     curl
     gnumake
+    sesh
 
     # Dev
     nil

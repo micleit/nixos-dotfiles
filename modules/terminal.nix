@@ -1,7 +1,6 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  programs.tmux.enable = true;
   programs.ghostty = {
     enable = true;
     package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
@@ -56,9 +55,10 @@
   };
 
   home.packages = with pkgs; [
-    inputs.copilot-cli.packages.${pkgs.system}.default
+    inputs.copilot-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     kitty # Keep kitty as a backup
     lazygit
+    tmux
       (buildGoModule {
         pname = "drift";
         version = "0.7.0"; # v0.7.0 is latest

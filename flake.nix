@@ -33,7 +33,7 @@
       nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs nix-openclaw; };
         modules = [
-          ./hosts/nixos-btw/default.nix
+          ./hosts/desktop-nixos/default.nix
           home-manager.nixosModules.home-manager
           {
             home-manager = {
