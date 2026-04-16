@@ -50,6 +50,28 @@
         ];
       };
 
+      nixosConfigurations.acer-nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/acer-nixos/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/linux/desktop-linux.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
       nixosConfigurations.optiplex-server = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
