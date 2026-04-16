@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, nix-openclaw, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
   imports = [
@@ -6,11 +6,9 @@
   ];
 
   nixpkgs.overlays = [
-    nix-openclaw.overlays.default
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
-    "openclaw-2026.4.2"
   ];
 
   # List packages installed in system profile.
