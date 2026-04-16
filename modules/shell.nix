@@ -31,12 +31,24 @@
       lg = "lazygit";
     };
 
+    functions = {
+      s = builtins.readFile (pkgs.writeText "sesh-function.fish" ''
+        sesh connect "$(sesh list --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' --preview-window 'right:55%' --preview 'sesh preview {})')"
+      '');
+    };
+
     plugins = [
       { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
       { name = "tide"; src = pkgs.fishPlugins.tide.src; }
       { name = "done"; src = pkgs.fishPlugins.done.src; }
     ];
   };
+
+  xdg.configFile."fish/completions/sesh.fish".text = builtins.readFile (
+    pkgs.runCommand "sesh-completion" {} ''
+      ${pkgs.sesh}/bin/sesh completion fish > $out
+    ''
+  );
 
   programs.zoxide = {
     enable = true;
@@ -68,6 +80,7 @@
     unzip
     curl
     gnumake
+    sesh
 
     # Dev
     nil

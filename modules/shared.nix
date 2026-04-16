@@ -14,5 +14,6 @@
     texliveFull
     neovim-remote
     gemini-cli
+    sesh
   ];
 }

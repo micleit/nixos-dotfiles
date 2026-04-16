@@ -62,6 +62,29 @@
 
 
   # ============================================================================
+  # KEYBOARD REMAPPING (Kanata)
+  # ============================================================================
+  services.kanata = {
+    enable = true;
+    keyboards.main = {
+      config = ''
+        (defsrc
+          caps
+        )
+        
+        (deflayer default
+          (multi lctrl lshift lalt lmet)
+        )
+      '';
+    };
+  };
+
+  systemd.services.kanata-main.serviceConfig = {
+    User = "root";
+    Group = "root";
+  };
+
+  # ============================================================================
   # GRAPHICS & HYPRLAND (System Level)
   # ============================================================================
   services.sunshine.enable = true;
@@ -114,7 +137,7 @@
   # ============================================================================
   users.users.mic = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "optical" "storage" "cdrom" ];
+    extraGroups = [ "wheel" "optical" "storage" "cdrom" "uinput" "input" ];
     shell = pkgs.fish;
   };
 
