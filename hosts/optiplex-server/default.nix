@@ -17,17 +17,17 @@
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "snd_hda_intel" ];
   hardware.enableAllFirmware = true;
-  
+
   # ============================================================================
   # NETWORKING & SERVICES
   # ============================================================================
   networking.hostName = "optiplex-server";
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  
+
   services.openssh.enable = true;
   services.tailscale.enable = true;
-  
+
   # Sound
   security.rtkit.enable = true;
   services.pipewire = {
@@ -81,14 +81,24 @@
     ];
   };
 
-  programs.fish.enable = true; 
+  programs.fish.enable = true;
 
   # ============================================================================
   # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    vim wget git unzip ffmpeg btop 
-    gcc gnumake curl pciutils usbutils alsa-utils
+    vim
+    wget
+    git
+    unzip
+    ffmpeg
+    btop
+    gcc
+    gnumake
+    curl
+    pciutils
+    usbutils
+    alsa-utils
     vlc # VLC with ncurses/terminal interface (nvlc)
     (mpv-unwrapped.override { cddaSupport = true; })
   ];
@@ -101,5 +111,5 @@
 
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
-  system.stateVersion = "26.05"; 
+  system.stateVersion = "26.05";
 }

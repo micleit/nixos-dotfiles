@@ -24,7 +24,7 @@
   nix.enable = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  
+  programs.zsh.enable = true;
   programs.fish.enable = true;
 
   # Manually source nix environment if nix.enable = false
@@ -49,7 +49,7 @@
   system.stateVersion = 4;
 
   # The platform the configuration will be used on.
-  nixpkgs.system = "aarch64-darwin"; 
+  nixpkgs.system = "aarch64-darwin";
 
   users.users.mic.home = "/Users/mic";
 
@@ -66,7 +66,7 @@
   # Homebrew management
   homebrew = {
     enable = true;
-    onActivation.cleanup = "uninstall"; 
+    onActivation.cleanup = "uninstall";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     taps = [
@@ -88,10 +88,10 @@
       "font-sketchybar-app-font"
       "colemak-dh"
       "nikitabobko/tap/aerospace"
-      ];
+    ];
     brews = [
       "gemini-cli"
-      "sketchybar" 
+      "sketchybar"
       "borders"
       "cliclick"
       "switchaudio-osx"

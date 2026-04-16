@@ -19,13 +19,12 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      nixvim,
-      darwin,
-      ...
+    inputs@{ self
+    , nixpkgs
+    , home-manager
+    , nixvim
+    , darwin
+    , ...
     }:
     {
       nixosConfigurations.desktop-nixos = nixpkgs.lib.nixosSystem {

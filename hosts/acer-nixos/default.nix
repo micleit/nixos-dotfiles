@@ -12,13 +12,13 @@
   boot.loader.systemd-boot.consoleMode = "1";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "fuse" ];
-  
+
   # Silent Boot / Plymouth
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.plymouth = {
     enable = true;
-    theme = "breeze"; 
+    theme = "breeze";
   };
 
   boot.kernelParams = [
@@ -33,9 +33,9 @@
 
 
   services.logind.settings.Login = {
-  HandleLidSwitch = "ignore";
-  HandleLidSwitchExternalPower = "ignore";
-  HandleLidSwitchDocked = "ignore";
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
   };
   # one of "ignore", "poweroff", "reboot", "halt", "kexec", "suspend", "hibernate", "hybrid-sleep", "suspend-then-hibernate", "lock"
 
@@ -142,9 +142,13 @@
   # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    vim wget git 
+    vim
+    wget
+    git
     adi1090x-plymouth-themes
-    gcc gnumake curl
+    gcc
+    gnumake
+    curl
   ];
 
   environment.sessionVariables = {
@@ -168,5 +172,5 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
 }

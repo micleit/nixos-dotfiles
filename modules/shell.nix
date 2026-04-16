@@ -45,7 +45,7 @@
   };
 
   xdg.configFile."fish/completions/sesh.fish".text = builtins.readFile (
-    pkgs.runCommand "sesh-completion" {} ''
+    pkgs.runCommand "sesh-completion" { } ''
       ${pkgs.sesh}/bin/sesh completion fish > $out
     ''
   );

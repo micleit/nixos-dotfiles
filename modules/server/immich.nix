@@ -5,15 +5,15 @@
   fileSystems."/mnt/old-laptop" = {
     device = "/dev/disk/by-uuid/7290c982-8ba3-422f-9eda-4831b7255260";
     fsType = "ext4";
-    options = ["nofail" "defaults"];
+    options = [ "nofail" "defaults" ];
   };
 
   # 2. Reach inside the old /var/lib/immich and map it to the new one
   fileSystems."/var/lib/immich" = {
     device = "/mnt/old-laptop/var/lib/immich";
     fsType = "none";
-    options = ["bind" "nofail"];
-    depends = ["/mnt/old-laptop"];
+    options = [ "bind" "nofail" ];
+    depends = [ "/mnt/old-laptop" ];
   };
 
   # 3. Standard Immich Service Setup
@@ -24,6 +24,6 @@
     mediaLocation = "/var/lib/immich";
   };
 
-  networking.firewall.allowedTCPPorts = [2283];
-  users.users.immich.extraGroups = ["users"];
+  networking.firewall.allowedTCPPorts = [ 2283 ];
+  users.users.immich.extraGroups = [ "users" ];
 }

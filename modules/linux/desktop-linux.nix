@@ -121,16 +121,17 @@
         ++ (
           # Workspaces
           builtins.concatLists (
-            builtins.genList (
-              i:
-              let
-                ws = i + 1;
-              in
-              [
-                "$mainMod, ${toString (if ws == 10 then 0 else ws)}, workspace, ${toString ws}"
-                "$mainMod SHIFT, ${toString (if ws == 10 then 0 else ws)}, movetoworkspacesilent, ${toString ws}"
-              ]
-            ) 10
+            builtins.genList
+              (
+                i:
+                let
+                  ws = i + 1;
+                in
+                [
+                  "$mainMod, ${toString (if ws == 10 then 0 else ws)}, workspace, ${toString ws}"
+                  "$mainMod SHIFT, ${toString (if ws == 10 then 0 else ws)}, movetoworkspacesilent, ${toString ws}"
+                ]
+              ) 10
           )
         );
 

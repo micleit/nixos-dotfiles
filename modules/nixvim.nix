@@ -67,7 +67,7 @@
         key = "<C-l>";
         action.__raw = "function() require('harpoon'):list():select(4) end";
       }
-      
+
       # Harpoon + Telescope (Your <leader>fl request)
       {
         mode = "n";
@@ -201,26 +201,26 @@
           lua = [ "stylua" ];
           python = [ "black" ];
           java = [ "google-java-format" ];
-          nix = ["nixfmt"];
+          nix = [ "nixfmt" ];
         };
       };
     };
 
     plugins.vimtex = {
       enable = true;
-      
+
       # Nixvim handles the package, but we set the settings here
       settings = {
         # Use Skim on macOS, Zathura on Linux
         view_method = if pkgs.stdenv.isDarwin then "skim" else "zathura";
-        
+
         # Skim specific settings for better sync
         view_skim_sync = 1;
         view_skim_activate = 1;
 
         # Continuous compilation (requires latexmk, which Nixvim pulls in)
         compiler_method = "latexmk";
-        
+
         # Clean up auxiliary files after compilation
         clean_enabled = true;
       };

@@ -22,7 +22,7 @@
   nix.enable = false;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  programs.zsh.enable = true; # default shell on catalina
   programs.fish.enable = true;
 
   # Manually source nix environment if nix.enable = false
@@ -80,7 +80,7 @@
       "font-sketchybar-app-font"
       "colemak-dh"
       # Add your other Mac apps here
-      ];
+    ];
     brews = [
       "gemini-cli"
       "sketchybar" # Often better from brew for permissions/updates

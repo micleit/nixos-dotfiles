@@ -9,8 +9,7 @@
   ];
 
   # Symlink existing configs from the repo
-  home.file = {
-  };
+  home.file = { };
 
   xdg.configFile = {
     "sketchybar".source = ../../config/sketchybar;

@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "uas" "sd_mod" "sr_mod" ];
@@ -14,35 +15,39 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f1640482-4ce5-420a-99f6-a3204f7044c7";
+    {
+      device = "/dev/disk/by-uuid/f1640482-4ce5-420a-99f6-a3204f7044c7";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/62A7-E767";
+    {
+      device = "/dev/disk/by-uuid/62A7-E767";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/mnt/storage" =
-    { device = "/dev/disk/by-uuid/6cd2fca7-829a-4446-8f7a-194d0042d09a";
+    {
+      device = "/dev/disk/by-uuid/6cd2fca7-829a-4446-8f7a-194d0042d09a";
       fsType = "ext4";
     };
 
   fileSystems."/mnt/old-laptop" =
-    { device = "/dev/disk/by-uuid/7290c982-8ba3-422f-9eda-4831b7255260";
+    {
+      device = "/dev/disk/by-uuid/7290c982-8ba3-422f-9eda-4831b7255260";
       fsType = "ext4";
     };
 
   fileSystems."/var/lib/immich" =
-    { device = "/mnt/old-laptop/var/lib/immich";
+    {
+      device = "/mnt/old-laptop/var/lib/immich";
       fsType = "none";
       options = [ "bind" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/adc06c6b-ae5e-4d62-8e7d-206485ff3444"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/adc06c6b-ae5e-4d62-8e7d-206485ff3444"; }];
 
   nixpkgs.system = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
