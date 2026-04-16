@@ -17,6 +17,7 @@
   # services.nix-daemon.enable = true; # Managed unconditionally now
 
   system.primaryUser = "mic";
+  nixpkgs.config.allowUnfree = true;
 
   # nix-darwin management of Nix is disabled for compatibility with Determinate
   nix.enable = false;
