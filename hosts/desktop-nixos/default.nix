@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -14,13 +20,13 @@
   boot.loader.systemd-boot.consoleMode = "1";
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "fuse" ];
-  
+
   # Silent Boot / Plymouth
   boot.consoleLogLevel = 0;
   boot.initrd.verbose = false;
   boot.plymouth = {
     enable = true;
-    theme = "breeze"; 
+    theme = "breeze";
   };
 
   boot.kernelParams = [
@@ -38,7 +44,10 @@
   # ============================================================================
   networking.hostName = "desktop-nixos";
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
 
   services.openssh.enable = true;
   services.tailscale.enable = true;
@@ -56,10 +65,15 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 21115 21116 21117 21118 21119 ];
+    allowedTCPPorts = [
+      21115
+      21116
+      21117
+      21118
+      21119
+    ];
     allowedUDPPorts = [ 21116 ];
   };
-
 
   # ============================================================================
   # KEYBOARD REMAPPING (Kanata)
@@ -71,7 +85,7 @@
         (defsrc
           caps
         )
-        
+
         (deflayer default
           (multi lctrl lshift lalt lmet)
         )
@@ -109,8 +123,8 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [ 
-      pkgs.xdg-desktop-portal-gtk 
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-hyprland
     ];
     config.common.default = "*";
@@ -137,8 +151,19 @@
   # ============================================================================
   users.users.mic = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "optical" "storage" "cdrom" "uinput" "input" ];
+    extraGroups = [
+      "wheel"
+      "optical"
+      "storage"
+      "cdrom"
+      "uinput"
+      "input"
+    ];
     shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" #mbp
+    ];
+
   };
 
   programs.fish.enable = true; # System level enable
@@ -152,15 +177,22 @@
   # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    vim wget git librewolf 
+    vim
+    wget
+    git
+    librewolf
     adi1090x-plymouth-themes
-    gcc gnumake curl
+    gcc
+    gnumake
+    curl
     mosh
   ];
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    QUICKSHELL_PLUGIN_PATH = "${inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/quickshell/plugins";
+    QUICKSHELL_PLUGIN_PATH = "${
+      inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default
+    }/lib/quickshell/plugins";
   };
 
   # ============================================================================
@@ -176,8 +208,11 @@
   # ============================================================================
   # NIX SETTINGS
   # ============================================================================
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
 }
