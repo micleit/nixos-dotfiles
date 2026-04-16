@@ -28,7 +28,7 @@
       ...
     }:
     {
-      nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.desktop-nixos= nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/desktop-nixos/default.nix
