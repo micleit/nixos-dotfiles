@@ -3,8 +3,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    # ../../modules/server/samba.nix
-    # Other system-wide modules
   ];
 
   # ============================================================================
@@ -32,6 +30,14 @@
     "rd.udev.log_level=3"
     "udev.log_priority=3"
   ];
+
+
+  services.logind.settings.Login = {
+  HandleLidSwitch = "ignore";
+  HandleLidSwitchExternalPower = "ignore";
+  HandleLidSwitchDocked = "ignore";
+  };
+  # one of "ignore", "poweroff", "reboot", "halt", "kexec", "suspend", "hibernate", "hybrid-sleep", "suspend-then-hibernate", "lock"
 
   # ============================================================================
   # NETWORKING & SERVICES
@@ -64,7 +70,7 @@
   # ============================================================================
   # GRAPHICS & HYPRLAND (System Level)
   # ============================================================================
-  services.sunshine.enable = true;
+  # services.sunshine.enable = true;
   # services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
@@ -79,19 +85,19 @@
   #   package = config.boot.kernelPackages.nvidiaPackages.stable;
   # };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  # programs.hyprland = {
+  #   enable = true;
+  #   xwayland.enable = true;
+  # };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ 
-      pkgs.xdg-desktop-portal-gtk 
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-    config.common.default = "*";
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [ 
+  #     pkgs.xdg-desktop-portal-gtk 
+  #     pkgs.xdg-desktop-portal-hyprland
+  #   ];
+  #   config.common.default = "*";
+  # };
 
   # Display Manager
   services.displayManager.sddm.wayland.enable = true;
@@ -100,14 +106,14 @@
   # ============================================================================
   # AUDIO (Pipewire)
   # ============================================================================
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
+  # services.pulseaudio.enable = false;
+  # security.rtkit.enable = true;
+  # services.pipewire = {
+  #   enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   pulse.enable = true;
+  # };
 
   # ============================================================================
   # USER & SECURITY
@@ -129,10 +135,9 @@
   # ESSENTIAL SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
-    vim wget git librewolf 
+    vim wget git 
     adi1090x-plymouth-themes
     gcc gnumake curl
-    mosh
   ];
 
   environment.sessionVariables = {

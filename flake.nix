@@ -62,7 +62,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  ./modules/linux/desktop-linux.nix
+                  # ./modules/linux/desktop-linux.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
