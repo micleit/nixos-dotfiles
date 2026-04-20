@@ -5,6 +5,7 @@
 
   home.packages = with pkgs; [
     moonlight-qt
+    iina
     # Add any other macOS specific CLI tools here
   ];
 

@@ -11,6 +11,7 @@
   environment.systemPackages = [
     pkgs.vim
     pkgs.git
+    pkgs.iina
   ];
 
   # Auto upgrade nix package and the daemon service.
