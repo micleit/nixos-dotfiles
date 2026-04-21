@@ -82,7 +82,6 @@
       "font-hack-nerd-font"
       "font-sketchybar-app-font"
       "colemak-dh"
-      "mole"
       # Add your other Mac apps here
     ];
     brews = [
@@ -93,6 +92,7 @@
       "switchaudio-osx"
       "nowplaying-cli"
       "lua"
+      "mole"
     ];
   };
 
