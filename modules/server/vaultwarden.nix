@@ -2,12 +2,12 @@
 
 {
   # Vaultwarden Setup (Bitwarden-compatible password manager)
-  # Access via Tailscale: https://<tailscale-hostname>.ts.net
+  # Access at http://100.91.229.67:8000
   services.vaultwarden = {
     enable = true;
     dbBackend = "postgresql";
     config = {
-      domain = "https://optiplex-server.ts.net";
+      domain = "http://100.91.229.67:8000";
       signupsAllowed = false;
       invitationsAllowed = false;
       showPasswordHint = false;
@@ -30,25 +30,8 @@
     ensureDatabases = [ "vaultwarden" ];
   };
 
-  # Nginx reverse proxy for Tailscale access
-  services.nginx = {
-    enable = true;
-    virtualHosts."optiplex-server.ts.net" = {
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:80";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-        '';
-      };
-    };
-  };
-
-  # Firewall rules
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  # Open port 8000 for Vaultwarden
+  networking.firewall.allowedTCPPorts = [ 8000 ];
 
   # Log rotation for vaultwarden
   services.logrotate = {
@@ -63,12 +46,8 @@
     };
   };
 
-  # Ensure Tailscale is enabled
-  services.tailscale.enable = true;
-
   # Notes:
-  # - Access via https://optiplex-server.ts.net from any Tailscale client
-  # - No port forwarding needed; traffic stays within your Tailnet
-  # - Update domain above if you rename the host
-  # - First login creates admin account; signups disabled after
+  # - Access at http://100.91.229.67:8000
+  # - Port 8000 is free and doesn't conflict with Nextcloud (80/443) or Immich (2283)
+  # - Database and logs are automatically managed
 }
