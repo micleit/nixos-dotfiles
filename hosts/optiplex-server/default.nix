@@ -7,6 +7,8 @@
     ../../modules/server/samba.nix
     ../../modules/server/nextcloud.nix
     ../../modules/server/navidrome.nix
+    ../../modules/server/vaultwarden.nix
+    ../../modules/server/vaultwarden-nginx.nix
   ];
 
   # ============================================================================

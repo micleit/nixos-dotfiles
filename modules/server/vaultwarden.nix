@@ -1,14 +1,19 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Vaultwarden Setup (Bitwarden-compatible password manager)
-  # Access at http://100.91.229.67:8000
   services.vaultwarden = {
     enable = true;
-    dbBackend = "postgresql";
     config = {
-      domain = "http://100.91.229.67:8000";
-      signupsAllowed = false;
+      domain = "https://optiplex-server.tail48220b.ts.net";
+      rocketAddress = "127.0.0.1";
+      rocketPort = 8222;
+      signupsAllowed = true;
       invitationsAllowed = false;
       showPasswordHint = false;
       logLevel = "info";
@@ -18,36 +23,21 @@
     };
   };
 
-  # PostgreSQL database
-  services.postgresql = {
-    enable = true;
-    ensureUsers = [
-      {
-        name = "vaultwarden";
-        ensureDBOwnership = true;
-      }
-    ];
-    ensureDatabases = [ "vaultwarden" ];
+  # Create log directory with proper permissions
+  systemd.tmpfiles.rules = [
+    "d /var/log/vaultwarden 0755 vaultwarden vaultwarden - -"
+  ];
+
+  # Allow vaultwarden to write to log directory despite ProtectSystem=strict
+  systemd.services.vaultwarden.serviceConfig = {
+    ReadWritePaths = [ "/var/log/vaultwarden" ];
   };
 
-  # Open port 8000 for Vaultwarden
-  networking.firewall.allowedTCPPorts = [ 8000 ];
-
-  # Log rotation for vaultwarden
-  services.logrotate = {
-    enable = true;
-    paths.vaultwarden = {
-      path = "/var/log/vaultwarden/*.log";
-      frequency = "daily";
-      rotate = 10;
-      compress = true;
-      delaycompress = true;
-      missingok = true;
-    };
-  };
+  # Open port 8222 for internal Vaultwarden (localhost only)
+  # Nginx will proxy to it from port 8443
 
   # Notes:
   # - Access at http://100.91.229.67:8000
   # - Port 8000 is free and doesn't conflict with Nextcloud (80/443) or Immich (2283)
-  # - Database and logs are automatically managed
+  # - Uses SQLite (simpler than PostgreSQL for personal server)
 }
