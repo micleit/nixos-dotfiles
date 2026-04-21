@@ -35,6 +35,7 @@
       "protonup-ng"
       "noctalia-shell"
       "libreoffice"
+      "bitwarden-desktop"
     ];
 
     home.file.".local/share/icons/macOS-hypr" = {
