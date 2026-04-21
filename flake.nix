@@ -61,7 +61,6 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  # ./modules/linux/desktop-linux.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -83,7 +82,6 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
-                  # ./modules/linux/desktop-linux.nix don't need it on a server
                 ];
               };
               extraSpecialArgs = { inherit inputs; };

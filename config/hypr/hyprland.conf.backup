@@ -25,7 +25,7 @@ bind=$mainMod, f, exec, $fileManager
 bind=$mainMod, V, togglefloating,
 bind=$mainMod, m, exec, command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit
 bind=mod5 Shift, F, fullscreen,
-bind=$mainMod, y, exec, ghostty --title "yazi-float" -e fish -c "y"
+bind=$mainMod, y, exec, bash -c "alacritty --title yazi-float -e fish -c \"y\""
 bind=$mainMod, backspace, exec, hyprctl switchxkblayout all next
 bind=mod5, SPACE, exec, $ipc launcher toggle
 bind=mod5, comma, exec, $ipc controlCenter toggle
@@ -148,7 +148,7 @@ windowrule {
   name=yazi-floating-config
   center=on
   float=on
-  match:title=yazi-float
+  match:title=^yazi-float$
   size=1000 700
 }
 windowrule {

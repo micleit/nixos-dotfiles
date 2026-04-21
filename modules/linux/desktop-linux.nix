@@ -2,14 +2,12 @@
 
 {
   config = lib.mkIf pkgs.stdenv.isLinux {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      xwayland.enable = true;
-      extraConfig = "";
-    };
-
+    # Hyprland is enabled at system level (hosts/desktop-nixos/default.nix)
+    # We use the symlinked config from ~/nixos-dotfiles/config/hypr instead of declarative module
+    
     home.packages = map (n: pkgs.${n}) [
       "anki"
+      "alacritty"
       "apple-cursor"
       "nautilus"
       "brave"
@@ -36,6 +34,7 @@
       "nicotine-plus"
       "protonup-ng"
       "noctalia-shell"
+      "libreoffice"
     ];
 
     home.file.".local/share/icons/macOS-hypr" = {
