@@ -1,6 +1,9 @@
-config/alacritty/themes/noctalia.toml
-config/btop/themes/noctalia.theme
-config/hypr/hyprtoolkit.conf
-config/hypr/noctalia/noctalia-colors.conf
-config/noctalia/colors.json
-config/yazi/flavors/noctalia.yazi/flavor.toml
+/config/alacritty/themes/noctalia.toml
+/config/btop/themes/noctalia.theme
+/config/hypr/hyprtoolkit.conf
+/config/hypr/noctalia/noctalia-colors.conf
+/config/noctalia/colors.json
+/config/yazi/flavors/noctalia.yazi/flavor.toml
+/config/noctalia/colors.json
+/config/noctalia/settings.json
+

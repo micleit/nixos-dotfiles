@@ -14,8 +14,8 @@
 
 
       if status is-interactive
-          if type -q pokeget
-              pokeget random 2>/dev/null
+          if type -q nerdfetch
+              nerdfetch
           end
       end
     '';
@@ -92,7 +92,7 @@
     tree-sitter
 
     # Fun & Misc
-    pokeget-rs
+    nerdfetch
     fastfetch
     tree
   ] ++ (lib.optionals stdenv.isLinux [
