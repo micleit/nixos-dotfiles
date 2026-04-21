@@ -170,6 +170,7 @@
         html.enable = true;
         nil_ls.enable = true;
         nixd.enable = true;
+        markdown_oxide.enable = true;
       };
     };
 
@@ -202,6 +203,7 @@
           python = [ "black" ];
           java = [ "google-java-format" ];
           nix = [ "nixfmt" ];
+          markdown = ["markdown_oxide"];
         };
       };
     };

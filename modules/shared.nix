@@ -16,5 +16,6 @@
     gemini-cli
     sesh
     obsidian
+    sioyek
   ];
 }
