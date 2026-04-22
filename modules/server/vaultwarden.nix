@@ -10,10 +10,10 @@
   services.vaultwarden = {
     enable = true;
     config = {
-      domain = "https://optiplex-server.tail48220b.ts.net";
+      domain = "https://vaultwarden.53729123.xyz";
       rocketAddress = "127.0.0.1";
       rocketPort = 8222;
-      signupsAllowed = true;
+      signupsAllowed = false;
       invitationsAllowed = false;
       showPasswordHint = false;
       logLevel = "info";
