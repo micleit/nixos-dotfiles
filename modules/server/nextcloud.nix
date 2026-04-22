@@ -5,7 +5,8 @@
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud33;
-    hostName = "100.91.229.67";
+    hostName = "localhost";
+    https = false;
 
     # Use PostgreSQL as the database (enabled automatically by database.createLocally)
     database.createLocally = true;
@@ -18,17 +19,18 @@
     # Basic performance/security settings
     settings = {
       "maintenance_window_start" = 1;
-      trusted_domains = [ "optiplex-server" "optiplex-server.local" "100.91.229.67" ];
-      overwriteprotocol = "http";
-      "overwrite.cli.url" = "http://100.91.229.67";
+      trusted_domains = [ "nextcloud.53729123.xyz" "localhost" "127.0.0.1" ];
+      overwriteprotocol = "https";
+      "overwrite.cli.url" = "https://nextcloud.53729123.xyz";
+      overwritehost = "nextcloud.53729123.xyz";
     };
 
     # Enable caching for better performance
     configureRedis = true;
   };
 
-  # Open the firewall for HTTP and HTTPS
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  # Nextcloud listens on localhost:80, reverse proxy handles external access
+  networking.firewall.allowedTCPPorts = [ ];
 
   # Reminder: You MUST create /etc/nextcloud-admin-pass before switching
   # echo "yourpassword" | sudo tee /etc/nextcloud-admin-pass

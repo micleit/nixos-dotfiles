@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/server/nginx-reverse-proxy.nix
     ../../modules/server/immich.nix
     ../../modules/server/samba.nix
     ../../modules/server/nextcloud.nix
