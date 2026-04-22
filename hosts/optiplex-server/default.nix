@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/server/landing-page.nix
     ../../modules/server/cloudflare-tunnel.nix
     ../../modules/server/immich.nix
     ../../modules/server/samba.nix

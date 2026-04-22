@@ -43,7 +43,7 @@ in
   # Create tunnel.env file location (user must populate with TUNNEL_TOKEN)
   systemd.tmpfiles.rules = [
     "d /etc/cloudflared 0755 root root -"
-    "f /etc/cloudflared/tunnel.env 0600 root root -"
+    "f /etc/cloudflared/tunnel.env 0644 root root -"
   ];
 
   # No need to open firewall—tunnel is outbound only
