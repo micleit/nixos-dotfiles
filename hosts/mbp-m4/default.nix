@@ -68,6 +68,7 @@
       "asmvik/formulae"
     ];
     casks = [
+      "bitwarden"
       "visual-studio-code"
       "discord"
       "spotify"
