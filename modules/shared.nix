@@ -17,5 +17,6 @@
     sesh
     obsidian
     sioyek
+    opencode
   ];
 }

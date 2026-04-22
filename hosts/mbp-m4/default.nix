@@ -68,7 +68,7 @@
       "asmvik/formulae"
     ];
     casks = [
-      "bitwarden"
+      # "bitwarden" can't do browser integration without mac app store version.
       "visual-studio-code"
       "discord"
       "spotify"
