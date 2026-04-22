@@ -4,7 +4,7 @@
   config = lib.mkIf pkgs.stdenv.isLinux {
     # Hyprland is enabled at system level (hosts/desktop-nixos/default.nix)
     # We use the symlinked config from ~/nixos-dotfiles/config/hypr instead of declarative module
-    
+
     home.packages = map (n: pkgs.${n}) [
       "anki"
       "alacritty"

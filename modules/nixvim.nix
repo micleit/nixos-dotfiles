@@ -203,7 +203,7 @@
           python = [ "black" ];
           java = [ "google-java-format" ];
           nix = [ "nixfmt" ];
-          markdown = ["markdown_oxide"];
+          markdown = [ "markdown_oxide" ];
         };
       };
     };
