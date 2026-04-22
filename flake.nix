@@ -40,6 +40,7 @@
                 imports = [
                   ./home/mic/default.nix
                   ./modules/linux/desktop-linux.nix
+                  ./modules/gui-apps.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -103,6 +104,7 @@
               users.mic = {
                 imports = [
                   ./home/mic/default.nix
+                  ./modules/gui-apps.nix
                   ./modules/darwin/darwin.nix
                 ];
               };

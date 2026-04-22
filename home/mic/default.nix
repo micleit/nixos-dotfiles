@@ -30,10 +30,11 @@
     "yazi".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/yazi";
     "drift".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/drift";
     "tmux".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/tmux";
+    "opencode".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/opencode";
   };
 
   # Manual symlink for hypr directory
-  home.activation.linkHyprConfig = config.lib.dag.entryAfter ["writeBoundary"] ''
+  home.activation.linkHyprConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     if [ -d "$HOME/.config/hypr" ]; then
       rm -rf "$HOME/.config/hypr"
     fi

@@ -11,6 +11,7 @@ This document provides instructions for Claude and other AI agents assisting wit
 - **Enable cross-platform consistency**: NixOS and Darwin configs share logic where possible.
 - **Prioritize Home Manager**: User-level packages and configs go in Home Manager, not systemPackages.
 - **Ensure safety**: Always build/dry-run before switching configurations.
+- **Check your work**: For any task that changes Nix configs, continue until a successful build for the target host completes without errors.
 
 ---
 

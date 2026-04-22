@@ -15,8 +15,6 @@
     neovim-remote
     gemini-cli
     sesh
-    obsidian
-    sioyek
     opencode
   ];
 }
