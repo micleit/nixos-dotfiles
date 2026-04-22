@@ -3,13 +3,12 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/server/nginx-reverse-proxy.nix
+    ../../modules/server/cloudflare-tunnel.nix
     ../../modules/server/immich.nix
     ../../modules/server/samba.nix
     ../../modules/server/nextcloud.nix
     ../../modules/server/navidrome.nix
     ../../modules/server/vaultwarden.nix
-    ../../modules/server/vaultwarden-nginx.nix
   ];
 
   # ============================================================================

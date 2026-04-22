@@ -19,17 +19,14 @@
     # Basic performance/security settings
     settings = {
       "maintenance_window_start" = 1;
-      trusted_domains = [ "nextcloud.53729123.xyz" "localhost" "127.0.0.1" ];
-      overwriteprotocol = "https";
-      "overwrite.cli.url" = "https://nextcloud.53729123.xyz";
-      overwritehost = "nextcloud.53729123.xyz";
+      trusted_domains = [ "localhost" "127.0.0.1" ];
     };
 
     # Enable caching for better performance
     configureRedis = true;
   };
 
-  # Nextcloud listens on localhost:80, reverse proxy handles external access
+  # Nextcloud listens on localhost:80 only
   networking.firewall.allowedTCPPorts = [ ];
 
   # Reminder: You MUST create /etc/nextcloud-admin-pass before switching
