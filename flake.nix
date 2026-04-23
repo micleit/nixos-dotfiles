@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    slippi.url = "github:lytedev/slippi-nix";
+    slippi.inputs.nixpkgs.follows = "nixpkgs";
     quickshell.url = "github:outfoxxed/quickshell";
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
@@ -19,18 +21,20 @@
   };
 
   outputs =
-    inputs@{ self
-    , nixpkgs
-    , home-manager
-    , nixvim
-    , darwin
-    , ...
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nixvim,
+      darwin,
+      ...
     }:
     {
       nixosConfigurations.desktop-nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/desktop-nixos/default.nix
+          inputs.slippi.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             home-manager = {

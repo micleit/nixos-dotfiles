@@ -20,8 +20,8 @@ This document provides instructions for Claude and other AI agents assisting wit
 ### 2.1 Nix Code Quality
 
 **Formatting is mandatory:**
-- Use `nixpkgs-fmt` (preferred) or `alejandra` before committing.
-- Command: `nixpkgs-fmt .` (formats entire repo)
+- Use `nixfmt` (preferred) or `alejandra` before committing.
+- Command: `nixfmt .` (formats entire repo)
 - Always validate formatting: `git diff` should show only logical changes, not formatting.
 
 **Before any configuration switch:**
@@ -186,7 +186,7 @@ xdg.configFile."noctalia".source = config.lib.file.mkOutOfStoreSymlink
    ```bash
    home-manager build --flake .#mic@<hostname>
    ```
-5. **Format**: `nixpkgs-fmt .`
+5. **Format**: `nixfmt .`
 6. **Commit**.
 
 ### 4.3 Updating a Symlinked Config
@@ -223,7 +223,7 @@ When `nixos-rebuild build` fails:
 
 Before committing any changes:
 
-- [ ] Code formatted with `nixpkgs-fmt .`
+- [ ] Code formatted with `nixfmt .`
 - [ ] Dry-run build succeeds: `nixos-rebuild build --flake .#<hostname>`
 - [ ] No unexpected changes in `git diff`
 - [ ] Commit message is clear and includes context
@@ -310,7 +310,7 @@ When assisting with nixos-dotfiles tasks:
 
 ### Is it a configuration change?
 - ✅ Always **build first** before switching
-- ✅ **Format with nixpkgs-fmt** before committing
+- ✅ **Format with nixfmt** before committing
 - ✅ **Include Co-authored-by trailer** in commits
 
 ### Is it a cross-platform change (NixOS + Darwin)?
@@ -541,7 +541,7 @@ home-manager build --flake .#mic@<hostname>
 home-manager switch --flake .#mic@<hostname>
 
 # Format Nix code
-nixpkgs-fmt .
+nixfmt .
 
 # Validate Nix syntax
 nix flake check

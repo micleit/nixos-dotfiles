@@ -1,7 +1,8 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 
 {
@@ -34,4 +35,3 @@
 
   # Vaultwarden listens on localhost:8222 only (cloudflare tunnel handles external access)
 }
-

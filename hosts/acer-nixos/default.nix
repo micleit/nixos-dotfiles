@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -31,7 +37,6 @@
     "udev.log_priority=3"
   ];
 
-
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
     HandleLidSwitchExternalPower = "ignore";
@@ -44,7 +49,10 @@
   # ============================================================================
   networking.hostName = "acer-nixos";
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
 
   services.openssh.enable = true;
   services.tailscale.enable = true;
@@ -62,10 +70,15 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 21115 21116 21117 21118 21119 ];
+    allowedTCPPorts = [
+      21115
+      21116
+      21117
+      21118
+      21119
+    ];
     allowedUDPPorts = [ 21116 ];
   };
-
 
   # ============================================================================
   # GRAPHICS & HYPRLAND (System Level)
@@ -92,8 +105,8 @@
 
   # xdg.portal = {
   #   enable = true;
-  #   extraPortals = [ 
-  #     pkgs.xdg-desktop-portal-gtk 
+  #   extraPortals = [
+  #     pkgs.xdg-desktop-portal-gtk
   #     pkgs.xdg-desktop-portal-hyprland
   #   ];
   #   config.common.default = "*";
@@ -120,14 +133,19 @@
   # ============================================================================
   users.users.mic = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "optical" "storage" "cdrom" ];
+    extraGroups = [
+      "wheel"
+      "optical"
+      "storage"
+      "cdrom"
+    ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" #mbp
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2H3Qy26Y3JV0p5WhpR89pE4hi7tssLbL/BYm+RsKd2 mic@headless-m1" #headlessm1
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIArDsvxPAbb7S2XhflttHFnsv5Sfyb/Z1mZIf+1PGJdn mic@nixos-btw" #desktop
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUGAfMHR2crHkfh6Wo73N0NW7w5VdBk476kEvF4QBxu mic@optiplex-server" #optiplex-server
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" #acer
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" # mbp
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2H3Qy26Y3JV0p5WhpR89pE4hi7tssLbL/BYm+RsKd2 mic@headless-m1" # headlessm1
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIArDsvxPAbb7S2XhflttHFnsv5Sfyb/Z1mZIf+1PGJdn mic@nixos-btw" # desktop
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUGAfMHR2crHkfh6Wo73N0NW7w5VdBk476kEvF4QBxu mic@optiplex-server" # optiplex-server
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" # acer
     ];
   };
 
@@ -153,7 +171,9 @@
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    QUICKSHELL_PLUGIN_PATH = "${inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default}/lib/quickshell/plugins";
+    QUICKSHELL_PLUGIN_PATH = "${
+      inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default
+    }/lib/quickshell/plugins";
   };
 
   # ============================================================================
@@ -169,7 +189,10 @@
   # ============================================================================
   # NIX SETTINGS
   # ============================================================================
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "25.11";

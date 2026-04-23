@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Nextcloud Setup
@@ -19,7 +24,10 @@
     # Basic performance/security settings
     settings = {
       "maintenance_window_start" = 1;
-      trusted_domains = [ "localhost" "127.0.0.1" ];
+      trusted_domains = [
+        "localhost"
+        "127.0.0.1"
+      ];
     };
 
     # Enable caching for better performance

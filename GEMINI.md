@@ -31,7 +31,7 @@ Editors: Manage configurations for VS Code and Neovim strictly through Home Mana
 4. Operational Guardrails
 Safe Testing: Always provide the command for a dry-run or "build" (e.g., nixos-rebuild build --flake .#hostname) before suggesting a "switch."
 
-Formatting: Always format Nix code using nixpkgs-fmt or alejandra.
+Formatting: Always format Nix code using nixfmt or alejandra.
 
 Domain Separation: Keep Mathematics and Computer Science topics distinct. Do not use analogies from one to explain the other unless explicitly requested.
 

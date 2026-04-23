@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   services.navidrome = {
@@ -17,7 +22,10 @@
   fileSystems."/var/lib/navidrome/music" = {
     device = "/home/mic/Sorted";
     fsType = "none";
-    options = [ "bind" "ro" ];
+    options = [
+      "bind"
+      "ro"
+    ];
   };
 
   # Ensure the mount point exists

@@ -21,7 +21,10 @@
     # KEYMAPS
     keymaps = [
       {
-        mode = [ "n" "v" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<leader>y";
         action = "\"+y";
         options = {
@@ -94,7 +97,10 @@
         options.desc = "Harpoon List in Telescope";
       }
       {
-        mode = [ "n" "v" ];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<leader>fd";
         action.__raw = ''
           function()
@@ -139,7 +145,14 @@
       settings = {
         highlight.enable = true;
         indent.enable = true;
-        ensure_installed = [ "lua" "python" "java" "nix" "latex" "markdown" ];
+        ensure_installed = [
+          "lua"
+          "python"
+          "java"
+          "nix"
+          "latex"
+          "markdown"
+        ];
       };
     };
 
@@ -237,8 +250,6 @@
     plugins.lazygit.enable = true;
     plugins.gitsigns.enable = true;
 
-
-
     # 6. CUSTOM LUA LOGIC (The Toggle & Keybinds)
     # This section allows you to inject the specific Lua logic we wrote earlier
     extraConfigLua = ''
@@ -252,13 +263,19 @@
       -- Keybind for your Telescope-Harpoon list
       vim.keymap.set("n", "<leader>fl", ":Telescope harpoon marks<CR>", { desc = "Harpoon List" })
     '';
-    extraPackages = with pkgs; [
-      lazygit
-      nixfmt
-      nil
-      nixd
-      neovim-remote
-    ] ++ (lib.optionals stdenv.isLinux [ zathura xdotool ]);
+    extraPackages =
+      with pkgs;
+      [
+        lazygit
+        nixfmt
+        nil
+        nixd
+        neovim-remote
+      ]
+      ++ (lib.optionals stdenv.isLinux [
+        zathura
+        xdotool
+      ]);
 
   };
 }

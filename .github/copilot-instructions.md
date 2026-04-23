@@ -114,7 +114,7 @@ imports = [
 
 Always format Nix code before committing:
 ```bash
-nixpkgs-fmt .
+nixfmt .
 ```
 
 Alternatively, use alejandra:
@@ -122,7 +122,7 @@ Alternatively, use alejandra:
 alejandra .
 ```
 
-Both tools are available in the shell. Default preference: **nixpkgs-fmt**.
+Both tools are available in the shell. Default preference: **nixfmt**.
 
 ### Import Patterns
 
@@ -191,7 +191,7 @@ Each uses `nixpkgs.lib.nixosSystem` or `darwin.lib.darwinSystem` with:
 2. Use `{ config, pkgs, lib, inputs, ... }:` as the function signature.
 3. Wrap Linux-only sections with `lib.mkIf pkgs.stdenv.isLinux { ... }`.
 4. Import the module in `home/mic/default.nix` or system config as appropriate.
-5. Format with `nixpkgs-fmt` before committing.
+5. Format with `nixfmt` before committing.
 
 ## MCP Servers
 

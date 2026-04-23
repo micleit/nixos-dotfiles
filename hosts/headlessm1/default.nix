@@ -1,4 +1,9 @@
-{ pkgs, lib, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -56,11 +61,11 @@
   # SSH Configuration
   services.openssh.enable = true;
   users.users.mic.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" #mbp
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2H3Qy26Y3JV0p5WhpR89pE4hi7tssLbL/BYm+RsKd2 mic@headless-m1" #headlessm1
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIArDsvxPAbb7S2XhflttHFnsv5Sfyb/Z1mZIf+1PGJdn mic@nixos-btw" #desktop
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUGAfMHR2crHkfh6Wo73N0NW7w5VdBk476kEvF4QBxu mic@optiplex-server" #optiplex-server
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" #acer
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" # mbp
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2H3Qy26Y3JV0p5WhpR89pE4hi7tssLbL/BYm+RsKd2 mic@headless-m1" # headlessm1
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIArDsvxPAbb7S2XhflttHFnsv5Sfyb/Z1mZIf+1PGJdn mic@nixos-btw" # desktop
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILUGAfMHR2crHkfh6Wo73N0NW7w5VdBk476kEvF4QBxu mic@optiplex-server" # optiplex-server
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" # acer
   ];
 
   # Homebrew management
@@ -112,7 +117,7 @@
 
       # Layout and gaps
       # sketchybar is already managed as a nix-darwin service, so we don't need a startup command here.
-      
+
       [gaps]
       inner.horizontal = 5
       inner.vertical = 5
@@ -124,14 +129,14 @@
       # Sketchybar Integration
       # Trigger when workspace changes
       on-focused-workspace-changed = ['exec-and-forget sketchybar --trigger aerospace_workspace_change']
-      
+
       [mode.main.binding]
       # Navigation (alt + h/j/k/l or a/r/w/s to match your skhd)
       alt-a = 'focus left'
       alt-r = 'focus down'
       alt-w = 'focus up'
       alt-s = 'focus right'
-      
+
       alt-h = 'focus left'
       alt-j = 'focus down'
       alt-k = 'focus up'

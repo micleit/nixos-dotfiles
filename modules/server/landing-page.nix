@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   domain = "53729123.xyz";
@@ -101,7 +106,12 @@ in
   services.nginx = {
     enable = true;
     virtualHosts."landing" = {
-      listen = [{ addr = "0.0.0.0"; port = 8080; }];
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 8080;
+        }
+      ];
       default = true;
       root = landingPageDir;
     };

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   domain = "53729123.xyz";
@@ -130,7 +135,10 @@ in
   services.vaultwarden.config.domain = lib.mkForce "https://vaultwarden.${domain}";
 
   # Firewall: Allow HTTP/HTTPS
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   # Ensure nginx starts after ACME certs are ready
   systemd.services.nginx.after = [ "acme-finished-${domain}.target" ];
