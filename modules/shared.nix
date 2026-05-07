@@ -11,10 +11,19 @@
     ffmpeg
     gifski
     imagemagick
+    spotify
+    spicetify-cli
     texliveFull
     neovim-remote
     gemini-cli
     sesh
     opencode
+    python3
+    python3Packages.pip
+    python3Packages.virtualenv
+    python3Packages.debugpy
+    black
+    isort
+    ruff
   ];
 }
