@@ -53,6 +53,29 @@
           }
         ];
       };
+      nixosConfigurations.latitude = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/latitude/default.nix
+          inputs.slippi.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/linux/desktop-linux.nix
+                  ./modules/gui-apps.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
 
       nixosConfigurations.acer-nixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
