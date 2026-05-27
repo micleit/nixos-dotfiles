@@ -7,7 +7,6 @@
 {
   imports = [
     ../../modules/systems/darwin/skhd.nix
-    ../../modules/systems/darwin/homebrew.nix
     ../../modules/systems/darwin/aerospace-skhd.nix
   ];
 

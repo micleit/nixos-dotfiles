@@ -7,7 +7,6 @@
   imports = [
     ../../modules/systems/darwin/yabai.nix
     ../../modules/systems/darwin/skhd.nix
-    ../../modules/systems/darwin/homebrew.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
