@@ -75,37 +75,51 @@ bash: cat modules/terminal.nix
 Know these paths by heart:
 
 ```
-flake.nix                           # Entry point, defines all configs
+flake.nix                           # Entry point (uses Flake Parts)
+├── parts/
+│   ├── nixos-systems.nix           # NixOS configurations (desktop-nixos, acer-nixos, optiplex-server)
+│   └── darwin-systems.nix          # Darwin configurations (mbp-m4, headless-m1)
 ├── hosts/
-│   ├── nixos-btw/                 # Desktop NixOS
-│   ├── optiplex-server/           # Headless NixOS server
-│   ├── mbp-m4/                    # MacBook Pro M4 (Darwin)
-│   └── headless-m1/               # Headless M1 Mac (Darwin)
+│   ├── desktop-nixos/              # NixOS Desktop
+│   ├── acer-nixos/                 # NixOS Laptop
+│   ├── optiplex-server/            # NixOS Server (self-hosted services)
+│   ├── mbp-m4/                     # MacBook Pro M4 (Darwin)
+│   └── headlessm1/                 # Headless M1 Mac (Darwin)
 ├── home/
 │   └── mic/
-│       └── default.nix            # User profile (Home Manager)
+│       └── default.nix             # User profile (Home Manager) - imported by ALL hosts
 ├── modules/
-│   ├── shell.nix                  # Fish, Git, Yazi, CLI utils
-│   ├── terminal.nix               # Ghostty, Btop
-│   ├── shared.nix                 # Fonts, cross-platform packages
-│   ├── nixvim.nix                 # Neovim via Nixvim
-│   ├── yazi.nix                   # File manager config
-│   ├── linux/
-│   │   └── desktop-linux.nix      # Hyprland, desktop-specific
-│   ├── darwin/                    # macOS-specific modules
-│   │   ├── darwin-system.nix      # System settings (Yabai, Skhd)
-│   │   └── ...
-│   └── server/                    # Self-hosted services
-│       ├── immich.nix
-│       ├── nextcloud.nix
-│       ├── samba.nix
-│       └── navidrome.nix
-├── config/                        # Non-Nix source configs (symlinked)
-│   ├── noctalia/                  # Hyprland/Waybar themes
+│   ├── home/                       # Home Manager modules (cross-platform, user-level)
+│   │   ├── shell.nix               # Fish, Git, Yazi, CLI utils
+│   │   ├── terminal.nix            # Ghostty, Btop
+│   │   ├── shared.nix              # Fonts, cross-platform packages (obsidian, sioyek, etc)
+│   │   ├── nixvim.nix              # Neovim via Nixvim
+│   │   ├── yazi.nix                # File manager config
+│   │   └── caveman.nix             # Caveman CLI tools
+│   └── systems/                    # System-level configurations (NixOS/Darwin)
+│       ├── darwin/                 # macOS-specific modules
+│       │   ├── homebrew.nix        # Homebrew management (parameterized per-host)
+│       │   ├── darwin.nix          # macOS user-level packages
+│       │   ├── yabai.nix           # Tiling window manager
+│       │   ├── skhd.nix            # Hotkey daemon
+│       │   ├── aerospace.nix       # AeroSpace config
+│       │   └── aerospace-skhd.nix  # AeroSpace skhd overrides
+│       ├── linux/
+│       │   └── desktop-linux.nix   # Hyprland, desktop packages
+│       └── server/                 # Self-hosted services
+│           ├── cloudflare-tunnel.nix
+│           ├── immich.nix
+│           ├── nextcloud.nix
+│           ├── navidrome.nix
+│           ├── vaultwarden.nix
+│           ├── samba.nix
+│           └── ... (see modules/systems/server/)
+├── config/                         # Non-Nix source configs (symlinked)
+│   ├── noctalia/                   # Hyprland/Waybar themes
 │   ├── btop/
 │   ├── yazi/
 │   └── ...
-└── scripts/                       # Custom helper scripts
+└── scripts/                        # Custom helper scripts
 ```
 
 ### 3.2 Platform-Specific Conditionals
@@ -129,22 +143,24 @@ home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/mic" else "/home/mic";
 
 ### 3.3 Module Import Pattern
 
-All user-facing modules must be imported in `home/mic/default.nix`:
+All user-facing modules are imported centrally in `home/mic/default.nix` (used by all hosts):
 
 ```nix
 imports = [
-  ../../modules/shell.nix
-  ../../modules/terminal.nix
-  ../../modules/shared.nix
-  ../../modules/nixvim.nix
-  ../../modules/yazi.nix
-  # Conditionally import platform-specific modules
-] ++ lib.optionals pkgs.stdenv.isLinux [
-  ../../modules/linux/desktop-linux.nix
-] ++ lib.optionals pkgs.stdenv.isDarwin [
-  ../../modules/darwin/darwin-system.nix
+  ../../modules/home/shell.nix
+  ../../modules/home/terminal.nix
+  ../../modules/home/shared.nix
+  ../../modules/home/yazi.nix
+  ../../modules/home/nixvim.nix
+  ../../modules/home/caveman.nix
+  inputs.nixvim.homeModules.nixvim
 ];
 ```
+
+System-level modules are imported in host configs or parts files:
+- Linux desktop: Import `../../modules/systems/linux/desktop-linux.nix` in host config
+- Darwin: Import `../../modules/systems/darwin/*.nix` modules in host config
+- Server: Import `../../modules/systems/server/*.nix` modules in host config
 
 ### 3.4 Symlinked Configs
 
@@ -163,31 +179,43 @@ xdg.configFile."noctalia".source = config.lib.file.mkOutOfStoreSymlink
 
 ### 4.1 Adding a New System
 
-1. **Create host config**: `hosts/<hostname>/default.nix`
+1. **Create host config**: `hosts/<hostname>/default.nix` (hardware, networking, SSH keys only)
 2. **Add hardware config** (NixOS only): `hosts/<hostname>/hardware-configuration.nix`
-3. **Update flake.nix**:
-   - For NixOS: Add to `nixosConfigurations.<hostname>`
-   - For Darwin: Add to `darwinConfigurations.<hostname>`
-4. **Test build**: `nixos-rebuild build --flake .#<hostname>` (NixOS) or `nix run nix-darwin -- build --flake .#<hostname>` (Darwin)
-5. **Commit with all three checks passed**.
+3. **Import system modules** in host config:
+   - NixOS desktop: `imports = [../../modules/systems/linux/desktop-linux.nix];`
+   - Darwin: `imports = [../../modules/systems/darwin/homebrew.nix ../../modules/systems/darwin/yabai.nix];`
+   - Server: `imports = [../../modules/systems/server/cloudflare-tunnel.nix ... ];`
+4. **Update parts file** (`parts/nixos-systems.nix` or `parts/darwin-systems.nix`):
+   - Add new configuration with correct module imports
+5. **Test build**: `nixos-rebuild build --flake .#<hostname>` (NixOS) or `nix run nix-darwin -- build --flake .#<hostname>` (Darwin)
+6. **Commit with all checks passed**.
 
 ### 4.2 Adding a New Module
 
-1. **Create module**: `modules/<name>.nix` with function signature:
+1. **Determine module type**:
+   - User-level (packages, shell, editor): `modules/home/<name>.nix`
+   - System-level Darwin: `modules/systems/darwin/<name>.nix`
+   - System-level Linux: `modules/systems/linux/<name>.nix`
+   - System-level Server: `modules/systems/server/<name>.nix`
+
+2. **Create module** with function signature:
    ```nix
    { config, pkgs, lib, inputs, ... }:
    {
      # module content
    }
    ```
-2. **Add platform conditionals** if needed: `lib.mkIf pkgs.stdenv.isLinux { ... }`
-3. **Import in `home/mic/default.nix`**: Add to `imports` list.
-4. **Test**:
+
+3. **For home-manager modules**: Import in `home/mic/default.nix`
+4. **For system modules**: Import in the relevant host config or parts file
+5. **Test**:
    ```bash
    home-manager build --flake .#mic@<hostname>
+   # or for system configs:
+   nixos-rebuild build --flake .#<hostname>
    ```
-5. **Format**: `nixfmt .`
-6. **Commit**.
+6. **Format**: `nixfmt .`
+7. **Commit**.
 
 ### 4.3 Updating a Symlinked Config
 
@@ -435,7 +463,7 @@ Internet → Cloudflare (DNS + SSL) → Cloudflare Tunnel (outbound connection) 
 - DNS not resolving → Wait 5-30 mins for Cloudflare to propagate
 
 **Important Files**:
-- NixOS tunnel module: `modules/server/cloudflare-tunnel.nix`
+- NixOS tunnel module: `modules/systems/server/cloudflare-tunnel.nix`
 - Tunnel token file: `/etc/cloudflared/tunnel.env` (on server, not in git)
 - Cloudflare dashboard: https://one.dash.cloudflare.com
 
@@ -521,8 +549,12 @@ When making changes, update documentation if needed:
 
 ```bash
 # NixOS Desktop
-nixos-rebuild build --flake .#nixos-btw
-sudo nixos-rebuild switch --flake .#nixos-btw
+nixos-rebuild build --flake .#desktop-nixos
+sudo nixos-rebuild switch --flake .#desktop-nixos
+
+# NixOS Laptop
+nixos-rebuild build --flake .#acer-nixos
+sudo nixos-rebuild switch --flake .#acer-nixos
 
 # NixOS Server
 nixos-rebuild build --flake .#optiplex-server
@@ -552,17 +584,22 @@ nix flake check
 | Component | Location | Type |
 |-----------|----------|------|
 | Entry point | `flake.nix` | Nix |
-| Desktop (NixOS) | `hosts/nixos-btw/default.nix` | Nix |
+| Flake parts | `parts/nixos-systems.nix`, `parts/darwin-systems.nix` | Nix |
+| Desktop (NixOS) | `hosts/desktop-nixos/default.nix` | Nix |
+| Laptop (NixOS) | `hosts/acer-nixos/default.nix` | Nix |
 | Server (NixOS) | `hosts/optiplex-server/default.nix` | Nix |
 | MacBook (Darwin) | `hosts/mbp-m4/default.nix` | Nix |
+| Headless M1 (Darwin) | `hosts/headlessm1/default.nix` | Nix |
 | User config | `home/mic/default.nix` | Nix |
-| Shared modules | `modules/` | Nix |
+| Home modules | `modules/home/` | Nix |
+| System modules | `modules/systems/{darwin,linux,server}/` | Nix |
 | Hyprland config | `config/noctalia/` | Symlinked |
-| Shell config | `modules/shell.nix` | Nix |
-| Neovim config | `modules/nixvim.nix` | Nix |
-| Services config | `modules/server/` | Nix |
-| Cloudflare Tunnel | `modules/server/cloudflare-tunnel.nix` | Nix |
-| Landing page | `modules/server/landing-page.nix` | Nix |
+| Shell config | `modules/home/shell.nix` | Nix |
+| Neovim config | `modules/home/nixvim.nix` | Nix |
+| Homebrew setup | `modules/systems/darwin/homebrew.nix` | Nix |
+| Services config | `modules/systems/server/` | Nix |
+| Cloudflare Tunnel | `modules/systems/server/cloudflare-tunnel.nix` | Nix |
+| Landing page | `modules/systems/server/landing-page.nix` | Nix |
 | Tunnel token | `/etc/cloudflared/tunnel.env` | System (not in git) |
 
 ---
@@ -579,5 +616,5 @@ nix flake check
 
 ---
 
-**Last Updated**: 2026-04-22 (Cloudflare Tunnel setup for optiplex-server)  
+**Last Updated**: 2026-05-27 (Module refactor: flake-parts architecture, home/ vs systems/ hierarchy, homebrew consolidation)  
 **For latest GEMINI.md principles**: See [GEMINI.md](./GEMINI.md)

@@ -4,36 +4,67 @@ A modular, cross-platform Nix configuration built with Flakes and Home Manager, 
 
 ## 🚀 Architecture
 
-This configuration follows a modular approach as mandated by [GEMINI.md](./GEMINI.md):
+This configuration follows a modular, flake-parts-based approach as mandated by [GEMINI.md](./GEMINI.md):
 
-- **Flakes First**: Managed via `flake.nix`.
-- **Platform Separation**:
-    - `hosts/`: Machine-specific system configurations (NixOS, Darwin).
-    - `home/`: User-specific Home Manager profiles.
-    - `modules/`: Shared logic, services, and application settings.
-- **Home Manager Dominance**: Most user-facing applications (Fish, Ghostty, Hyprland) are managed at the user level for maximum portability.
+- **Flake Parts**: Uses `hercules-ci/flake-parts` for modular flake composition (`parts/nixos-systems.nix`, `parts/darwin-systems.nix`)
+- **Clear Hierarchy**:
+  - `hosts/` → Machine-specific system configurations (hardware, networking, SSH keys)
+  - `home/` → User profile (imports shared home-manager modules across all hosts)
+  - `modules/home/` → Cross-platform Home Manager configs (shell, terminal, packages, editors)
+  - `modules/systems/` → System-level configs (Darwin, Linux, Server with clear separation)
+- **Home Manager First**: User-facing applications (Fish, Ghostty, Neovim, Yazi) managed at user level for portability
+- **Minimal Host Config**: Hosts only contain hardware/platform-specific settings; features come from modules
 
 ## 📂 Directory Structure
 
 ```text
 .
-├── flake.nix               # Entry point for the entire configuration
+├── flake.nix               # Entry point (uses Flake Parts)
+├── parts/                  # Flake-parts modules
+│   ├── nixos-systems.nix   # NixOS configurations
+│   └── darwin-systems.nix  # Darwin configurations
 ├── hosts/
-│   └── desktop-nixos/          # NixOS Desktop (desktop-nixos)
-│       ├── default.nix     # System-level services, hardware, and users
-│       └── hardware-configuration.nix # Auto-generated hardware config
+│   ├── desktop-nixos/          # NixOS Desktop
+│   │   ├── default.nix     # System-level hardware, networking, SSH
+│   │   └── hardware-configuration.nix
+│   ├── acer-nixos/
+│   ├── optiplex-server/    # Self-hosted services (Immich, Nextcloud, etc)
+│   ├── mbp-m4/             # MacBook Pro M4
+│   └── headlessm1/         # Headless M1 Mac
 ├── home/
 │   └── mic/                # Main user profile
-│       └── default.nix     # Entry point for Home Manager, imports modules
+│       └── default.nix     # Home Manager imports (shared across all hosts)
 ├── modules/
-│   ├── home/               # Home Manager modules (Cross-platform)
-│   │   ├── shell.nix       # Fish, Git, Yazi, and core CLI utilities
-│   │   ├── terminal.nix    # Ghostty and Btop configurations
-│   │   └── shared.nix      # Fonts, and shared cross-platform applications
-│   └── nixvim.nix          # Neovim configuration via Nixvim
-├── config/                 # Source for non-Nix symlinked configurations
-├── scripts/                # Custom helper scripts (e.g., drift, borders)
-└── walls/                  # Curated wallpapers and media
+│   ├── home/               # Home Manager modules (cross-platform)
+│   │   ├── shell.nix       # Fish, Git, Yazi, CLI utilities
+│   │   ├── terminal.nix    # Ghostty, Btop
+│   │   ├── shared.nix      # Fonts, cross-platform packages (obsidian, sioyek, etc)
+│   │   ├── nixvim.nix      # Neovim via Nixvim
+│   │   ├── yazi.nix        # File manager config
+│   │   └── caveman.nix     # Caveman mode for CLI tools
+│   └── systems/            # System-level configurations
+│       ├── darwin/         # macOS-specific
+│       │   ├── homebrew.nix       # Homebrew management (parameterized per-host)
+│       │   ├── darwin.nix         # macOS user-level packages
+│       │   ├── yabai.nix          # Tiling window manager
+│       │   ├── skhd.nix           # Hotkey daemon
+│       │   ├── aerospace.nix      # AeroSpace config (headless-m1 only)
+│       │   └── aerospace-skhd.nix # AeroSpace skhd overrides (headless-m1 only)
+│       ├── linux/          # Linux-specific
+│       │   └── desktop-linux.nix  # Hyprland, desktop apps
+│       └── server/         # Self-hosted services
+│           ├── cloudflare-tunnel.nix  # Tunnel setup for optiplex-server
+│           ├── immich.nix
+│           ├── nextcloud.nix
+│           ├── navidrome.nix
+│           ├── vaultwarden.nix
+│           └── ... (see modules/systems/server/)
+├── config/                 # Non-Nix source configs (symlinked)
+│   ├── noctalia/           # Hyprland/Waybar themes
+│   ├── btop/
+│   ├── yazi/
+│   └── ...
+└── scripts/                # Custom helper scripts
 ```
 
 ## 🛠️ Usage
