@@ -19,7 +19,6 @@
             users.mic = {
               imports = [
                 "${self}/home/mic/default.nix"
-                "${self}/modules/home/gui-apps.nix"
                 "${self}/modules/systems/darwin/darwin.nix"
               ];
             };

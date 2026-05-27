@@ -21,7 +21,6 @@
               imports = [
                 "${self}/home/mic/default.nix"
                 "${self}/modules/systems/linux/desktop-linux.nix"
-                "${self}/modules/home/gui-apps.nix"
               ];
             };
             extraSpecialArgs = { inherit inputs; };

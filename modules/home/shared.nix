@@ -25,5 +25,8 @@
     black
     isort
     ruff
+    # GUI applications
+    obsidian
+    sioyek
   ];
 }
