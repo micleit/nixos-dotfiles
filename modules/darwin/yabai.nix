@@ -43,7 +43,7 @@ in
     config = {
       external_bar = "all:33:0";
       mouse_follows_focus = "on";
-      focus_follows_mouse = "autofocus";
+      focus_follows_mouse = "off";
       window_zoom_persist = "off";
       window_placement = "second_child";
       window_shadow = "float";

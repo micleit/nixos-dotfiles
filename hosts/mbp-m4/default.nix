@@ -69,6 +69,7 @@
     ];
     casks = [
       # "bitwarden" can't do browser integration without mac app store version.
+      "anki"
       "visual-studio-code"
       "discord"
       "spotify"
