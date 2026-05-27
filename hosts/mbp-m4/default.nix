@@ -1,9 +1,13 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 
 {
   imports = [
-    ../../modules/darwin/yabai.nix
-    ../../modules/darwin/skhd.nix
+    ../../modules/systems/darwin/yabai.nix
+    ../../modules/systems/darwin/skhd.nix
+    ../../modules/systems/darwin/homebrew.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
@@ -11,7 +15,6 @@
   environment.systemPackages = [
     pkgs.vim
     pkgs.git
-    pkgs.iina
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -57,45 +60,38 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" # acer
   ];
 
-  # Homebrew management
-  homebrew = {
-    enable = true;
-    onActivation.cleanup = "uninstall"; # Safer than "zap"
-    onActivation.autoUpdate = true;
-    onActivation.upgrade = true;
-    taps = [
-      "felixkratz/formulae"
-      "asmvik/formulae"
-    ];
-    casks = [
-      # "bitwarden" can't do browser integration without mac app store version.
-      "anki"
-      "visual-studio-code"
-      "discord"
-      "spotify"
-      "raycast"
-      "karabiner-elements"
-      "brave-browser"
-      "skim"
-      "font-sf-pro"
-      "font-sf-mono"
-      "sf-symbols"
-      "font-hack-nerd-font"
-      "font-sketchybar-app-font"
-      "colemak-dh"
-      # Add your other Mac apps here
-    ];
-    brews = [
-      "gemini-cli"
-      "sketchybar" # Often better from brew for permissions/updates
-      "borders"
-      "cliclick"
-      "switchaudio-osx"
-      "nowplaying-cli"
-      "lua"
-      "mole"
-    ];
-  };
+  # Homebrew configuration (per-host customization)
+  homebrew.taps = [
+    "felixkratz/formulae"
+    "asmvik/formulae"
+  ];
+  homebrew.casks = [
+    # "bitwarden" can't do browser integration without mac app store version.
+    "anki"
+    "visual-studio-code"
+    "discord"
+    "spotify"
+    "raycast"
+    "karabiner-elements"
+    "brave-browser"
+    "skim"
+    "font-sf-pro"
+    "font-sf-mono"
+    "sf-symbols"
+    "font-hack-nerd-font"
+    "font-sketchybar-app-font"
+    "colemak-dh"
+  ];
+  homebrew.brews = [
+    "gemini-cli"
+    "sketchybar" # Often better from brew for permissions/updates
+    "borders"
+    "cliclick"
+    "switchaudio-osx"
+    "nowplaying-cli"
+    "lua"
+    "mole"
+  ];
 
   # Services
   services.sketchybar.enable = true;

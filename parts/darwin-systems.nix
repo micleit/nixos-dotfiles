@@ -19,8 +19,8 @@
             users.mic = {
               imports = [
                 "${self}/home/mic/default.nix"
-                "${self}/modules/gui-apps.nix"
-                "${self}/modules/darwin/darwin.nix"
+                "${self}/modules/home/gui-apps.nix"
+                "${self}/modules/systems/darwin/darwin.nix"
               ];
             };
             extraSpecialArgs = { inherit inputs; };
@@ -42,7 +42,8 @@
             users.mic = {
               imports = [
                 "${self}/home/mic/default.nix"
-                "${self}/modules/darwin/darwin.nix"
+                "${self}/modules/systems/darwin/darwin.nix"
+                "${self}/modules/systems/darwin/aerospace.nix"
               ];
             };
             extraSpecialArgs = { inherit inputs; };

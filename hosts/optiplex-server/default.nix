@@ -9,13 +9,13 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/server/landing-page.nix
-    ../../modules/server/cloudflare-tunnel.nix
-    ../../modules/server/immich.nix
-    ../../modules/server/samba.nix
-    ../../modules/server/nextcloud.nix
-    ../../modules/server/navidrome.nix
-    ../../modules/server/vaultwarden.nix
+    ../../modules/systems/server/landing-page.nix
+    ../../modules/systems/server/cloudflare-tunnel.nix
+    ../../modules/systems/server/immich.nix
+    ../../modules/systems/server/samba.nix
+    ../../modules/systems/server/nextcloud.nix
+    ../../modules/systems/server/navidrome.nix
+    ../../modules/systems/server/vaultwarden.nix
   ];
 
   # ============================================================================
