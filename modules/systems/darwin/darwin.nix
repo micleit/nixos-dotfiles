@@ -9,10 +9,11 @@
     # Add any other macOS specific CLI tools here
   ];
 
-  # Symlink existing configs from the repo
-  home.file = { };
-
+  # Symlink sketchybar config (not tracked in git, uses mkOutOfStoreSymlink)
   xdg.configFile = {
-    "sketchybar".source = ../../config/sketchybar;
+    "sketchybar".source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/nixos-dotfiles/config/sketchybar";
   };
 }
+
+
