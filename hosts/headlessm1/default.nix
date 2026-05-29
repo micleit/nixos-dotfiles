@@ -12,6 +12,7 @@
 
   nixpkgs.overlays = [ ];
 
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ ];
 
   # List packages installed in system profile.
