@@ -37,7 +37,13 @@ in
   services.yabai = {
     enable = true;
     # Using the package from nixpkgs
-    package = pkgs.yabai;
+    package = pkgs.yabai.overrideAttrs (oldAttrs: rec {
+      version = "7.1.24";
+      src = pkgs.fetchurl {
+        url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
+        hash = "sha256-YnSHxsOQRo6oZ5UZjs8uqw3ZCmZF9KQiJflyC5W5SkM=";
+      };
+    });
     enableScriptingAddition = true;
 
     config = {

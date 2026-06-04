@@ -25,8 +25,6 @@
     black
     isort
     ruff
-    docker
-    docker-client
     # GUI applications
     obsidian
     sioyek

@@ -80,6 +80,7 @@
     "font-hack-nerd-font"
     "font-sketchybar-app-font"
     "colemak-dh"
+    "docker-desktop" # Docker Desktop GUI
   ];
   homebrew.brews = [
     "gemini-cli"
@@ -90,6 +91,7 @@
     "nowplaying-cli"
     "lua"
     "mole"
+    "colima" # Docker daemon via lightweight VM
   ];
 
   # Services

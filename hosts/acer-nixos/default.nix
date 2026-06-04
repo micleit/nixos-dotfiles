@@ -59,6 +59,9 @@
   services.tuned.enable = true;
   services.upower.enable = true;
 
+  # Docker
+  virtualisation.docker.enable = true;
+
   # Time & Locale
   time.timeZone = "America/New_York";
   services.timesyncd.enable = true;
@@ -138,6 +141,7 @@
       "optical"
       "storage"
       "cdrom"
+      "docker"
     ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [

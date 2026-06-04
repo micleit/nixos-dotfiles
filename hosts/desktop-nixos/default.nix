@@ -9,7 +9,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/systems/server/samba.nix
     # Other system-wide modules
   ];
 
@@ -53,6 +52,9 @@
   services.tailscale.enable = true;
   services.tuned.enable = true;
   services.upower.enable = true;
+
+  # Docker
+  virtualisation.docker.enable = true;
 
   # Time & Locale
   time.timeZone = "America/New_York";
@@ -158,6 +160,7 @@
       "cdrom"
       "uinput"
       "input"
+      "docker"
     ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [

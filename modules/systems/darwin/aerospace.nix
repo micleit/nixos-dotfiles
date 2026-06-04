@@ -6,9 +6,9 @@
 
 {
   # Override the default sketchybar config with the aerospace-specific one
-  xdg.configFile."sketchybar".source = lib.mkForce
-    (config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/nixos-dotfiles/config/sketchybar-aerospace");
+  xdg.configFile."sketchybar".source = lib.mkForce (
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/sketchybar-aerospace"
+  );
 
   # AeroSpace configuration file
   home.file.".config/aerospace/aerospace.toml".text = ''

@@ -10,6 +10,7 @@
     ../../modules/home/shell.nix
     ../../modules/home/terminal.nix
     ../../modules/home/shared.nix
+    ../../modules/home/linux.nix
     ../../modules/home/yazi.nix
     ../../modules/home/nixvim.nix
     ../../modules/home/caveman.nix
