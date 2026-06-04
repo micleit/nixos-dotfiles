@@ -44,6 +44,7 @@
                 imports = [
                   ./home/mic/default.nix
                   ./modules/systems/linux/desktop-linux.nix
+                  ./modules/home/shared.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -66,6 +67,7 @@
                 imports = [
                   ./home/mic/default.nix
                   ./modules/systems/linux/desktop-linux.nix
+                  ./modules/home/shared.nix
                 ];
               };
               extraSpecialArgs = { inherit inputs; };
@@ -117,27 +119,28 @@
         ];
       };
 
-      darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/mbp-m4/default.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.mic = {
-                imports = [
-                  ./home/mic/default.nix
-                  ./modules/systems/darwin/darwin.nix
-                ];
-              };
-              extraSpecialArgs = { inherit inputs; };
-              backupFileExtension = "backup";
-            };
-          }
-        ];
-      };
+       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
+         specialArgs = { inherit inputs; };
+         modules = [
+           ./hosts/mbp-m4/default.nix
+           home-manager.darwinModules.home-manager
+           {
+             home-manager = {
+               useGlobalPkgs = true;
+               useUserPackages = true;
+               users.mic = {
+                 imports = [
+                   ./home/mic/default.nix
+                   ./modules/home/shared.nix
+                   ./modules/systems/darwin/darwin.nix
+                 ];
+               };
+               extraSpecialArgs = { inherit inputs; };
+               backupFileExtension = "backup";
+             };
+           }
+         ];
+       };
 
       darwinConfigurations.headless-m1 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
