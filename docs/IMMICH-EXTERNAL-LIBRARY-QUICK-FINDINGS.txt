@@ -1,0 +1,79 @@
+IMMICH EXTERNAL LIBRARY RESEARCH - QUICK FINDINGS
+==================================================
+
+QUESTION 1: Does Immich have a native external library feature?
+ANSWER: YES - External Libraries is a fully supported, first-class feature
+- Official docs: https://immich.app/docs/features/libraries
+- Web UI: Administration > External Libraries
+- Create/edit/delete via UI
+- Per-user ownership
+
+QUESTION 2: Official supported methods for external storage?
+ANSWER: Three methods
+1. Docker Volume Mounts (for Docker deployments)
+   Format: immich-server volumes: [ /host/path:/container/path:ro ]
+   
+2. Filesystem-Level Mounts (for NixOS/systemd)
+   Used in current nixos-dotfiles configuration
+   
+3. Network Mounts (NAS/SMB/NFS)
+   Supported but auto-watching doesn't work on networks
+
+QUESTION 3: Is bind mounting recommended or is there a better way?
+ANSWER: For NixOS - bind mounting IS correct and recommended
+- Your current approach is sound
+- Matches Immich's official troubleshooting steps
+- Clean integration with NixOS philosophy
+- Alternative: Use External Libraries UI for more flexibility
+
+QUESTION 4: How does Immich handle multiple storage locations?
+ANSWER: Three approaches
+1. Multiple import paths in single library
+   - One library references /path1, /path2, /path3
+   - Deduplication across all paths
+   
+2. Storage template engine (for uploaded files)
+   - Organize by pattern: Year/Year-Month-Day/Filename
+   - Customizable via UI
+   
+3. Multiple external libraries
+   - Each library owned by single user
+   - Independent scanning schedules
+
+QUESTION 5: Required permissions/ownership for external libraries?
+ANSWER: Standard NixOS/Linux permissions
+- Immich runs as user: immich
+- Minimum: read permission (rx) for directories
+- For metadata writes: rw permissions needed
+- Current config includes: users.users.immich.extraGroups = [ "users" ]
+- Read-only: Add "ro" option to mount for archives
+- Best practice: Use :ro in Docker, "ro" in NixOS mounts for archives
+
+CURRENT IMPLEMENTATION ASSESSMENT
+==================================
+Status: SOUND and CORRECT
+
+Current code:
+  fileSystems."/mnt/old-laptop" = { device = "/dev/disk/by-uuid/..."; ... }
+  fileSystems."/var/lib/immich" = { device = "/mnt/old-laptop/var/lib/immich"; fsType = "none"; options = [ "bind" "nofail" ]; }
+
+Strengths:
+✓ Correct use of NixOS fileSystems abstraction
+✓ Proper dependency ordering with "depends"
+✓ Nofail prevents boot failures if drive unavailable
+✓ Matches Immich troubleshooting documentation
+
+Potential Improvements:
+- Add "ro" option if archive-only: options = [ "bind" "nofail" "ro" ]
+- Consider separate mount for UI visibility: /mnt/immich-external instead of /var/lib/immich
+- Use External Libraries UI for future flexibility
+
+RECOMMENDATIONS
+================
+1. KEEP current bind-mount approach - it's correct for NixOS
+2. CONSIDER adding :ro if old laptop drive should be read-only
+3. CONSIDER using separate external library mount for UI clarity (future enhancement)
+4. NO URGENT CHANGES NEEDED - current implementation is sound
+
+For reference, see full document:
+/Users/mic/nixos-dotfiles/docs/immich-external-library-research.md
