@@ -10,36 +10,39 @@ local popup_width = 250
 
 local wifi_up = sbar.add("item", "widgets.wifi1", {
   position = "right",
-padding_left = 0,
+  padding_left = 0,
   padding_right = 25,
-width = 0,
+  width = 0,
   label = {
-  font = {
+    font = {
       family = settings.font.numbers,
-    style = settings.font.style_map["Bold"],
+      style = settings.font.style_map["Bold"],
       size = 10.0,
-  },
+    },
     color = colors.red,
-  string = "Unknown SSID",
+    string = "Unknown SSID",
   },
-y_offset = 0,
+  y_offset = 0,
 })
 
---wifi_up:subscribe({"wifi_change", "system_woke"}, function(env)
---  sbar.exec("networksetup -getairportnetwork en0 | cut -d: -f2 | sed 's/^ //'", function(result)
---    local ssid = result:gsub("\n", "") -- trim newlines
---    if ssid == "" then
---      ssid = "No Wi-Fi"
---    end
---    wifi_up:set({
---      label = {
---        string = ssid,
---        color = colors.red
---      }
---    })
---  end)
---end)
-
+-- Handle SSID changes and waking up using the macOS Shortcuts runtime engine
+wifi_up:subscribe({"wifi_change", "system_woke"}, function(env)
+  -- Wrapping the execution inside a shell evaluation force-feeds the text payload back to Lua
+  sbar.exec("res=$(shortcuts run 'Get Wi-Fi SSID') && echo \"$res\"", function(result)
+    local ssid = result:gsub("[\r\n]", ""):gsub("^%s*(.-)%s*$", "%1")
+    
+    if ssid == "" then
+      ssid = "No Wi-Fi"
+    end
+    
+    wifi_up:set({
+      label = {
+        string = ssid,
+        color = colors.red
+      }
+    })
+  end)
+end)
 local wifi = sbar.add("item", "widgets.wifi.padding", {
   position = "right",
   padding_right = 6,
@@ -114,28 +117,12 @@ local router = sbar.add("item", {
 
 sbar.add("item", { position = "right", width = settings.group_paddings })
 
--- wifi_up:subscribe("network_update", function(env)
---   local up_color = (env.upload == "000 Bps") and colors.grey or colors.red
---   local down_color = (env.download == "000 Bps") and colors.grey or colors.blue
---   wifi_up:set({
---     icon = { color = up_color },
---     label = {
---       string = env.upload,
---       color = up_color
---     }
---   })
---   wifi_down:set({
---     icon = { color = down_color },
---     label = {
---       string = env.download,
---       color = down_color
---     }
---   })
--- end)
+-- Note: The `wifi_up:subscribe("network_update", ...)` download/upload traffic block remains commented out 
+-- since it requires a `wifi_down` element that isn't declared in this file.
 
 wifi:subscribe({"wifi_change", "system_woke"}, function(env)
-  sbar.exec("ipconfig getifaddr en0", function(ip)
-    local connected = not (ip == "")
+  sbar.exec("ipconfig getifaddr en0", function(ip_addr)
+    local connected = not (ip_addr == "")
     wifi:set({
       icon = {
         string = connected and icons.wifi.connected or icons.wifi.disconnected,
