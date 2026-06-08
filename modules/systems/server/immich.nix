@@ -2,8 +2,8 @@
 
 {
   # 1. Mount the old Laptop Root Partition (2TB SSD)
-  fileSystems."/mnt/old-laptop" = {
-    device = "/dev/disk/by-uuid/7290c982-8ba3-422f-9eda-4831b7255260";
+  fileSystems."/mnt/ssd1" = {
+    device = "/dev/disk/by-uuid/640ec30a-2257-4b72-8d22-4f9936056038";
     fsType = "ext4";
     options = [
       "nofail"
@@ -13,13 +13,13 @@
 
   # 2. Reach inside the old /var/lib/immich and map it to the new one
   fileSystems."/var/lib/immich" = {
-    device = "/mnt/old-laptop/var/lib/immich";
+    device = "/mnt/ssd1/immich-temp/";
     fsType = "none";
     options = [
       "bind"
       "nofail"
     ];
-    depends = [ "/mnt/old-laptop" ];
+    depends = [ "/mnt/ssd1" ];
   };
 
   # 3. Standard Immich Service Setup

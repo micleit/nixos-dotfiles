@@ -13,7 +13,7 @@
     ../../modules/systems/server/cloudflare-tunnel.nix
     ../../modules/systems/server/immich.nix
     ../../modules/systems/server/samba.nix
-    ../../modules/systems/server/nextcloud.nix
+    # ../../modules/systems/server/nextcloud.nix
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
   ];
@@ -30,13 +30,14 @@
   # ============================================================================
   # NETWORKING & SERVICES
   # ============================================================================
-  networking.hostName = "optiplex-server";
+  networking.hostName = "new-optiplex";
   networking.networkmanager.enable = true;
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
   ];
 
+  virtualisation.docker.enable = true;
   services.openssh.enable = true;
   services.tailscale.enable = true;
 
@@ -90,6 +91,7 @@
       "optical"
       "cdrom"
       "audio"
+      "docker"
     ];
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
