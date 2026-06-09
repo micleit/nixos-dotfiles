@@ -23,6 +23,7 @@
         volumes = [
           "/var/lib/seafile/mysql:/var/lib/mysql"
         ];
+        extraOptions = [ "--network=seafile-net" ];
       };
 
       # Cache
@@ -33,6 +34,7 @@
           "-m"
           "256"
         ];
+        extraOptions = [ "--network=seafile-net" ];
       };
 
       # Seafile Server
@@ -49,17 +51,38 @@
           DB_HOST = "seafile-mysql";
           DB_ROOT_PASSWD = "seafile_db_password";
           TIME_ZONE = "America/New_York";
-          SEAFILE_ADMIN_EMAIL = "mic@53729123.xyz";
+          SEAFILE_ADMIN_EMAIL = "micah.leiterman@gmail.com";
           SEAFILE_ADMIN_PASSWORD = "seafile_password_change_me";
           SEAFILE_SERVER_LETSENCRYPT = "false";
           SEAFILE_SERVER_HOSTNAME = "seafile.53729123.xyz";
+          SEAFILE_SERVER_PROTOCOL = "https";
         };
         volumes = [
           "/var/lib/seafile/data:/shared"
         ];
+        extraOptions = [ "--network=seafile-net" ];
       };
     };
   };
+
+  # Create the network before starting containers
+  systemd.services.docker-network-seafile = {
+    description = "Create the Seafile Docker network";
+    after = [ "network.target" "docker.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      check=$(${pkgs.docker}/bin/docker network ls | grep seafile-net || true)
+      if [ -z "$check" ]; then
+        ${pkgs.docker}/bin/docker network create seafile-net
+      fi
+    '';
+  };
+
+  # Ensure containers wait for the network
+  systemd.services.docker-seafile-mysql.after = [ "docker-network-seafile.service" ];
+  systemd.services.docker-seafile-memcached.after = [ "docker-network-seafile.service" ];
+  systemd.services.docker-seafile.after = [ "docker-network-seafile.service" ];
 
   # Ensure the data directory exists
   systemd.tmpfiles.rules = [

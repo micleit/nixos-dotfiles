@@ -9,28 +9,19 @@
   services.navidrome = {
     enable = true;
     settings = {
-      # Point to the bind-mounted location
-      MusicFolder = "/var/lib/navidrome/music";
+      # Moved music to a top-level directory to avoid home directory permission issues
+      MusicFolder = "/music";
       Address = "0.0.0.0";
       Port = 4533;
       ScanSchedule = "@every 1h";
     };
   };
 
-  # Bind mount the music folder so Navidrome can access it directly.
-  # This bypasses the home directory's restricted permissions.
-  fileSystems."/var/lib/navidrome/music" = {
-    device = "/home/mic/Sorted";
-    fsType = "none";
-    options = [
-      "bind"
-      "ro"
-    ];
-  };
-
-  # Ensure the mount point exists
+  # Automatically fix permissions for new files added to /music using ACLs
+  # This ensures Navidrome can always read new music without manual chmod
   systemd.tmpfiles.rules = [
-    "d /var/lib/navidrome/music 0755 navidrome navidrome -"
+    "d /music 0755 mic users - -"
+    "A+ /music - - - - d:u::rwx,d:g::rwx,d:o::rx,u::rwx,g::rwx,o::rx"
   ];
 
   networking.firewall.allowedTCPPorts = [ 4533 ];

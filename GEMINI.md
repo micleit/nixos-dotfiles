@@ -36,7 +36,18 @@ Formatting: Always format Nix code using nixfmt or alejandra.
 Domain Separation: Keep Mathematics and Computer Science topics distinct. Do not use analogies from one to explain the other unless explicitly requested.
 
 5. Specific Hardware & Services
-Support for photography workflows (Fujifilm X-T3/GoPro) via Nix-wrapped scripts.
+### Docker Networking in NixOS
+When using `virtualisation.oci-containers` with the `docker` backend for multi-container deployments (like Seafile), you MUST create a custom Docker network and assign containers to it to enable DNS resolution between containers.
+
+Example:
+```nix
+systemd.services.docker-network-seafile = {
+  script = "docker network inspect seafile-net >/dev/null 2>&1 || docker network create seafile-net";
+  # ...
+};
+```
+And add `extraOptions = [ "--network=seafile-net" ];` to each container.
+
 
 Maintain configurations for self-hosted services like Immich.
 

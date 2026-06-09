@@ -18,6 +18,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    neomutt-gmail.url = "github:jevy/neomutt-for-gmail";
+
   };
 
   outputs =
