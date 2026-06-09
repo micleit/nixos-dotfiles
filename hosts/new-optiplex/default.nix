@@ -13,7 +13,6 @@
     ../../modules/systems/server/cloudflare-tunnel.nix
     ../../modules/systems/server/immich.nix
     ../../modules/systems/server/samba.nix
-    # ../../modules/systems/server/nextcloud.nix
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
   ];
