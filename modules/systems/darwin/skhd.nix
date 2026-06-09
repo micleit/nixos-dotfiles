@@ -102,6 +102,8 @@
       ralt + shift - 6 : yabai -m window --space 6
       ralt + shift - 7 : yabai -m window --space 7
       ralt + shift - 8 : yabai -m window --space 8
+      ralt + shift - 9 : yabai -m window --space 9
+      ralt + shift - 0 : yabai -m window --space 0
 
       # --- Move + focus window to space ---
       ralt + ctrl - m : yabai -m window --space last; yabai -m space --focus last

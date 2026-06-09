@@ -238,11 +238,8 @@
       # Nixvim handles the package, but we set the settings here
       settings = {
         # Use Skim on macOS, Zathura on Linux
-        view_method = if pkgs.stdenv.isDarwin then "skim" else "zathura";
+        view_method = "sioyek";
 
-        # Skim specific settings for better sync
-        view_skim_sync = 1;
-        view_skim_activate = 1;
 
         # Continuous compilation (requires latexmk, which Nixvim pulls in)
         compiler_method = "latexmk";
