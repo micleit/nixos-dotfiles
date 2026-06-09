@@ -7,7 +7,7 @@
 {
   imports = [
     ../../modules/systems/darwin/skhd.nix
-    ../../modules/systems/darwin/aerospace-skhd.nix
+    # ../../modules/systems/darwin/aerospace-skhd.nix
   ];
 
   nixpkgs.overlays = [ ];

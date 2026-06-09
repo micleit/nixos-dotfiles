@@ -86,6 +86,10 @@ let
                 <span class="emoji">📁</span>
                 Nextcloud
               </a>
+              <a href="https://seafile.${domain}" class="service">
+                <span class="emoji">🌊</span>
+                Seafile
+              </a>
               <a href="https://navidrome.${domain}" class="service">
                 <span class="emoji">🎵</span>
                 Navidrome

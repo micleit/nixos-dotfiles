@@ -49,12 +49,6 @@
     fsType = "ext4";
   };
 
-  fileSystems."/var/lib/immich" = {
-    device = "/mnt/old-laptop/var/lib/immich";
-    fsType = "none";
-    options = [ "bind" ];
-  };
-
   swapDevices = [ { device = "/dev/disk/by-uuid/adc06c6b-ae5e-4d62-8e7d-206485ff3444"; } ];
 
   nixpkgs.system = lib.mkDefault "x86_64-linux";

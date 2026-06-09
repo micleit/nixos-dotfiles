@@ -15,6 +15,7 @@
     ../../modules/systems/server/samba.nix
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
+    ../../modules/systems/server/seafile.nix
   ];
 
   # ============================================================================
