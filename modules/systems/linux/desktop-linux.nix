@@ -36,6 +36,7 @@
       "noctalia-shell"
       "libreoffice"
       "bitwarden-desktop"
+      "nextcloud-client"
     ];
   };
 }
