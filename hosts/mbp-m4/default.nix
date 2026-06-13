@@ -83,7 +83,6 @@
     "docker-desktop" # Docker Desktop GUI
   ];
   homebrew.brews = [
-    "gemini-cli"
     "sketchybar" # Often better from brew for permissions/updates
     "borders"
     "cliclick"

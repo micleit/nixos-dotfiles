@@ -15,7 +15,7 @@
     spicetify-cli
     texliveFull
     neovim-remote
-    gemini-cli
+    antigravity
     sesh
     opencode
     python3

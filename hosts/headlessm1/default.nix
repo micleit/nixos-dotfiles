@@ -89,7 +89,6 @@
     "nikitabobko/tap/aerospace"
   ];
   homebrew.brews = [
-    "gemini-cli"
     "sketchybar"
     "borders"
     "cliclick"
