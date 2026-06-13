@@ -37,16 +37,16 @@ Domain Separation: Keep Mathematics and Computer Science topics distinct. Do not
 
 5. Specific Hardware & Services
 ### Docker Networking in NixOS
-When using `virtualisation.oci-containers` with the `docker` backend for multi-container deployments (like Seafile), you MUST create a custom Docker network and assign containers to it to enable DNS resolution between containers.
+When using `virtualisation.oci-containers` with the `docker` backend for multi-container deployments, you SHOULD create a custom Docker network and assign containers to it to enable DNS resolution between containers.
 
 Example:
 ```nix
-systemd.services.docker-network-seafile = {
-  script = "docker network inspect seafile-net >/dev/null 2>&1 || docker network create seafile-net";
+systemd.services.docker-network-custom = {
+  script = "docker network inspect custom-net >/dev/null 2>&1 || docker network create custom-net";
   # ...
 };
 ```
-And add `extraOptions = [ "--network=seafile-net" ];` to each container.
+And add `extraOptions = [ "--network=custom-net" ];` to each container.
 
 
 Maintain configurations for self-hosted services like Immich.

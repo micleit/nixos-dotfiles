@@ -402,7 +402,6 @@ Internet → Cloudflare (DNS + SSL) → Cloudflare Tunnel (outbound connection) 
   - https://nextcloud.53729123.xyz → http://127.0.0.1:80
   - https://navidrome.53729123.xyz → http://127.0.0.1:4533
   - https://vaultwarden.53729123.xyz → http://127.0.0.1:8222
-  - https://seafile.53729123.xyz → http://127.0.0.1:8083
   - https://53729123.xyz → http://127.0.0.1:8080 (landing page)
 
 **Adding a New Service to the Tunnel**:
@@ -480,26 +479,6 @@ Internet → Cloudflare (DNS + SSL) → Cloudflare Tunnel (outbound connection) 
    ```
 
 **Key Learning**: Cloudflare Tunnel is ideal for self-hosted services behind NAT. The outbound-only connection model avoids all firewall/port forwarding complexity while maintaining security.
-
-#### 8.2b Seafile (Docker)
-
-**Context**: Seafile was removed from Nixpkgs due to being unmaintained. It is now deployed using Docker (OCI containers).
-
-**Architecture**:
-- **Backend**: Docker (`virtualisation.docker.enable = true`)
-- **Containers**: Seafile (Server), MariaDB (Database), Memcached (Cache)
-- **Persistence**: Data stored in `/var/lib/seafile/data`, Database in `/var/lib/seafile/mysql`
-
-**Module**: `modules/systems/server/seafile.nix`
-
-**Initial Setup**:
-1. **Passwords**: Edit `modules/systems/server/seafile.nix` and set `MYSQL_ROOT_PASSWORD`, `DB_ROOT_PASSWD`, and `SEAFILE_ADMIN_PASSWORD`.
-2. **Access**: Seafile is mapped to host port `8083`.
-3. **Tunnel**: Route `https://seafile.53729123.xyz` to `http://localhost:8083` in Cloudflare Zero Trust.
-
-**Maintenance**:
-- **Logs**: `docker logs seafile`, `docker logs seafile-mysql`
-- **Updates**: Change image tags in `seafile.nix` and rebuild.
 
 ### 8.3 Photography Workflows
 

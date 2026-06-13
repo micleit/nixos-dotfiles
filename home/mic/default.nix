@@ -14,7 +14,7 @@
     ../../modules/home/yazi.nix
     ../../modules/home/nixvim.nix
     ../../modules/home/caveman.nix
-    ../../modules/home/neomutt.nix
+    # ../../modules/home/neomutt.nix
     inputs.nixvim.homeModules.nixvim
   ];
 

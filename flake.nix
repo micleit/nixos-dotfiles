@@ -146,7 +146,7 @@
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/mbp-m4/default.nix
+          (import ./hosts/mbp-m4/default.nix)
           home-manager.darwinModules.home-manager
           {
             home-manager = {
@@ -169,7 +169,7 @@
       darwinConfigurations.headless-m1 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/headlessm1/default.nix
+          (import ./hosts/headlessm1/default.nix)
           home-manager.darwinModules.home-manager
           {
             home-manager = {

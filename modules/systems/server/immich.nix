@@ -28,8 +28,9 @@
     host = "0.0.0.0";
     port = 2283;
     mediaLocation = "/var/lib/immich";
+    accelerationDevices = null;
   };
 
   networking.firewall.allowedTCPPorts = [ 2283 ];
-  users.users.immich.extraGroups = [ "users" ];
+  users.users.immich.extraGroups = [ "users" "video" "render" ];
 }

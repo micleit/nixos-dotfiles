@@ -37,9 +37,5 @@
       "libreoffice"
       "bitwarden-desktop"
     ];
-
-    home.file.".local/share/icons/macOS-hypr" = {
-      source = ../../../icons/macOS-hypr;
-    };
   };
 }

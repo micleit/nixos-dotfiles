@@ -16,7 +16,6 @@
     # ../../modules/systems/server/nextcloud.nix
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
-    ../../modules/systems/server/seafile.nix
   ];
 
   # ============================================================================

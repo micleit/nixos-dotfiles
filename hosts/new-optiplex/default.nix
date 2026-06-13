@@ -15,7 +15,7 @@
     ../../modules/systems/server/samba.nix
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
-    ../../modules/systems/server/seafile.nix
+    ../../modules/systems/server/filebrowser.nix
   ];
 
   # ============================================================================
@@ -79,6 +79,23 @@
   systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
 
   # ============================================================================
+  # GRAPHICS & NVIDIA
+  # ============================================================================
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  # ============================================================================
   # USER & SECURITY
   # ============================================================================
   users.users.mic = {
@@ -115,6 +132,7 @@
     unzip
     ffmpeg
     btop
+    nvtopPackages.nvidia
     gcc
     gnumake
     curl
@@ -133,6 +151,9 @@
     "flakes"
   ];
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
 
   environment.pathsToLink = [
     "/share/applications"
