@@ -103,7 +103,20 @@
   # ============================================================================
   # GRAPHICS & HYPRLAND (System Level)
   # ============================================================================
-  services.sunshine.enable = true;
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
