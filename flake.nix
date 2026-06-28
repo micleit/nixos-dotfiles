@@ -19,6 +19,7 @@
     };
 
     neomutt-gmail.url = "github:jevy/neomutt-for-gmail";
+    nixflix.url = "github:kiriwalawren/nixflix";
 
   };
 
@@ -141,7 +142,6 @@
           }
         ];
       };
-
 
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
         specialArgs = { inherit inputs; };

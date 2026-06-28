@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/systems/linux/ollama.nix
     ../../modules/systems/server/landing-page.nix
     ../../modules/systems/server/cloudflare-tunnel.nix
     ../../modules/systems/server/immich.nix
@@ -16,6 +17,9 @@
     ../../modules/systems/server/navidrome.nix
     ../../modules/systems/server/vaultwarden.nix
     ../../modules/systems/server/filebrowser.nix
+    ../../modules/systems/server/nixflix.nix
+    ../../modules/systems/server/pia-vpn.nix
+    ../../modules/systems/server/slskd.nix
   ];
 
   # ============================================================================
@@ -150,7 +154,7 @@
     "nix-command"
     "flakes"
   ];
-  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [
   #   "electron-39.8.10"
   # ];

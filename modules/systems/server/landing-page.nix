@@ -18,88 +18,67 @@ let
           <title>53729123.xyz</title>
           <style>
             body {
-              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-              margin: 0;
-              padding: 0;
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              min-height: 100vh;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            .container {
-              background: white;
-              border-radius: 12px;
-              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-              padding: 40px;
+              background-color: #282828; /* Gruvbox dark background */
+              color: #ebdbb2; /* Gruvbox light foreground */
+              font-family: monospace;
+              line-height: 1.6;
               max-width: 600px;
-              text-align: center;
+              margin: 40px auto;
+              padding: 0 20px;
             }
             h1 {
-              color: #333;
-              margin-top: 0;
-              margin-bottom: 10px;
-              font-size: 2.5em;
+              color: #b8bb26; /* Gruvbox green */
+              border-bottom: 2px dashed #504945;
+              padding-bottom: 10px;
             }
-            .subtitle {
-              color: #666;
-              font-size: 1.1em;
-              margin-bottom: 30px;
-            }
-            .services {
-              display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-              gap: 15px;
+            h2 {
+              color: #fabd2f; /* Gruvbox yellow */
               margin-top: 30px;
             }
-            .service {
-              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-              color: white;
-              padding: 20px;
-              border-radius: 8px;
+            a {
+              color: #83a598; /* Gruvbox blue */
               text-decoration: none;
-              transition: transform 0.2s, box-shadow 0.2s;
-              font-weight: 600;
             }
-            .service:hover {
-              transform: translateY(-5px);
-              box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            a:hover {
+              color: #fe8019; /* Gruvbox orange */
+              background-color: #3c3836;
+              text-decoration: underline;
             }
-            .emoji {
-              font-size: 2em;
-              display: block;
+            ul {
+              list-style-type: square;
+              padding-left: 20px;
+            }
+            li {
               margin-bottom: 10px;
+            }
+            .desc {
+              color: #928374; /* Gruvbox gray */
+            }
+            hr {
+              border: 0;
+              border-top: 1px dashed #504945;
+              margin: 40px 0;
             }
           </style>
         </head>
         <body>
-          <div class="container">
-            <h1>✨ Self-Hosted Services</h1>
-            <p class="subtitle">Welcome to your personal cloud</p>
-        
-            <div class="services">
-              <a href="https://immich.${domain}" class="service">
-                <span class="emoji">🖼️</span>
-                Immich
-              </a>
-              <a href="https://nextcloud.${domain}" class="service">
-                <span class="emoji">📁</span>
-                Nextcloud
-              </a>
-              <a href="https://navidrome.${domain}" class="service">
-                <span class="emoji">🎵</span>
-                Navidrome
-              </a>
-              <a href="https://vaultwarden.${domain}" class="service">
-                <span class="emoji">🔐</span>
-                Vaultwarden
-              </a>
-              <a href="https://files.${domain}" class="service">
-                <span class="emoji">📁</span>
-                FileBrowser
-              </a>
-            </div>
-          </div>
+          <h1>~/${domain}</h1>
+          <p>Welcome to the server. All systems operational.</p>
+          
+          <h2>Services</h2>
+          <ul>
+            <li><a href="https://jellyfin.${domain}">[ Jellyfin ]</a> <span class="desc">- Media Server</span></li>
+            <li><a href="https://seerr.${domain}">[ Seerr ]</a> <span class="desc">- Media Requests</span></li>
+            <li><a href="https://immich.${domain}">[ Immich ]</a> <span class="desc">- Photo Backup</span></li>
+            <li><a href="https://navidrome.${domain}">[ Navidrome ]</a> <span class="desc">- Music Streaming</span></li>
+            <li><a href="https://lidarr.${domain}">[ Lidarr ]</a> <span class="desc">- Music Management</span></li>
+            <li><a href="https://slskd.${domain}">[ Slskd ]</a> <span class="desc">- Soulseek Daemon</span></li>
+            <li><a href="https://files.${domain}">[ FileBrowser ]</a> <span class="desc">- Web File Manager</span></li>
+            <li><a href="https://vaultwarden.${domain}">[ Vaultwarden ]</a> <span class="desc">- Password Manager</span></li>
+          </ul>
+
+          <hr>
+          <p class="desc"><i>System: NixOS 26.11<br>Location: /mnt/ssd2</i></p>
         </body>
         </html>
     EOF
