@@ -12,7 +12,7 @@
     ../../modules/home/shared.nix
     ../../modules/home/linux.nix
     ../../modules/home/yazi.nix
-    ../../modules/home/nixvim.nix
+    ../../modules/home/helix.nix
     ../../modules/home/caveman.nix
     inputs.nixvim.homeModules.nixvim
   ];
