@@ -34,16 +34,29 @@ let
   '';
 in
 {
-  services.yabai = {
-    enable = true;
-    # Using the package from nixpkgs
-    package = pkgs.yabai.overrideAttrs (oldAttrs: rec {
-      version = "7.1.24";
-      src = pkgs.fetchurl {
-        url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
-        hash = "sha256-YnSHxsOQRo6oZ5UZjs8uqw3ZCmZF9KQiJflyC5W5SkM=";
-      };
-    });
+    services.yabai = {
+  enable = true;
+  package = pkgs.yabai.overrideAttrs (oldAttrs: rec {
+    version = "7.1.24";
+    src = pkgs.fetchurl {
+      url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
+      hash = "sha256-YnSHxsOQRo6oZ5UZjs8uqw3ZCmZF9KQiJflyC5W5SkM=";
+    };
+
+    # Skip the patch, configure, and build phases entirely since this is a pre-compiled binary
+    phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
+
+    # Override the install phase to just copy the compiled binary into place
+    installPhase = ''
+      mkdir -p $out/bin
+      mkdir -p $out/share/man/man1
+
+      # Adjust these paths if the layout inside the tarball changed
+      cp bin/yabai $out/bin/
+      cp doc/yabai.1 $out/share/man/man1/ || true
+    '';
+  });
+
     enableScriptingAddition = true;
 
     config = {
