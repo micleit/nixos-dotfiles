@@ -3,7 +3,8 @@
 {
   programs.helix = {
     enable = true;
-    
+    defaultEditor = true;
+
     # This maps to config.toml (Editor configuration)
     settings = {
       theme = "gruvbox";

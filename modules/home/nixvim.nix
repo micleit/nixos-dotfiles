@@ -240,7 +240,6 @@
         # Use Skim on macOS, Zathura on Linux
         view_method = "sioyek";
 
-
         # Continuous compilation (requires latexmk, which Nixvim pulls in)
         compiler_method = "latexmk";
 
