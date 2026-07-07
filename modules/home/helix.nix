@@ -1,6 +1,17 @@
 { pkgs, lib, ... }:
 
 {
+  home.packages = with pkgs; [
+    nil
+    nixd
+    nixfmt
+    ruff
+    superhtml
+    marksman
+    texlab
+    jdt-language-server
+  ];
+
   programs.helix = {
     enable = true;
     defaultEditor = true;
