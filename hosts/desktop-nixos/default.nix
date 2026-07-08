@@ -94,6 +94,7 @@
       '';
     };
   };
+  hardware.keyboard.qmk.enable = true;
 
   systemd.services.kanata-main.serviceConfig = {
     User = "root";
