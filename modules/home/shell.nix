@@ -53,6 +53,8 @@
       ssh = "test \"$TERM\" = \"xterm-kitty\"; and kitty +kitten ssh; or command ssh";
       btw = "echo I use nixos, btw";
       lg = "lazygit";
+      kanata-off = "sudo launchctl bootout system /Library/LaunchDaemons/org.nixos.kanata.plist";
+      kanata-on = "sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.kanata.plist";
     };
 
     functions = {

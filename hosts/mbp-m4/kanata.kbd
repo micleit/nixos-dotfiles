@@ -1,0 +1,88 @@
+(defcfg
+  ;; Lock to internal keyboard
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
+  process-unmapped-keys yes
+)
+
+(defsrc
+  ;; Left Hand                                Right Hand
+  `    1    2    3    4                   8    9    0    -    =
+  tab  q    w    e    r                   i    o    p    [    ]
+  caps a    s    d    f                   k    l    ;    '    ret
+  
+  ;; Left Thumbs                              Right Thumbs
+  z    x    c                                 ,    .    /
+)
+
+(defalias
+  ;; --- Home Row Modifiers (Base Layer) ---
+  a_gui  (tap-hold-release 200 200 a lmet)
+  s_alt  (tap-hold-release 200 200 s lalt)
+  d_ctl  (tap-hold-release 200 200 d lctl)
+  f_sft  (tap-hold-release 200 200 f lsft)
+  
+  j_sft  (tap-hold-release 200 200 j rsft)
+  k_ctl  (tap-hold-release 200 200 k rctl)
+  l_alt  (tap-hold-release 200 200 l ralt)
+  scl_gui(tap-hold-release 200 200 ; rmet)
+
+  ;; --- Thumb Layer Toggles ---
+  t_media (tap-hold-release 200 200 esc (layer-toggle media))
+  t_nav   (tap-hold-release 200 200 spc (layer-toggle nav))
+  t_mouse (tap-hold-release 200 200 tab (layer-toggle mouse))
+  
+  t_sym   (tap-hold-release 200 200 ret (layer-toggle sym))
+  t_num   (tap-hold-release 200 200 bspc (layer-toggle num))
+  t_fun   (tap-hold-release 200 200 del (layer-toggle fun))
+)
+
+(deflayer base
+  q         w         e         r         t                   y         u         i         o         p
+  @a_gui    @s_alt    @d_ctl    @f_sft    g                   h         @j_sft    @k_ctl    @l_alt    @scl_gui
+  z         x         c         v         b                   n         m         ,         .         /
+  @t_media  @t_nav    @t_mouse                                @t_sym    @t_num    @t_fun
+)
+
+(deflayer nav
+  XX        XX        XX        XX        XX                          XX       XX      XX      XX      XX
+  lmet      lalt      lctl      lsft      XX                          XX     left     down       up     right
+  XX        XX        XX        XX        XX                          ins       home      pgdn      pgup      end
+  _         _         _                                       _         _         _
+)
+
+(deflayer mouse
+  XX        XX        XX        XX        XX                          XX       XX      XX      XX      XX
+  lmet      lalt      lctl      lsft      XX                          XX        XX        XX        XX        XX
+  XX        XX        XX        XX        XX                          XX        XX        XX        XX        XX
+  _         _         _                                       mrgt      mlft      mmid
+)
+
+(deflayer media
+  XX        XX        XX        XX        XX                          XX        XX        XX        XX        XX
+  lmet      lalt      lctl      lsft      XX                          prev      vold      volu      next      XX
+  XX        XX        XX        XX        XX                          XX        XX        XX        XX        XX
+  _         _         _                                       _         _         _
+)
+
+(deflayer num
+  [         7         8         9         ]                           XX        XX        XX        XX        XX
+  '         4         5         6         =                           lsft      lctl      lalt      lmet      XX
+  `         1         2         3         \                           XX        XX        XX        XX        XX
+  .         0         -                                       _         _         _
+)
+
+(deflayer sym
+  S-[       S-7       S-8       S-9       S-]                         XX        XX        XX        XX        XX
+  S-'       S-4       S-5       S-6       S-=                         lsft      lctl      lalt      lmet      XX
+  S-`       S-1       S-2       S-3       S-\                         XX        XX        XX        XX        XX
+  S-9       S-0       S--                                     _         _         _
+)
+
+(deflayer fun
+  f12       f7        f8        f9        XX                          XX        XX        XX        XX        XX
+  f11       f4        f5        f6        XX                          lsft      lctl      lalt      lmet      XX
+  f10       f1        f2        f3        XX                          XX        XX        XX        XX        XX
+  spc       tab       XX                                      _         _         _
+)
