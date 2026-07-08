@@ -14,6 +14,8 @@
   environment.systemPackages = [
     pkgs.vim
     pkgs.git
+    pkgs.qmk
+    pkgs.gnumake
   ];
 
   # Auto upgrade nix package and the daemon service.
