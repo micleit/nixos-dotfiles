@@ -114,7 +114,7 @@
       "audio"
       "docker"
     ];
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKxCjlGFtiU6rrgryYhKmp0u6cbPhXPYm6IRkh9mSGL0 <comment>" # mbp
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM2H3Qy26Y3JV0p5WhpR89pE4hi7tssLbL/BYm+RsKd2 mic@headless-m1" # headlessm1
@@ -124,7 +124,7 @@
     ];
   };
 
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
 
   # ============================================================================
   # ESSENTIAL SYSTEM PACKAGES

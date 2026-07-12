@@ -1,47 +1,37 @@
 { pkgs, lib, ... }:
 
 {
-  programs.fish = {
+  programs.zsh = {
     enable = true;
 
-    interactiveShellInit = ''
-      # Path & Env
-      fish_add_path $HOME/.spicetify
-      fish_add_path $HOME/go/bin
-      fish_add_path $HOME/.cargo/bin
+    # Fish-like features built directly into Home Manager's Zsh module
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
 
-      set -gx fish_greeting ""
+    # Path & Env setup
+    initContent = ''
+      path+=("$HOME/.spicetify" "$HOME/go/bin" "$HOME/.cargo/bin")
+      export PATH
 
-      function bind_bang
-          switch (commandline -t)[-1]
-              case "!"
-                  commandline -t -- $history[1]
-                  commandline -f repaint
-              case "*"
-                  commandline -i !
-          end
-      end
+      # Silence the default Zsh login greeting if any
+      # (Zsh doesn't have a default greeting like Fish, but good to keep clean)
 
-      function bind_dollar
-          switch (commandline -t)[-1]
-              case "!"
-                  commandline -f backward-delete-char history-token-search-backward
-              case "*"
-                  commandline -i '$'
-          end
-      end
+      # Run nerdfetch interactively
+      if [[ $- == *i* ]]; then
+        if command -v nerdfetch &> /dev/null; then
+          nerdfetch
+        fi
+      fi
 
-      function fish_user_key_bindings
-          bind ! bind_bang
-          bind '$' bind_dollar
-      end
-
-
-      if status is-interactive
-          if type -q nerdfetch
-              nerdfetch
-          end
-      end
+      # Your custom 's' function for sesh
+      s() {
+        local session
+        session=$(sesh list --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' --preview-window 'right:55%' --preview 'sesh preview {}')
+        if [[ -n "$session" ]]; then
+          sesh connect "$session"
+        fi
+      }
     '';
 
     shellAliases = {
@@ -50,46 +40,45 @@
       lt = "eza --tree --level=2 --long --icons --git";
       gc = "git clone";
       cd = "z";
-      ssh = "test \"$TERM\" = \"xterm-kitty\"; and kitty +kitten ssh; or command ssh";
+      ssh = "if [ \"$TERM\" = \"xterm-kitty\" ]; then kitty +kitten ssh; else command ssh; fi";
       btw = "echo I use nixos, btw";
       lg = "lazygit";
       kanata-off = "sudo launchctl bootout system /Library/LaunchDaemons/org.nixos.kanata.plist";
       kanata-on = "sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.kanata.plist";
     };
 
-    functions = {
-      s = builtins.readFile (
-        pkgs.writeText "sesh-function.fish" ''
-          sesh connect "$(sesh list --icons | fzf-tmux -p 80%,70% --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' --bind 'tab:down,btab:up' --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list --icons)' --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t --icons)' --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c --icons)' --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z --icons)' --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' --bind 'ctrl-d:execute(tmux kill-session -t {2..})+change-prompt(⚡  )+reload(sesh list --icons)' --preview-window 'right:55%' --preview 'sesh preview {})')"
-        ''
-      );
+    # History configuration (crucial for Zsh to feel good)
+    history = {
+      size = 10000;
+      save = 10000;
+      share = true;
     };
-
-    plugins = [
-      {
-        name = "fzf-fish";
-        src = pkgs.fishPlugins.fzf-fish.src;
-      }
-      {
-        name = "tide";
-        src = pkgs.fishPlugins.tide.src;
-      }
-      {
-        name = "done";
-        src = pkgs.fishPlugins.done.src;
-      }
-    ];
   };
 
-  xdg.configFile."fish/completions/sesh.fish".text = builtins.readFile (
+  # Generate completion file specifically for Zsh
+  xdg.configFile."zsh/completions/_sesh".text = builtins.readFile (
     pkgs.runCommand "sesh-completion" { } ''
-      ${pkgs.sesh}/bin/sesh completion fish > $out
+      ${pkgs.sesh}/bin/sesh completion zsh > $out
     ''
   );
 
+  # Update zoxide integration for Zsh
   programs.zoxide = {
     enable = true;
-    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  # Fzf integration for Zsh replaces fishPlugins.fzf-fish
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # Prompt Replacement: Tide is Fish-only, Starship is the perfect Zsh alternative
+  # (gives you a fast, beautiful async prompt with git status)
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.git = {
@@ -102,7 +91,6 @@
     };
   };
 
-  #github cli
   programs.gh = {
     enable = true;
   };

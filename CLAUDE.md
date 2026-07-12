@@ -90,7 +90,7 @@ flake.nix                           # Entry point (uses Flake Parts)
 │       └── default.nix             # User profile (Home Manager) - imported by ALL hosts
 ├── modules/
 │   ├── home/                       # Home Manager modules (cross-platform, user-level)
-│   │   ├── shell.nix               # Fish, Git, Yazi, CLI utils
+│   │   ├── shell.nix               # Zsh, Git, Yazi, CLI utils
 │   │   ├── terminal.nix            # Ghostty, Btop
 │   │   ├── shared.nix              # Fonts, cross-platform packages (obsidian, sioyek, etc)
 │   │   ├── nixvim.nix              # Neovim via Nixvim

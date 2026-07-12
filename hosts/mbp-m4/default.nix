@@ -48,18 +48,12 @@
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true; # default shell on catalina
-  programs.fish.enable = true;
 
   # Manually source nix environment if nix.enable = false
   programs.zsh.shellInit = ''
     if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
       . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
     fi
-  '';
-  programs.fish.shellInit = ''
-    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-      source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-    end
   '';
 
   # Set System Version
