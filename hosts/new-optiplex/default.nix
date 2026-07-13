@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/systems/linux/ollama.nix
+    # ../../modules/systems/linux/ollama.nix
     ../../modules/systems/server/landing-page.nix
     ../../modules/systems/server/cloudflare-tunnel.nix
     ../../modules/systems/server/immich.nix
@@ -40,6 +40,17 @@
     "1.1.1.1"
     "8.8.8.8"
   ];
+  # allows network bridge from mic-debian to explicitly use vpn ip 
+  networking.interfaces.eno1 = {
+    useDHCP = true;
+    ipv4.routes = [
+      {
+        address = "212.102.59.242"; # Replace with your VPN's IP
+        prefixLength = 32;                # Explictly targets just this single IP
+        via = "10.42.0.1";
+      }
+    ];
+  };
 
   virtualisation.docker.enable = true;
   services.openssh.enable = true;
