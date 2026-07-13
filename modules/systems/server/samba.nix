@@ -24,7 +24,7 @@
         "fruit:delete_empty_adfiles" = "yes";
       };
       Shared = {
-        "path" = "/home/mic/Shared";
+        "path" = "/";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";

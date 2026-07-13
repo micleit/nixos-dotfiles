@@ -50,10 +50,10 @@
 
       # === Navigation ===
       # window focus
-      ralt - a : yabai -m window --focus west
-      ralt - r : yabai -m window --focus south
-      ralt - w : yabai -m window --focus north
-      ralt - s : yabai -m window --focus east
+      ralt - r : yabai -m window --focus west
+      ralt - s : yabai -m window --focus south
+      ralt - f : yabai -m window --focus north
+      ralt - t : yabai -m window --focus east
 
       ralt - left : yabai -m window --focus west
       ralt - down : yabai -m window --focus south
@@ -82,10 +82,10 @@
 
       # === Modification === 
       # Move window relatively
-      ralt + shift - a : yabai -m window --warp west
-      ralt + shift - r : yabai -m window --warp south
-      ralt + shift - w : yabai -m window --warp north
-      ralt + shift - s : yabai -m window --warp east
+      ralt + shift - r : yabai -m window --warp west
+      ralt + shift - s : yabai -m window --warp south
+      ralt + shift - f : yabai -m window --warp north
+      ralt + shift - t : yabai -m window --warp east
 
       ralt + shift - left : yabai -m window --warp west
       ralt + shift - down : yabai -m window --warp south

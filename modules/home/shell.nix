@@ -12,12 +12,14 @@
     # Path & Env setup
     initContent = ''
       path+=("$HOME/.spicetify" "$HOME/go/bin" "$HOME/.cargo/bin")
-      export PATH
 
-      # Silence the default Zsh login greeting if any
-      # (Zsh doesn't have a default greeting like Fish, but good to keep clean)
+      # Only inject Homebrew on macOS hosts
+      ${lib.optionalString pkgs.stdenv.isDarwin ''
+        if [[ -f /opt/homebrew/bin/brew ]]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+      ''}
 
-      # Run nerdfetch interactively
       if [[ $- == *i* ]]; then
         if command -v nerdfetch &> /dev/null; then
           nerdfetch
@@ -126,7 +128,5 @@
     ]
     ++ (lib.optionals stdenv.isLinux [
       wl-clipboard
-      wmenu
-      mpvpaper
     ]);
 }

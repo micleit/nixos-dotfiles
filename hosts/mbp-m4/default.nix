@@ -19,24 +19,25 @@
     pkgs.kanata
   ];
 
-  launchd = {
-    daemons = {
-      kanata = {
-        # Remove the 'command' line entirely and use ProgramArguments instead:
-        serviceConfig = {
-          ProgramArguments = [
-            "${pkgs.kanata}/bin/kanata"
-            "--cfg"
-            "${./kanata.kbd}"
-          ];
-          KeepAlive = true;
-          RunAtLoad = true;
-          StandardOutPath = "/tmp/kanata.out.log";
-          StandardErrorPath = "/tmp/kanata.err.log";
-        };
-      };
-    };
-  };
+  # launchd = {
+  #   daemons = {
+  #     kanata = {
+  #       # Remove the 'command' line entirely and use ProgramArguments instead:
+  #       serviceConfig = {
+  #         ProgramArguments = [
+  #           "${pkgs.kanata}/bin/kanata"
+  #           "--cfg"
+  #           "${./kanata.kbd}"
+  #         ];
+  #         KeepAlive = true;
+  #         RunAtLoad = true;
+  #         StandardOutPath = "/tmp/kanata.out.log";
+  #         StandardErrorPath = "/tmp/kanata.err.log";
+  #       };
+  #     };
+  #   };
+  # };
+
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true; # Managed unconditionally now
 
