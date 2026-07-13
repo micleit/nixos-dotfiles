@@ -29,7 +29,6 @@
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;
-  programs.fish.enable = true;
 
   # Manually source nix environment if nix.enable = false
   programs.zsh.shellInit = ''
@@ -39,14 +38,6 @@
     if [ -f /opt/homebrew/bin/brew ]; then
       eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
-  '';
-  programs.fish.shellInit = ''
-    if test -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-      source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish
-    end
-    if test -f /opt/homebrew/bin/brew
-      eval (/opt/homebrew/bin/brew shellenv)
-    end
   '';
 
   # Set System Version

@@ -25,6 +25,7 @@
     black
     isort
     ruff
+    go
     aerc
     # GUI applications
     obsidian

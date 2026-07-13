@@ -24,7 +24,7 @@ Nix-Darwin: When working on the MacBook config, use nix-darwin modules for syste
 3. Development Workflow
 Tooling: Prioritize nix shell or devShells for project-specific dependencies to keep the global profile light.
 
-Shell: Focus on Fish shell configurations with high interactive usability.
+Shell: Focus on zsh shell configurations with high interactive usability.
 
 Editors: Manage configurations for VS Code and Neovim strictly through Home Manager.
 

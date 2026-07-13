@@ -12,7 +12,7 @@ This configuration follows a modular, flake-parts-based approach as mandated by 
   - `home/` → User profile (imports shared home-manager modules across all hosts)
   - `modules/home/` → Cross-platform Home Manager configs (shell, terminal, packages, editors)
   - `modules/systems/` → System-level configs (Darwin, Linux, Server with clear separation)
-- **Home Manager First**: User-facing applications (Fish, Ghostty, Neovim, Yazi) managed at user level for portability
+- **Home Manager First**: User-facing applications (zsh, Ghostty, Neovim, Yazi) managed at user level for portability
 - **Minimal Host Config**: Hosts only contain hardware/platform-specific settings; features come from modules
 
 ## 📂 Directory Structure
@@ -36,7 +36,7 @@ This configuration follows a modular, flake-parts-based approach as mandated by 
 │       └── default.nix     # Home Manager imports (shared across all hosts)
 ├── modules/
 │   ├── home/               # Home Manager modules (cross-platform)
-│   │   ├── shell.nix       # Fish, Git, Yazi, CLI utilities
+│   │   ├── shell.nix       # zsh, Git, Yazi, CLI utilities
 │   │   ├── terminal.nix    # Ghostty, Btop
 │   │   ├── shared.nix      # Fonts, cross-platform packages (obsidian, sioyek, etc)
 │   │   ├── nixvim.nix      # Neovim via Nixvim
@@ -84,7 +84,7 @@ nixos-rebuild build --flake .#desktop-nixos
 ## ✨ Key Components
 
 - **Window Manager**: [Hyprland](https://hyprland.org/) with a custom [Noctalia Shell](https://github.com/noctalia-dev/noctalia-shell) setup.
-- **Shell**: [Fish](https://fishshell.com/) with Zoxide, Eza, and Yazi integration.
+- **Shell**: [zsh](https://zshshell.com/) with Zoxide, Eza, and Yazi integration.
 - **Editor**: [Neovim](https://neovim.io/) managed via [Nixvim](https://github.com/nix-community/nixvim).
 - **Terminal**: [Ghostty](https://ghostty.org/) with a Gruvbox/Noctalia-inspired theme.
 - **File Manager**: [Yazi](https://yazi-rs.github.io/) (terminal) and Nautilus (GUI).
