@@ -42,7 +42,7 @@
       lt = "eza --tree --level=2 --long --icons --git";
       gc = "git clone";
       cd = "z";
-      ssh = "if [ \"$TERM\" = \"xterm-kitty\" ]; then kitty +kitten ssh; else command ssh; fi";
+      ssh = "[ \"$TERM\" = \"xterm-kitty\" ] && kitty +kitten ssh || command ssh";
       btw = "echo I use nixos, btw";
       lg = "lazygit";
       kanata-off = "sudo launchctl bootout system /Library/LaunchDaemons/org.nixos.kanata.plist";
