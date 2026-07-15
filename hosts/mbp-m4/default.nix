@@ -75,6 +75,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" # acer
   ];
 
+  homebrew.enable = true;
   # Homebrew configuration (per-host customization)
   homebrew.taps = [
     "felixkratz/formulae"
@@ -96,6 +97,8 @@
     "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
+    "whatcable"
+    "wooshy"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
