@@ -151,21 +151,6 @@
       ctrl + alt - return         : yabai -m window --toggle zoom-fullscreen
       ctrl + alt + shift - return : yabai -m window --toggle native-fullscreen
 
-
-      # mouse emulation
-      hyper - k : /opt/homebrew/bin/cliclick "m:+0,-20" #up
-      hyper - j : /opt/homebrew/bin/cliclick "m:+0,+20" #down
-      hyper - l : /opt/homebrew/bin/cliclick "m:+20,+0" #right
-      hyper - h : /opt/homebrew/bin/cliclick "m:-20,+0" #left
-
-      hyper - m : /opt/homebrew/bin/cliclick ku:cmd,ctrl,alt,shift c:. #release all modifiers and click
-
-      hyper - n : /opt/homebrew/bin/cliclick ku:ctrl rc:.  #right click
-
-      hyper + fn - k : /opt/homebrew/bin/cliclick "m:+0,-40" #up (faster)
-      hyper + fn - j : /opt/homebrew/bin/cliclick "m:+0,+40" #down (faster)
-      hyper + fn - l : /opt/homebrew/bin/cliclick "m:+40,+0" #right (faster)
-      hyper + fn - h : /opt/homebrew/bin/cliclick "m:-40,+0" #left (faster)
     '';
   };
 }

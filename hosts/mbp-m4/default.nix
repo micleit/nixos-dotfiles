@@ -84,12 +84,8 @@
   homebrew.casks = [
     # "bitwarden" can't do browser integration without mac app store version.
     "anki"
-    "visual-studio-code"
     "discord"
-    "spotify"
-    "raycast"
     "brave-browser"
-    "skim"
     "font-sf-pro"
     "font-sf-mono"
     "sf-symbols"
@@ -99,11 +95,12 @@
     "docker-desktop" # Docker Desktop GUI
     "whatcable"
     "wooshy"
+    "antigravity-ide"
+    "sol"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
     "borders"
-    "cliclick"
     "switchaudio-osx"
     "nowplaying-cli"
     "lua"
