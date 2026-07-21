@@ -34,28 +34,32 @@ let
   '';
 in
 {
-    services.yabai = {
-  enable = true;
-  package = pkgs.yabai.overrideAttrs (oldAttrs: rec {
-    version = "7.1.24";
-    src = pkgs.fetchurl {
-      url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
-      hash = "sha256-YnSHxsOQRo6oZ5UZjs8uqw3ZCmZF9KQiJflyC5W5SkM=";
-    };
+  services.yabai = {
+    enable = true;
+    package = pkgs.yabai.overrideAttrs (oldAttrs: rec {
+      version = "7.1.24";
+      src = pkgs.fetchurl {
+        url = "https://github.com/koekeishiya/yabai/releases/download/v${version}/yabai-v${version}.tar.gz";
+        hash = "sha256-YnSHxsOQRo6oZ5UZjs8uqw3ZCmZF9KQiJflyC5W5SkM=";
+      };
 
-    # Skip the patch, configure, and build phases entirely since this is a pre-compiled binary
-    phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
+      # Skip the patch, configure, and build phases entirely since this is a pre-compiled binary
+      phases = [
+        "unpackPhase"
+        "installPhase"
+        "fixupPhase"
+      ];
 
-    # Override the install phase to just copy the compiled binary into place
-    installPhase = ''
-      mkdir -p $out/bin
-      mkdir -p $out/share/man/man1
+      # Override the install phase to just copy the compiled binary into place
+      installPhase = ''
+        mkdir -p $out/bin
+        mkdir -p $out/share/man/man1
 
-      # Adjust these paths if the layout inside the tarball changed
-      cp bin/yabai $out/bin/
-      cp doc/yabai.1 $out/share/man/man1/ || true
-    '';
-  });
+        # Adjust these paths if the layout inside the tarball changed
+        cp bin/yabai $out/bin/
+        cp doc/yabai.1 $out/share/man/man1/ || true
+      '';
+    });
 
     enableScriptingAddition = true;
 
@@ -68,7 +72,7 @@ in
       window_shadow = "float";
       window_opacity = "on";
       window_opacity_duration = "0.2";
-      active_window_opacity = "0.98";
+      active_window_opacity = "1";
       normal_window_opacity = "0.94";
       window_animation_duration = "0.2";
       split_ratio = "0.50";
@@ -109,7 +113,6 @@ in
       yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
       yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
       yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
-      yabai -m rule --add app="^kitty$" manage=on
 
       # Borders (managed separately if using services.jankyborders, but kept here for compatibility)
       borders active_color=0xffebdbb2 inactive_color=0x40ebdbb2 width=6.0 &

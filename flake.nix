@@ -20,6 +20,7 @@
 
     neomutt-gmail.url = "github:jevy/neomutt-for-gmail";
     nixflix.url = "github:kiriwalawren/nixflix";
+    antigravity-nix.url = "github:jacopone/antigravity-nix";
 
   };
 

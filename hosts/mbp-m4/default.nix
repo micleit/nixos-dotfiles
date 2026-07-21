@@ -75,6 +75,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHgcQZ2TjpwiJAeeOUAywqpZ+xSxIYjeN7FBn0w59zHP mic@acer-nixos" # acer
   ];
 
+  homebrew.enable = true;
   # Homebrew configuration (per-host customization)
   homebrew.taps = [
     "felixkratz/formulae"
@@ -83,12 +84,8 @@
   homebrew.casks = [
     # "bitwarden" can't do browser integration without mac app store version.
     "anki"
-    "visual-studio-code"
     "discord"
-    "spotify"
-    "raycast"
     "brave-browser"
-    "skim"
     "font-sf-pro"
     "font-sf-mono"
     "sf-symbols"
@@ -96,11 +93,14 @@
     "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
+    "whatcable"
+    "wooshy"
+    "antigravity-ide"
+    "sol"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
     "borders"
-    "cliclick"
     "switchaudio-osx"
     "nowplaying-cli"
     "lua"
@@ -109,7 +109,7 @@
   ];
 
   # Services
-  services.sketchybar.enable = true;
+  # services.sketchybar.enable = true;
   # services.yabai and services.skhd are now managed in modules/*.nix
 
   # macOS System Settings

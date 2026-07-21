@@ -10,6 +10,7 @@
     ../../modules/home/shell.nix
     ../../modules/home/terminal.nix
     ../../modules/home/shared.nix
+    ../../modules/home/aerc.nix
     ../../modules/home/linux.nix
     ../../modules/home/yazi.nix
     ../../modules/home/helix.nix
