@@ -109,7 +109,7 @@
   ];
 
   # Services
-  services.sketchybar.enable = true;
+  # services.sketchybar.enable = true;
   # services.yabai and services.skhd are now managed in modules/*.nix
 
   # macOS System Settings

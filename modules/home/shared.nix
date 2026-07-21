@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   # Common Fonts
@@ -16,6 +16,7 @@
     texliveFull
     neovim-remote
     gemini-cli
+    inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
     sesh
     opencode
     python3
@@ -26,7 +27,6 @@
     isort
     ruff
     go
-    aerc
     # GUI applications
     obsidian
     sioyek
