@@ -57,6 +57,29 @@
           }
         ];
       };
+
+      nixosConfigurations.ipad-nixos = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/ipad-nixos/default.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.mic = {
+                imports = [
+                  ./home/mic/default.nix
+                  ./modules/systems/linux/desktop-linux.nix
+                  ./modules/home/shared.nix
+                ];
+              };
+              extraSpecialArgs = { inherit inputs; };
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
       nixosConfigurations.latitude = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
