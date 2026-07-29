@@ -185,7 +185,7 @@
     vim
     wget
     git
-    librewolf
+    brave
     adi1090x-plymouth-themes
     gcc
     gnumake
