@@ -6,21 +6,12 @@
 }:
 
 {
-  imports = [
-    ../../modules/home/shell.nix
-    ../../modules/home/terminal.nix
-    ../../modules/home/shared.nix
-    ../../modules/home/aerc.nix
-    ../../modules/home/linux.nix
-    ../../modules/home/yazi.nix
-    ../../modules/home/helix.nix
-    ../../modules/home/caveman.nix
-    inputs.nixvim.homeModules.nixvim
-  ];
 
   home.username = "mic";
   home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/mic" else "/home/mic";
   home.stateVersion = "25.11";
+
+  fonts.fontconfig.enable = true;
 
   home.sessionPath = [
     "$HOME/.local/bin"
