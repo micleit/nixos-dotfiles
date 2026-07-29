@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 {
   programs.zsh = {
@@ -34,6 +34,9 @@
           sesh connect "$session"
         fi
       }
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+      source ${config.home.homeDirectory}/nixos-dotfiles/modules/home/.p10k.zsh
     '';
 
     shellAliases = {
@@ -76,13 +79,6 @@
     enableZshIntegration = true;
   };
 
-  # Prompt Replacement: Tide is Fish-only, Starship is the perfect Zsh alternative
-  # (gives you a fast, beautiful async prompt with git status)
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   programs.git = {
     enable = true;
     settings = {
@@ -100,6 +96,7 @@
   home.packages =
     with pkgs;
     [
+      zsh-powerlevel10k
       # Core CLI
       eza
       fzf

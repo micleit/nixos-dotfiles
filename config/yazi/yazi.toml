@@ -9,12 +9,12 @@ edit = [
 
 [open]
 rules = [
-    { name = "*.txt", use = "edit" },
-    { name = "*.nix", use = "edit" },
-    { name = "*.conf", use = "edit" },
-    { name = "*.lua", use = "edit" },
-    { name = "*.md",  use = "edit" },
-    { name = "*.sh",  use = "edit" },
+    { name = "*.txt", mime = "*", use = "edit" },
+    { name = "*.nix", mime = "*", use = "edit" },
+    { name = "*.conf", mime = "*", use = "edit" },
+    { name = "*.lua", mime = "*", use = "edit" },
+    { name = "*.md", mime = "*", use = "edit" },
+    { name = "*.sh", mime = "*", use = "edit" },
     # Fallback for all other files
     { mime = "*", use = "edit" }
 ]
