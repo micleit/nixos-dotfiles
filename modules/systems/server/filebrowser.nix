@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # ============================================================================
   # FILEBROWSER QUANTUM (Modern File Browser)
   # ============================================================================
@@ -21,7 +23,7 @@
     containers = {
       filebrowser = {
         image = "gtstef/filebrowser:stable";
-        ports = [ "8085:80" ];
+        ports = ["8085:80"];
         environment = {
           # Use environment variables for everything to avoid YAML issues
           FB_DATABASE = "/database/filebrowser.db";
@@ -46,9 +48,9 @@
   systemd.tmpfiles.rules = [
     "d /var/lib/filebrowser 0777 root root -"
     "d /var/lib/filebrowser/data 0777 root root -"
-    "d /mnt/ssd2/files 0775 mic users -"
+    "d /mnt/ssd2/files 0775 root users -"
   ];
 
   # 4. Networking
-  networking.firewall.allowedTCPPorts = [ 8085 ];
+  networking.firewall.allowedTCPPorts = [8085];
 }

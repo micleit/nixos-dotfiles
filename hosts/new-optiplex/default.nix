@@ -4,9 +4,7 @@
   pkgs,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     # ../../modules/systems/linux/ollama.nix
@@ -20,6 +18,7 @@
     ../../modules/systems/server/nixflix.nix
     ../../modules/systems/server/pia-vpn.nix
     ../../modules/systems/server/slskd.nix
+    inputs.self.nixosModules.substack-rss
   ];
 
   # ============================================================================
@@ -27,8 +26,8 @@
   # ============================================================================
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "fuse" ];
-  boot.kernelModules = [ "snd_hda_intel" ];
+  boot.supportedFilesystems = ["fuse"];
+  boot.kernelModules = ["snd_hda_intel"];
   hardware.enableAllFirmware = true;
 
   # ============================================================================
@@ -40,13 +39,13 @@
     "1.1.1.1"
     "8.8.8.8"
   ];
-  # allows network bridge from mic-debian to explicitly use vpn ip 
+  # allows network bridge from mic-debian to explicitly use vpn ip
   networking.interfaces.eno1 = {
     useDHCP = true;
     ipv4.routes = [
       {
         address = "212.102.59.242"; # Replace with your VPN's IP
-        prefixLength = 32;                # Explictly targets just this single IP
+        prefixLength = 32; # Explictly targets just this single IP
         via = "10.42.0.1";
       }
     ];
@@ -77,6 +76,19 @@
   # Display Manager (TUI)
   services.displayManager.ly.enable = true;
 
+  # rsync without sudo
+  security.sudo.extraRules = [
+    {
+      users = ["mic"];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/rsync";
+          options = ["NOPASSWD"];
+        }
+      ];
+    }
+  ];
+
   # ============================================================================
   # HEADLESS AUDIO FIXES
   # ============================================================================
@@ -90,13 +102,13 @@
   '';
 
   # Ensure PipeWire starts and stays running without a monitor/active session
-  systemd.user.services.pipewire.wantedBy = [ "default.target" ];
-  systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
+  systemd.user.services.pipewire.wantedBy = ["default.target"];
+  systemd.user.services.wireplumber.wantedBy = ["default.target"];
 
   # ============================================================================
   # GRAPHICS & NVIDIA
   # ============================================================================
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.graphics = {
     enable = true;
@@ -155,7 +167,7 @@
     usbutils
     alsa-utils
     vlc # VLC with ncurses/terminal interface (nvlc)
-    (mpv-unwrapped.override { cddaSupport = true; })
+    (mpv-unwrapped.override {cddaSupport = true;})
   ];
 
   # ============================================================================
@@ -174,6 +186,12 @@
     "/share/applications"
     "/share/xdg-desktop-portal"
   ];
+
+  services.substack-rss = {
+    enable = true;
+    telegramBotTokenFile = "/var/secrets/telegram-substack-bot.env";
+    baseUrl = "https://substack.53729123.xyz";
+  };
 
   system.stateVersion = "26.05";
 }
