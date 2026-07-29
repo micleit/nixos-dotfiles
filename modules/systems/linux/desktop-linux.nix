@@ -2,13 +2,22 @@
   pkgs,
   lib,
   osConfig ? { },
+  inputs,
   ...
 }:
 
 {
+  imports = [
+    inputs.noctalia.homeModules.default
+  ];
+
   config = lib.mkIf pkgs.stdenv.isLinux {
     # Hyprland is enabled at system level (hosts/desktop-nixos/default.nix)
     # We use the symlinked config from ~/nixos-dotfiles/config/hypr instead of declarative module
+
+    programs.noctalia = {
+      enable = true;
+    };
 
     home.packages =
       let
@@ -19,7 +28,6 @@
           "apple-cursor"
           "pavucontrol"
           "wireplumber"
-          "quickshell"
           "hyprpolkitagent"
           "xwayland-satellite"
           "grim"
@@ -30,7 +38,6 @@
           "gtk3"
           "hyprshot"
           "xdotool"
-          "noctalia-shell"
         ];
 
         guiApps = [

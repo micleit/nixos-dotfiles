@@ -5,9 +5,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     slippi.url = "github:lytedev/slippi-nix";
     slippi.inputs.nixpkgs.follows = "nixpkgs";
-    quickshell.url = "github:outfoxxed/quickshell";
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
-    noctalia-qs.url = "github:noctalia-dev/noctalia-qs";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
     nixvim.url = "github:nix-community/nixvim";
     darwin.url = "github:LnL7/nix-darwin";

@@ -195,9 +195,6 @@
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
-    QUICKSHELL_PLUGIN_PATH = "${
-      inputs.noctalia-qs.packages.${pkgs.stdenv.hostPlatform.system}.default
-    }/lib/quickshell/plugins";
   };
 
   # ============================================================================
