@@ -17,9 +17,8 @@
         ../../modules/home/aerc.nix
         ../../modules/home/linux.nix
         ../../modules/home/yazi.nix
-        ../../modules/home/helix.nix
+        ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
-        inputs.nixvim.homeModules.nixvim
       ];
       home.packages = with pkgs; [
         nerd-fonts.jetbrains-mono

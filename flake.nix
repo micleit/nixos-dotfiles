@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     copilot-cli.url = "github:scarisey/copilot-cli-flake";
-    nixvim.url = "github:nix-community/nixvim";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -29,7 +28,6 @@
       self,
       nixpkgs,
       home-manager,
-      nixvim,
       darwin,
       ...
     }:

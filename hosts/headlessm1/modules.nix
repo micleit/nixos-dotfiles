@@ -16,9 +16,8 @@
         ../../modules/home/terminal.nix
         ../../modules/home/aerc.nix
         ../../modules/home/yazi.nix
-        ../../modules/home/helix.nix
+        ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
-        inputs.nixvim.homeModules.nixvim
       ];
     };
   };
