@@ -45,7 +45,7 @@
       lt = "eza --tree --level=2 --long --icons --git";
       gc = "git clone";
       gs = "git status";
-      gl = "git log --one-line";
+      gl = "git log --oneline";
       cd = "z";
       ssh = "[ \"$TERM\" = \"xterm-kitty\" ] && kitty +kitten ssh || command ssh";
       btw = "echo I use nixos, btw";
