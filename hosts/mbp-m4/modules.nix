@@ -1,13 +1,15 @@
-{ inputs, pkgs, ... }:
-
 {
-  imports = [ ];
+  inputs,
+  pkgs,
+  ...
+}: {
+  imports = [];
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {inherit inputs;};
     users.mic = {
       imports = [
         ../../home/mic/default.nix
@@ -18,7 +20,9 @@
         ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
+        ../../modules/home/anki-cli.nix
       ];
+      programs.anki-cli.enable = true;
       home.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         curl
@@ -48,5 +52,5 @@
   };
 
   # Host-specific packages can be declared here or in default.nix
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [];
 }
