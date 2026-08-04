@@ -51,7 +51,7 @@ This configuration follows a modular, flake-parts-based approach as mandated by 
 │       │   ├── aerospace.nix      # AeroSpace config (headless-m1 only)
 │       │   └── aerospace-skhd.nix # AeroSpace skhd overrides (headless-m1 only)
 │       ├── linux/          # Linux-specific
-│       │   └── desktop-linux.nix  # Hyprland, desktop apps
+│       │   └── ollama.nix         # Ollama LLM service
 │       └── server/         # Self-hosted services
 │           ├── cloudflare-tunnel.nix  # Tunnel setup for optiplex-server
 │           ├── immich.nix

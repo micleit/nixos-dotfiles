@@ -66,7 +66,6 @@ home-manager build --flake .#mic@nixos-btw
   - `nixvim.nix`: Neovim via Nixvim
   - `shared.nix`: Fonts, cross-platform packages
   - `yazi.nix`: File manager
-  - `linux/desktop-linux.nix`: Hyprland, desktop-specific (Linux only)
   - `darwin/`: macOS-specific modules (Yabai, Skhd, Darwin system settings)
   - `server/`: Self-hosted services (Immich, Nextcloud, Samba, Navidrome)
 - **config/**: Non-Nix source configs (symlinked via `xdg.configFile`)
@@ -157,7 +156,7 @@ Each uses `nixpkgs.lib.nixosSystem` or `darwin.lib.darwinSystem` with:
 - System-level modules from `hosts/<hostname>/default.nix`
 - Home Manager integration via `home-manager.nixosModules.home-manager` or `home-manager.darwinModules.home-manager`
 - User profile: `./home/mic/default.nix`
-- Platform-specific modules: `./modules/linux/desktop-linux.nix` or `./modules/darwin/darwin.nix`
+- Platform-specific modules: host `modules.nix` or `./modules/darwin/darwin.nix`
 
 ## Design Priorities
 
@@ -169,7 +168,7 @@ Each uses `nixpkgs.lib.nixosSystem` or `darwin.lib.darwinSystem` with:
 
 ## Specific Contexts
 
-- **Hyprland**: NixOS desktop only; configured via `modules/linux/desktop-linux.nix` and symlinked Noctalia configs.
+- **Hyprland**: NixOS desktop only; configured via host `modules.nix` and symlinked Noctalia configs.
 - **Gaming**: Steam, Gamemode enabled on nixos-btw.
 - **Photography**: Workflows for Fujifilm X-T3/GoPro via scripts in `scripts/`.
 - **Self-Hosted Services**: Immich (photo storage), Nextcloud (files/calendar), Samba (SMB shares), Navidrome (music streaming) on optiplex-server.

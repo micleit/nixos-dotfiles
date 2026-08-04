@@ -105,7 +105,7 @@ flake.nix                           # Entry point (uses Flake Parts)
 │       │   ├── aerospace.nix       # AeroSpace config
 │       │   └── aerospace-skhd.nix  # AeroSpace skhd overrides
 │       ├── linux/
-│       │   └── desktop-linux.nix   # Hyprland, desktop packages
+│       │   └── ollama.nix          # Ollama LLM service
 │       └── server/                 # Self-hosted services
 │           ├── cloudflare-tunnel.nix
 │           ├── immich.nix
@@ -158,7 +158,7 @@ imports = [
 ```
 
 System-level modules are imported in host configs or parts files:
-- Linux desktop: Import `../../modules/systems/linux/desktop-linux.nix` in host config
+- Linux desktop: Configured via host `modules.nix`
 - Darwin: Import `../../modules/systems/darwin/*.nix` modules in host config
 - Server: Import `../../modules/systems/server/*.nix` modules in host config
 
@@ -182,7 +182,7 @@ xdg.configFile."noctalia".source = config.lib.file.mkOutOfStoreSymlink
 1. **Create host config**: `hosts/<hostname>/default.nix` (hardware, networking, SSH keys only)
 2. **Add hardware config** (NixOS only): `hosts/<hostname>/hardware-configuration.nix`
 3. **Import system modules** in host config:
-   - NixOS desktop: `imports = [../../modules/systems/linux/desktop-linux.nix];`
+   - NixOS desktop: configured via host `modules.nix`
    - Darwin: `imports = [../../modules/systems/darwin/homebrew.nix ../../modules/systems/darwin/yabai.nix];`
    - Server: `imports = [../../modules/systems/server/cloudflare-tunnel.nix ... ];`
 4. **Update parts file** (`parts/nixos-systems.nix` or `parts/darwin-systems.nix`):
@@ -366,7 +366,7 @@ When assisting with nixos-dotfiles tasks:
 ### 8.1 Hyprland (NixOS Desktop)
 
 - **Config source**: `config/noctalia/` (symlinked)
-- **Module**: `modules/linux/desktop-linux.nix`
+- **Module**: Host `modules.nix`
 - **Theme**: Custom Noctalia configuration with Waybar
 - **Safe edits**: Modify `config/noctalia/` directly; restart Hyprland to apply
 

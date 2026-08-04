@@ -11,7 +11,7 @@
     users.mic = {
       imports = [
         ../../home/mic/default.nix
-        ../../modules/systems/linux/desktop-linux.nix
+        inputs.noctalia.homeModules.default
         ../../modules/home/shell.nix
         ../../modules/home/terminal.nix
         ../../modules/home/aerc.nix
@@ -20,6 +20,9 @@
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
       ];
+      programs.noctalia = {
+        enable = true;
+      };
       home.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         curl
@@ -40,6 +43,19 @@
         isort
         ruff
         go
+        apple-cursor
+        pavucontrol
+        wireplumber
+        hyprpolkitagent
+        xwayland-satellite
+        grim
+        slurp
+        wl-clipboard
+        wf-recorder
+        swaybg
+        gtk3
+        hyprshot
+        xdotool
       ];
     };
   };

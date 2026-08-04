@@ -20,7 +20,7 @@
             users.mic = {
               imports = [
                 "${self}/home/mic/default.nix"
-                "${self}/modules/systems/linux/desktop-linux.nix"
+                inputs.noctalia.homeModules.default
               ];
             };
             extraSpecialArgs = { inherit inputs; };
