@@ -16,7 +16,6 @@
     pkgs.git
     pkgs.qmk
     pkgs.gnumake
-    pkgs.kanata
   ];
 
   system.primaryUser = "mic";

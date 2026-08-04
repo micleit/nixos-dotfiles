@@ -43,8 +43,10 @@
         go
         obsidian
         sioyek
-        lan-mouse
-        input-leap
+        moonlight-qt
+        sunshine
+        prismlauncher
+
       ];
     };
   };
