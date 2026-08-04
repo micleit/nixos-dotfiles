@@ -9,14 +9,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/systems/server/landing-page.nix
-    ../../modules/systems/server/cloudflare-tunnel.nix
-    ../../modules/systems/server/immich.nix
-    ../../modules/systems/server/samba.nix
-    # ../../modules/systems/server/nextcloud.nix
-    ../../modules/systems/server/navidrome.nix
-    ../../modules/systems/server/vaultwarden.nix
-    ../../modules/systems/server/nixflix.nix
   ];
 
   # ============================================================================
@@ -64,6 +56,48 @@
 
   # Display Manager (TUI)
   services.displayManager.ly.enable = true;
+
+  # ============================================================================
+  # GRAPHICS & HYPRLAND (System Level)
+  # ============================================================================
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
+
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    config.common.default = "*";
+  };
+
+  # Display Manager
+  services.displayManager.sddm.wayland.enable = true;
 
   # ============================================================================
   # HEADLESS AUDIO FIXES
@@ -135,6 +169,9 @@
     "flakes"
   ];
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
 
   environment.pathsToLink = [
     "/share/applications"

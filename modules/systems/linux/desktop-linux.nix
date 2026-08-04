@@ -24,7 +24,6 @@
         isIpad = (osConfig.networking.hostName or "") == "ipad-nixos";
 
         terminalAndSystem = [
-          "alacritty"
           "apple-cursor"
           "pavucontrol"
           "wireplumber"
@@ -45,17 +44,9 @@
           "nautilus"
           "brave"
           "vlc"
-          "geary"
-          "seahorse"
-          "tesseract"
-          "zbar"
           "translate-shell"
-          "orca-slicer"
-          "nicotine-plus"
-          "protonup-ng"
           "libreoffice"
           "bitwarden-desktop"
-          "nextcloud-client"
         ];
 
         targetApps = terminalAndSystem ++ lib.optionals (!isIpad) guiApps;

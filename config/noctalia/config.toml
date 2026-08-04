@@ -1,7 +1,171 @@
+[bar.default]
+capsule = true
+center = [ "workspaces" ]
+end = [
+    "keyboard_layout",
+    "notifications",
+    "clipboard",
+    "network",
+    "bluetooth",
+    "volume",
+    "brightness",
+    "battery",
+    "control-center",
+    "session",
+    "tray"
+]
+font_family = "JetBrainsMono Nerd Font"
+margin_ends = 0
+start = [ "clock", "launcher", "wallpaper", "nix-monitor" ]
+
+[desktop_widgets]
+enabled = false
+schema_version = 2
+widget_order = []
+
+    [desktop_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [desktop_widgets.widget]
+
+[location]
+address = "Berrien Springs, MI"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-2" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+[plugins]
+enabled = [ "avivbintangaringga/nix-monitor" ]
+
+[shell]
+font_family = "JetBrainsMono Nerd Font"
+panel_anchor_bar = "default"
+password_style = "random"
+polkit_agent = true
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.panel]
+    control_center_placement = "floating"
+    control_center_position = "center"
+    transparency_mode = "glass"
+    wallpaper_placement = "floating"
+    wallpaper_position = "center"
+
+    [shell.screen_corners]
+    enabled = true
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "1"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "2"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "3"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "4"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "5"
+    variant = "destructive"
+
+    [[shell.session.actions]]
+    action = "command"
+    command = "notify-send 'Noctalia' 'systemctl reboot --firmware-setup'"
+    countdown_seconds = 10.0
+    enabled = true
+    glyph = "devices-pc"
+    label = "Reboot to UEFI"
+    variant = "destructive"
+
 [theme]
-mode = "dark"
-source = "builtin"
 builtin = "Catppuccin"
+mode = "dark"
+source = "wallpaper"
+wallpaper_scheme = "m3-rainbow"
+
+    [theme.templates]
+    builtin_ids = [ "hyprland" ]
 
 [wallpaper]
+directory = "/home/mic/nixos-dotfiles/walls"
 enabled = true
+fill_color = "primary"
+transition = [ "disc" ]
+
+    [wallpaper.default]
+    path = "/home/mic/nixos-dotfiles/walls/DSCF0181.jpg"
+
+    [wallpaper.last]
+    path = "/home/mic/nixos-dotfiles/walls/DSCF0181.jpg"
+
+    [wallpaper.monitors.DP-2]
+    path = "/home/mic/nixos-dotfiles/walls/DSCF0181.jpg"
+
+[widget.keyboard_layout]
+color = "primary"
+hide_when_single_layout = true
+
+[widget.nix-monitor]
+type = "avivbintangaringga/nix-monitor:nix-monitor"
+
+[widget.workspaces]
+anchor = true
+
+
