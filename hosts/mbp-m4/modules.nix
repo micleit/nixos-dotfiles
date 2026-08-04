@@ -16,7 +16,7 @@
         ../../modules/systems/darwin/darwin.nix
         ../../modules/home/shell.nix
         ../../modules/home/terminal.nix
-        ../../modules/home/aerc.nix
+        # ../../modules/home/aerc.nix  # disabled due to arm64 mailutils issue
         ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
@@ -31,10 +31,8 @@
         imagemagick
         texliveFull
         neovim-remote
-        gemini-cli
         inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
         sesh
-        opencode
         python3
         python3Packages.pip
         python3Packages.virtualenv
@@ -43,10 +41,10 @@
         isort
         ruff
         go
-        spotify
-        spicetify-cli
         obsidian
         sioyek
+        lan-mouse
+        input-leap
       ];
     };
   };
