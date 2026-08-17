@@ -33,7 +33,6 @@
         imagemagick
         texliveFull
         neovim-remote
-        gemini-cli
         inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
         sesh
         opencode
@@ -45,8 +44,6 @@
         isort
         ruff
         go
-        spotify
-        spicetify-cli
         obsidian
         sioyek
         apple-cursor
@@ -69,6 +66,8 @@
         translate-shell
         libreoffice
         bitwarden-desktop
+        moonlight-qt 
+        protontricks
       ];
     };
   };
