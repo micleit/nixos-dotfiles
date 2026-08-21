@@ -34,8 +34,8 @@
     let
       overlays = [
         (final: prev: {
-          wf-recorder = prev.wf-recorder.override { ffmpeg = prev.ffmpeg_6-headless; };
-          moonlight-qt = prev.moonlight-qt.override { ffmpeg = prev.ffmpeg_6; };
+          wf-recorder = prev.wf-recorder.override { ffmpeg_8 = prev.ffmpeg_6-headless; };
+          moonlight-qt = prev.moonlight-qt.override { ffmpeg_8 = prev.ffmpeg_6; };
         })
       ];
       sharedModules = [

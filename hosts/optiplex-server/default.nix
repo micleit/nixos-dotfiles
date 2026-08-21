@@ -9,6 +9,9 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./modules.nix
+    ../../modules/systems/server/home-assistant.nix
+    ../../modules/systems/server/cloudflare-tunnel.nix
   ];
 
   # ============================================================================

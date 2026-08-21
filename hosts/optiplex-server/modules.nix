@@ -44,6 +44,8 @@
         translate-shell
         libreoffice
         bitwarden-desktop
+        feishin
+        fladder
       ];
     };
   };
