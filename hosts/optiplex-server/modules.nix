@@ -46,6 +46,7 @@
         bitwarden-desktop
         feishin
         fladder
+        obsidian
       ];
     };
   };
