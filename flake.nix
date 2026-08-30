@@ -9,7 +9,6 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    copilot-cli.url = "github:scarisey/copilot-cli-flake";
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -34,6 +33,7 @@
     let
       overlays = [
         (final: prev: {
+          che = prev.callPackage ./pkgs/che/package.nix { };
           wf-recorder = prev.wf-recorder.override { ffmpeg_8 = prev.ffmpeg_6-headless; };
           moonlight-qt = prev.moonlight-qt.override { ffmpeg_8 = prev.ffmpeg_6; };
         })
@@ -54,6 +54,7 @@
             in
             {
               inherit fsrs anki-cli;
+              che = pkgs.callPackage ./pkgs/che/package.nix { };
               substack-rss = pkgs.callPackage ./pkgs/substack-rss/package.nix { };
               default = self.packages.${system}.substack-rss;
             }

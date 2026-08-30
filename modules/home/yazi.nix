@@ -2,12 +2,13 @@
 
 {
   programs.yazi = {
-    enable = true;
-    shellWrapperName = "y";
+    enable = false;
   };
 
   home.packages = with pkgs; [
-    # Yazi File Viewing Dependencies
+    che
+
+    # Yazi/Che File Viewing Dependencies
     ffmpeg
     ffmpegthumbnailer
     imagemagick
