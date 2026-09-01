@@ -75,6 +75,7 @@
     "localsend"
     "openmtp"
     "chang-07/tap/rascal"
+    "anaconda"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates

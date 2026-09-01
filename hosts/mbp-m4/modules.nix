@@ -40,6 +40,8 @@
         isort
         ruff
         go
+        R
+        rstudio
         obsidian
         (sioyek.overrideAttrs (oldAttrs: {
           postInstall = ''
