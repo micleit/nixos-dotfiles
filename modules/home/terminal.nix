@@ -38,10 +38,30 @@
     enable = true;
   };
 
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-strategy-nvim 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '10'
+        '';
+      }
+    ];
+    extraConfig = builtins.readFile ../../config/tmux/tmux.conf;
+  };
+
   home.packages = with pkgs; [
     kitty
     lazygit
-    tmux
     speedtest-cli
     (buildGoModule {
       pname = "drift";
