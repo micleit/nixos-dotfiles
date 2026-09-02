@@ -34,6 +34,17 @@
           sesh connect "$session"
         fi
       }
+
+      # Your custom 'y' function for che (replaces yazi wrapper)
+      y() {
+        local tmp
+        tmp="$(mktemp -t "che-cwd.XXXXXX")"
+        che "$@" --cwd-file="$tmp"
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
       source ${config.home.homeDirectory}/nixos-dotfiles/modules/home/.p10k.zsh

@@ -15,29 +15,8 @@
       font-size = if pkgs.stdenv.isDarwin then 14 else 10;
       confirm-close-surface = false;
 
-      # Visuals
-      background = "#282828";
-      foreground = "#ebdbb2";
-
-      # Palette override to match your exact Gruvbox colors
-      palette = [
-        "0=#282828"
-        "1=#cc241d"
-        "2=#98971a"
-        "3=#d79921"
-        "4=#458588"
-        "5=#b16286"
-        "6=#689d6a"
-        "7=#a89984"
-        "8=#928374"
-        "9=#fb4934"
-        "10=#b8bb26"
-        "11=#fabd2f"
-        "12=#83a598"
-        "13=#d3869b"
-        "14=#8ec07c"
-        "15=#ebdbb2"
-      ];
+      # Theme
+      theme = "Gruvbox Dark";
 
       # Padding
       window-padding-x = 6;
@@ -59,11 +38,30 @@
     enable = true;
   };
 
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-strategy-nvim 'session'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '10'
+        '';
+      }
+    ];
+    extraConfig = builtins.readFile ../../config/tmux/tmux.conf;
+  };
+
   home.packages = with pkgs; [
-    inputs.copilot-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
     kitty
     lazygit
-    tmux
     speedtest-cli
     (buildGoModule {
       pname = "drift";

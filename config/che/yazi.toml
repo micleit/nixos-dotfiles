@@ -6,9 +6,14 @@ sort_by = "natural"
 edit = [
     { run = 'nvim "$@"', block = true, desc = "Edit in Neovim" }
 ]
+pdf = [
+    { run = 'sioyek "$@"', orphan = true, desc = "Open in Sioyek" }
+]
 
 [open]
 rules = [
+    { name = "*.pdf", use = [ "pdf", "edit" ] },
+    { mime = "application/pdf", use = [ "pdf", "edit" ] },
     { name = "*.txt", mime = "*", use = "edit" },
     { name = "*.nix", mime = "*", use = "edit" },
     { name = "*.conf", mime = "*", use = "edit" },

@@ -70,11 +70,11 @@ in
       window_zoom_persist = "off";
       window_placement = "second_child";
       window_shadow = "float";
-      window_opacity = "on";
-      window_opacity_duration = "0.2";
+      window_opacity = "off";
+      window_opacity_duration = "0.0";
       active_window_opacity = "1";
-      normal_window_opacity = "0.94";
-      window_animation_duration = "0.2";
+      normal_window_opacity = "1.0";
+      window_animation_duration = "0.0";
       split_ratio = "0.50";
       auto_balance = "off";
       mouse_modifier = "fn";
@@ -115,7 +115,7 @@ in
       yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 
       # Borders (managed separately if using services.jankyborders, but kept here for compatibility)
-      borders active_color=0xffebdbb2 inactive_color=0x40ebdbb2 width=6.0 &
+      # borders active_color=0xffebdbb2 inactive_color=0x40ebdbb2 width=6.0 &
     '';
   };
 
