@@ -10,9 +10,9 @@
 
       :: default : yabai -m config active_window_border_color 0xE0f5c2e7
       # kickstart yabai 
-      ralt - y : yabai --restart-service
+      ralt - y : launchctl kickstart -k gui/$(id -u)/org.nixos.yabai
       # restart skhd
-      ralt + shift - y : skhd --restart-service
+      ralt + shift - y : launchctl kickstart -k gui/$(id -u)/org.nixos.skhd
 
       # logout
       # ralt + shift - f : /usr/bin/osascript -e 'tell app "System Events" to log out'
@@ -34,10 +34,10 @@
       hyper - b : /usr/bin/open -na "Brave Browser"
 
       # open finder (opens home folder in new window)
-      hyper - f : /usr/bin/open $HOME
+      hyper - f : /usr/bin/open -na "Swift Salamander"
 
-      # open yazi in ghostty
-      hyper - y : ghostty -e yazi
+      # open che in ghostty
+      hyper - y : ghostty -e che
 
       # open system preferences
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'

@@ -9,6 +9,9 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./modules.nix
+    ../../modules/systems/server/home-assistant.nix
+    ../../modules/systems/server/cloudflare-tunnel.nix
   ];
 
   # ============================================================================
@@ -18,6 +21,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "snd_hda_intel" ];
+  # Force virtual display on HDMI-A-1 for headless Sunshine streaming without physical monitor
+  boot.kernelParams = [ "video=HDMI-A-1:1920x1080@60e" ];
   hardware.enableAllFirmware = true;
 
   # ============================================================================
@@ -75,12 +80,10 @@
     };
   };
 
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
-
 
   programs.hyprland = {
     enable = true;

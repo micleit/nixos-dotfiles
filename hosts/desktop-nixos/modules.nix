@@ -68,6 +68,7 @@
         bitwarden-desktop
         moonlight-qt 
         protontricks
+        orca-slicer
       ];
     };
   };

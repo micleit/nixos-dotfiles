@@ -57,12 +57,10 @@
   homebrew.taps = [
     "felixkratz/formulae"
     "asmvik/formulae"
-    "deskflow/tap"
   ];
   homebrew.casks = [
     # "bitwarden" can't do browser integration without mac app store version.
     "anki"
-    "discord"
     "brave-browser"
     "font-sf-pro"
     "font-sf-mono"
@@ -71,12 +69,12 @@
     "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
-    "whatcable"
     "wooshy"
     "antigravity-ide"
     "sol"
-    "deskflow"
     "localsend"
+    "openmtp"
+    "chang-07/tap/rascal"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
@@ -86,11 +84,10 @@
     "lua"
     "mole"
     "colima" # Docker daemon via lightweight VM
+    "python@3.12"
+    "node"
+    "rclone"
   ];
-
-  # Services
-  # services.sketchybar.enable = true;
-  # services.yabai and services.skhd are now managed in modules/*.nix
 
   # macOS System Settings
   system.defaults = {
