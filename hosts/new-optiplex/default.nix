@@ -35,6 +35,9 @@
   # ============================================================================
   networking.hostName = "new-optiplex";
   networking.networkmanager.enable = true;
+  networking.firewall.allowedTCPPorts = [8096];
+  networking.resolvconf.enable = true;
+  networking.dhcpcd.extraConfig = "nohook resolv.conf";
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
