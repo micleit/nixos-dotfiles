@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.tmux = {
     enable = true;
     terminal = "tmux-256color";
@@ -8,6 +6,8 @@
     mouse = true;
     keyMode = "vi";
     baseIndex = 1;
+    escapeTime = 0;
+    prefix = "M-S-C-Space";
 
     plugins = with pkgs.tmuxPlugins; [
       {
@@ -34,9 +34,6 @@
 
       # Keybindings & Prefixes
       unbind t
-      unbind C-b
-      set -g prefix M-S-C-Space
-      bind-key M-S-C-Space send-prefix
 
       # Prefix for iPad
       set -g prefix2 C-a
@@ -97,7 +94,6 @@
       bind -n M-9 select-window -t 9
 
       # 1-based indexing options
-      setw -g pane-base-index 1
       set -g renumber-windows on
 
       # Vim-like copy/paste

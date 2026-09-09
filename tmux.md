@@ -1,6 +1,6 @@
 # 🪟 Tmux Cheatsheet
 
-This cheatsheet reflects the custom configuration found in `config/tmux/tmux.conf`.
+This cheatsheet reflects the custom configuration found in `modules/home/tmux.nix` (Nix/Home Manager) and `config/tmux/tmux.conf` (standalone/non-Nix).
 
 ## 🎹 Key Bindings
 
