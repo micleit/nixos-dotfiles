@@ -57,7 +57,7 @@
         moonlight-qt
         sunshine
         prismlauncher
-
+        feishin
       ];
     };
   };

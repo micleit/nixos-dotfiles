@@ -57,6 +57,7 @@
   homebrew.taps = [
     "felixkratz/formulae"
     "asmvik/formulae"
+    "y3owk1n/tap"
   ];
   homebrew.casks = [
     # "bitwarden" can't do browser integration without mac app store version.
@@ -69,16 +70,15 @@
     "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
-    "wooshy"
     "antigravity-ide"
     "sol"
     "localsend"
     "openmtp"
-    "chang-07/tap/rascal"
+    "tableau"
+    "y3owk1n/tap/neru"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
-    "borders"
     "switchaudio-osx"
     "nowplaying-cli"
     "lua"
