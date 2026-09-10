@@ -70,7 +70,6 @@
     "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
-    "wooshy"
     "antigravity-ide"
     "sol"
     "localsend"
@@ -80,7 +79,6 @@
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
-    "borders"
     "switchaudio-osx"
     "nowplaying-cli"
     "lua"
