@@ -54,12 +54,12 @@ top = 0.0
 [general]
 animationsEnabled = true
 defaultLayoutType = "niri"
-hotkeysEnabled = false
+hotkeysEnabled = true
 hyperKeyModifiers = "Control+Option+Shift+Command"
-ipcEnabled = true
+ipcEnabled = false
 preventSleepEnabled = false
 systemHyperTrigger = "None"
-updateChecksEnabled = false
+updateChecksEnabled = true
 
 [gestures]
 fingerCount = 3
@@ -160,7 +160,7 @@ notchMode = "off"
 position = "belowMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 0.0
-revealModifier = "option"
+revealModifier = "control"
 showFloatingWindows = false
 showLabels = true
 systemStatsButton = true
