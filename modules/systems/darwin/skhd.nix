@@ -11,18 +11,9 @@
       # restart skhd
       rctrl + shift - y : launchctl kickstart -k gui/$(id -u)/org.nixos.skhd
 
-      # logout
-      # rctrl + shift - f : /usr/bin/osascript -e 'tell app "System Events" to log out'
-      # power down 
-      # rctrl + shift - ; : /usr/bin/osascript -e 'tell app "System Events" to shut down'
-      # reboot
-      # rctrl + shift - z : /usr/bin/osascript -e 'tell app "System Events" to restart'
-      # sleep 
-      hyper - escape : /usr/bin/osascript -e 'tell application "System Events" to sleep'
-
       # === launch commands ===
       # open ghostty terminal
-      rctrl - return : ghostty
+      hyper - return : /usr/bin/open -na Ghostty
 
       # open vscode
       hyper - v : /usr/bin/open -na /Applications/Visual\ Studio\ Code.app
@@ -38,11 +29,6 @@
 
       # open system preferences
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'
-
-      # test binding (creates a file to verify execution)
-      hyper - t : /usr/bin/touch /tmp/skhd_test
-      # second test with a different key
-      hyper - z : /usr/bin/touch /tmp/skhd_z_test
     '';
   };
 }

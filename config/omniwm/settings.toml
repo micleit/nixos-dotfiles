@@ -164,7 +164,7 @@ revealModifier = "control"
 showFloatingWindows = false
 showLabels = true
 systemStatsButton = true
-windowLevel = "normal"
+windowLevel = "floating"
 xOffset = 0.0
 yOffset = 0.0
 
@@ -681,7 +681,7 @@ binding = "Unassigned"
 id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
-binding = "Control+Return"
+binding = "Control+Shift+Return"
 id = "toggleFullscreen"
 
 [[hotkeys]]
