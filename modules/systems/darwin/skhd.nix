@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  omniwmctl = "${pkgs.omniwm}/bin/omniwmctl";
+in
 {
   services.skhd = {
     enable = true;
@@ -8,7 +11,7 @@
       # hyper = cmd + shift + ctrl + alt
 
       # restart skhd
-      ralt + shift - y : launchctl kickstart -k gui/$(id -u)/org.nixos.skhd
+      ralt + shift - y : launchctl kill SIGTERM gui/$(id -u)/org.nixos.skhd
 
       # sleep
       hyper - escape : /usr/bin/osascript -e 'tell application "System Events" to sleep'
@@ -33,84 +36,84 @@
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'
 
       # === OmniWM Navigation ===
-      # window focus
-      ralt - s : omniwmctl command focus left
-      ralt - d : omniwmctl command focus down
-      ralt - e : omniwmctl command focus up
-      ralt - f : omniwmctl command focus right
+      # window focus (s, d, e, f and arrows)
+      ralt - s : ${omniwmctl} command focus left
+      ralt - d : ${omniwmctl} command focus down
+      ralt - e : ${omniwmctl} command focus up
+      ralt - f : ${omniwmctl} command focus right
 
-      ralt - left : omniwmctl command focus left
-      ralt - down : omniwmctl command focus down
-      ralt - up : omniwmctl command focus up
-      ralt - right : omniwmctl command focus right
+      ralt - left : ${omniwmctl} command focus left
+      ralt - down : ${omniwmctl} command focus down
+      ralt - up : ${omniwmctl} command focus up
+      ralt - right : ${omniwmctl} command focus right
 
-      ralt - tab : omniwmctl command focus previous
+      ralt - tab : ${omniwmctl} command focus previous
 
       # === OmniWM Window Movement ===
       # move window
-      ralt + shift - s : omniwmctl command move left
-      ralt + shift - d : omniwmctl command move down
-      ralt + shift - e : omniwmctl command move up
-      ralt + shift - f : omniwmctl command move right
+      ralt + shift - s : ${omniwmctl} command move left
+      ralt + shift - d : ${omniwmctl} command move down
+      ralt + shift - e : ${omniwmctl} command move up
+      ralt + shift - f : ${omniwmctl} command move right
 
-      ralt + shift - left : omniwmctl command move left
-      ralt + shift - down : omniwmctl command move down
-      ralt + shift - up : omniwmctl command move up
-      ralt + shift - right : omniwmctl command move right
+      ralt + shift - left : ${omniwmctl} command move left
+      ralt + shift - down : ${omniwmctl} command move down
+      ralt + shift - up : ${omniwmctl} command move up
+      ralt + shift - right : ${omniwmctl} command move right
 
       # === OmniWM Workspace Management ===
       # switch workspace
-      ralt - 1 : omniwmctl command switch-workspace 1
-      ralt - 2 : omniwmctl command switch-workspace 2
-      ralt - 3 : omniwmctl command switch-workspace 3
-      ralt - 4 : omniwmctl command switch-workspace 4
-      ralt - 5 : omniwmctl command switch-workspace 5
-      ralt - 6 : omniwmctl command switch-workspace 6
-      ralt - 7 : omniwmctl command switch-workspace 7
-      ralt - 8 : omniwmctl command switch-workspace 8
-      ralt - 9 : omniwmctl command switch-workspace 9
-      ralt + ctrl - tab : omniwmctl command switch-workspace back-and-forth
+      ralt - 1 : ${omniwmctl} command switch-workspace 1
+      ralt - 2 : ${omniwmctl} command switch-workspace 2
+      ralt - 3 : ${omniwmctl} command switch-workspace 3
+      ralt - 4 : ${omniwmctl} command switch-workspace 4
+      ralt - 5 : ${omniwmctl} command switch-workspace 5
+      ralt - 6 : ${omniwmctl} command switch-workspace 6
+      ralt - 7 : ${omniwmctl} command switch-workspace 7
+      ralt - 8 : ${omniwmctl} command switch-workspace 8
+      ralt - 9 : ${omniwmctl} command switch-workspace 9
+      ralt + ctrl - tab : ${omniwmctl} command switch-workspace back-and-forth
 
       # move window to workspace
-      ralt + shift - 1 : omniwmctl command move-to-workspace 1
-      ralt + shift - 2 : omniwmctl command move-to-workspace 2
-      ralt + shift - 3 : omniwmctl command move-to-workspace 3
-      ralt + shift - 4 : omniwmctl command move-to-workspace 4
-      ralt + shift - 5 : omniwmctl command move-to-workspace 5
-      ralt + shift - 6 : omniwmctl command move-to-workspace 6
-      ralt + shift - 7 : omniwmctl command move-to-workspace 7
-      ralt + shift - 8 : omniwmctl command move-to-workspace 8
-      ralt + shift - 9 : omniwmctl command move-to-workspace 9
+      ralt + shift - 1 : ${omniwmctl} command move-to-workspace 1
+      ralt + shift - 2 : ${omniwmctl} command move-to-workspace 2
+      ralt + shift - 3 : ${omniwmctl} command move-to-workspace 3
+      ralt + shift - 4 : ${omniwmctl} command move-to-workspace 4
+      ralt + shift - 5 : ${omniwmctl} command move-to-workspace 5
+      ralt + shift - 6 : ${omniwmctl} command move-to-workspace 6
+      ralt + shift - 7 : ${omniwmctl} command move-to-workspace 7
+      ralt + shift - 8 : ${omniwmctl} command move-to-workspace 8
+      ralt + shift - 9 : ${omniwmctl} command move-to-workspace 9
 
       # move column to workspace
-      ralt + ctrl + shift - up : omniwmctl command move-column-to-workspace up
-      ralt + ctrl + shift - down : omniwmctl command move-column-to-workspace down
+      ralt + ctrl + shift - up : ${omniwmctl} command move-column-to-workspace up
+      ralt + ctrl + shift - down : ${omniwmctl} command move-column-to-workspace down
 
       # === OmniWM Layout & Window State ===
       # fullscreen & floating
-      ralt + shift - return : omniwmctl command toggle-fullscreen
-      ralt + shift - space : omniwmctl command toggle-focused-window-floating
+      ralt + shift - return : ${omniwmctl} command toggle-fullscreen
+      ralt + shift - space : ${omniwmctl} command toggle-focused-window-floating
 
       # column sizing & tabbed toggle
-      ralt - period : omniwmctl command cycle-size forward
-      ralt - comma : omniwmctl command cycle-size backward
-      ralt + ctrl - f : omniwmctl command toggle-container-full-primary-span
-      ralt + ctrl - r : omniwmctl command reset-window-secondary-span
-      ralt - t : omniwmctl command toggle-column-tabbed
-      ralt + shift - b : omniwmctl command balance-sizes
+      ralt - period : ${omniwmctl} command cycle-size forward
+      ralt - comma : ${omniwmctl} command cycle-size backward
+      ralt + ctrl - f : ${omniwmctl} command toggle-container-full-primary-span
+      ralt + ctrl - r : ${omniwmctl} command reset-window-secondary-span
+      ralt - t : ${omniwmctl} command toggle-column-tabbed
+      ralt + shift - b : ${omniwmctl} command balance-sizes
 
       # layout toggles
-      ralt + shift - l : omniwmctl command toggle-workspace-layout
-      ralt + shift - o : omniwmctl command toggle-overview
+      ralt + shift - l : ${omniwmctl} command toggle-workspace-layout
+      ralt + shift - o : ${omniwmctl} command toggle-overview
 
       # monitor focus
-      ralt + cmd - tab : omniwmctl command focus-monitor next
-      ralt + cmd - 0x32 : omniwmctl command focus-monitor last
+      ralt + cmd - tab : ${omniwmctl} command focus-monitor next
+      ralt + cmd - 0x32 : ${omniwmctl} command focus-monitor last
 
       # utilities
-      ralt + ctrl - space : omniwmctl command open-command-palette
-      ralt + ctrl - m : omniwmctl command open-menu-anywhere
-      ralt + shift - r : omniwmctl command raise-all-floating-windows
+      ralt + ctrl - space : ${omniwmctl} command open-command-palette
+      ralt + ctrl - m : ${omniwmctl} command open-menu-anywhere
+      ralt + shift - r : ${omniwmctl} command raise-all-floating-windows
     '';
   };
 }
