@@ -16,6 +16,7 @@
       # === Launch Commands ===
       # open ghostty terminal
       ralt - return : /usr/bin/open -na Ghostty
+      rctrl - return : /usr/bin/open -na Ghostty
 
       # open vscode
       hyper - v : /usr/bin/open -na /Applications/Visual\ Studio\ Code.app
