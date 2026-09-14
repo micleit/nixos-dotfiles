@@ -76,6 +76,7 @@
     "openmtp"
     "tableau"
     "y3owk1n/tap/neru"
+    "zennotes/tap/zennotes"
   ];
   homebrew.brews = [
     "sketchybar" # Often better from brew for permissions/updates
