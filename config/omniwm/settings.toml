@@ -10,13 +10,13 @@ mode = "dark"
 
 [borders]
 enabled = true
-width = 4.0
+width = 1.5
 
 [borders.color]
-alpha = 0.88
-blue = 0.9
-green = 0.76
-red = 0.96
+alpha = 1.0
+blue = 0.3636843264102936
+green = 0.8318855166435242
+red = 0.9806177020072937
 
 [clipboard]
 historyEnabled = false
@@ -35,7 +35,7 @@ useGlobalGaps = true
 [focus]
 crossesMonitorAtEdge = false
 followsMouse = false
-followsWindowToMonitor = false
+followsWindowToMonitor = true
 lockModifier = "off"
 moveCrossesMonitorAtEdge = false
 moveMouseToFocusedWindow = true
@@ -43,23 +43,23 @@ raiseOnMouseFocus = false
 
 [gaps]
 fullscreenUsesOuterGaps = false
-size = 5.0
+size = 16.0
 
 [gaps.outer]
-bottom = 4.0
-left = 4.0
-right = 4.0
-top = 4.0
+bottom = 0.0
+left = 0.0
+right = 0.0
+top = 0.0
 
 [general]
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
 hyperKeyModifiers = "Control+Option+Shift+Command"
-ipcEnabled = true
+ipcEnabled = false
 preventSleepEnabled = false
 systemHyperTrigger = "None"
-updateChecksEnabled = false
+updateChecksEnabled = true
 
 [gestures]
 fingerCount = 3
@@ -70,9 +70,9 @@ scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
-workspaceSwipeAxis = "vertical"
-workspaceSwipeEnabled = false
-workspaceSwipeFingerCount = 3
+workspaceSwipeAxis = "horizontal"
+workspaceSwipeEnabled = true
+workspaceSwipeFingerCount = 4
 
 [hiddenBar]
 enabled = true
@@ -128,11 +128,11 @@ autoHide = false
 backgroundBlurRadius = 0
 backgroundEffect = "standardBlur"
 enabled = true
-heightPercent = 50.0
+heightPercent = 60.0
 monitorMode = "focusedWindow"
 opacity = 1.0
 position = "center"
-widthPercent = 50.0
+widthPercent = 60.0
 
 [routing]
 arrangements = []
@@ -148,23 +148,23 @@ showWorkspaceName = false
 useWorkspaceId = false
 
 [workspaceBar]
-backgroundOpacity = 0.85
+backgroundOpacity = 0.1
 deduplicateAppIcons = false
 enabled = true
 excludedBundleIDs = []
-height = 26.0
+height = 28.0
 hideEmptyWorkspaces = false
 hideInNativeFullscreen = false
-notchActiveZoneWidth = 180.0
-notchMode = "moveBelowMenuBar"
+notchActiveZoneWidth = 100.0
+notchMode = "off"
 position = "belowMenuBar"
-reserveLayoutSpace = true
-revealHoldMilliseconds = 200.0
-revealModifier = "off"
+reserveLayoutSpace = false
+revealHoldMilliseconds = 0.0
+revealModifier = "control"
 showFloatingWindows = false
 showLabels = true
 systemStatsButton = true
-windowLevel = "popup"
+windowLevel = "normal"
 xOffset = 0.0
 yOffset = 0.0
 
@@ -243,76 +243,10 @@ minHeight = 650.0
 minWidth = 930.0
 
 [[appRules]]
-appNameSubstring = "Calculator"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Software Update"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Dictionary"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "System Preferences"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "System Settings"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Photo Booth"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Archive Utility"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "App Store"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Steam"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Alfred"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "LuLu"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Stickies"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Ryujinx"
-layout = "float"
-
-[[appRules]]
-appNameSubstring = "Finder"
-layout = "float"
-titleRegex = "(Co(py|nnect)|Move|Info|Pref)"
-
-[[appRules]]
-appNameSubstring = "Safari"
-layout = "float"
-titleRegex = "^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$"
-
-[[appRules]]
-appNameSubstring = "System Information"
-layout = "float"
-titleSubstring = "About This Mac"
-
-[[appRules]]
-appNameSubstring = "Inkscape"
-layout = "float"
-titleSubstring = "Select file to save to"
+bundleId = "com.apple.MobileSMS"
+id = "552FB77D-BF0E-4737-90A6-B5BC6986C579"
+minHeight = 320.0
+minWidth = 660.0
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -395,75 +329,75 @@ binding = "Unassigned"
 id = "assignFocusedWindowToScratchpad.10"
 
 [[hotkeys]]
-binding = "Option+1"
+binding = "Control+1"
 id = "switchWorkspace.0"
 
 [[hotkeys]]
-binding = "Option+Shift+1"
+binding = "Control+Shift+1"
 id = "moveToWorkspace.0"
 
 [[hotkeys]]
-binding = "Option+2"
+binding = "Control+2"
 id = "switchWorkspace.1"
 
 [[hotkeys]]
-binding = "Option+Shift+2"
+binding = "Control+Shift+2"
 id = "moveToWorkspace.1"
 
 [[hotkeys]]
-binding = "Option+3"
+binding = "Control+3"
 id = "switchWorkspace.2"
 
 [[hotkeys]]
-binding = "Option+Shift+3"
+binding = "Control+Shift+3"
 id = "moveToWorkspace.2"
 
 [[hotkeys]]
-binding = "Option+4"
+binding = "Control+4"
 id = "switchWorkspace.3"
 
 [[hotkeys]]
-binding = "Option+Shift+4"
+binding = "Control+Shift+4"
 id = "moveToWorkspace.3"
 
 [[hotkeys]]
-binding = "Option+5"
+binding = "Control+5"
 id = "switchWorkspace.4"
 
 [[hotkeys]]
-binding = "Option+Shift+5"
+binding = "Control+Shift+5"
 id = "moveToWorkspace.4"
 
 [[hotkeys]]
-binding = "Option+6"
+binding = "Control+6"
 id = "switchWorkspace.5"
 
 [[hotkeys]]
-binding = "Option+Shift+6"
+binding = "Control+Shift+6"
 id = "moveToWorkspace.5"
 
 [[hotkeys]]
-binding = "Option+7"
+binding = "Control+7"
 id = "switchWorkspace.6"
 
 [[hotkeys]]
-binding = "Option+Shift+7"
+binding = "Control+Shift+7"
 id = "moveToWorkspace.6"
 
 [[hotkeys]]
-binding = "Option+8"
+binding = "Control+8"
 id = "switchWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+Shift+8"
+binding = "Control+Shift+8"
 id = "moveToWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+9"
+binding = "Control+9"
 id = "switchWorkspace.8"
 
 [[hotkeys]]
-binding = "Option+Shift+9"
+binding = "Control+Shift+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
@@ -551,19 +485,19 @@ binding = "Unassigned"
 id = "switchWorkspace.previous"
 
 [[hotkeys]]
-binding = "Option+Left Arrow"
+binding = "Control+S"
 id = "focus.left"
 
 [[hotkeys]]
-binding = "Option+Down Arrow"
+binding = "Control+D"
 id = "focus.down"
 
 [[hotkeys]]
-binding = "Option+Up Arrow"
+binding = "Control+E"
 id = "focus.up"
 
 [[hotkeys]]
-binding = "Option+Right Arrow"
+binding = "Control+F"
 id = "focus.right"
 
 [[hotkeys]]
@@ -663,19 +597,19 @@ binding = "Unassigned"
 id = "moveColumnToWorkspace.8"
 
 [[hotkeys]]
-binding = "Option+Shift+Left Arrow"
+binding = "Control+Shift+S"
 id = "move.left"
 
 [[hotkeys]]
-binding = "Option+Shift+Down Arrow"
+binding = "Control+Shift+D"
 id = "move.down"
 
 [[hotkeys]]
-binding = "Option+Shift+Up Arrow"
+binding = "Control+Shift+E"
 id = "move.up"
 
 [[hotkeys]]
-binding = "Option+Shift+Right Arrow"
+binding = "Control+Shift+F"
 id = "move.right"
 
 [[hotkeys]]
@@ -747,7 +681,7 @@ binding = "Unassigned"
 id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
-binding = "Option+Return"
+binding = "Control+Return"
 id = "toggleFullscreen"
 
 [[hotkeys]]
@@ -1107,7 +1041,6 @@ name = "5"
 type = "main"
 
 [[workspaces]]
-displayName = "❤️"
 id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
 layoutType = "niri"
 name = "6"
@@ -1116,7 +1049,6 @@ name = "6"
 type = "secondary"
 
 [[workspaces]]
-displayName = "🚀"
 id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
 layoutType = "niri"
 name = "7"

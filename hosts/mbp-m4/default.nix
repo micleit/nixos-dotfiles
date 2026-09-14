@@ -6,6 +6,7 @@
 {
   imports = [
     ../../modules/systems/darwin/omniwm.nix
+    ../../modules/systems/darwin/skhd.nix
   ];
 
   # List packages installed in system profile. To search by name, run:
