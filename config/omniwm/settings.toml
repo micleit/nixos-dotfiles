@@ -957,7 +957,7 @@ binding = "Control+Option+Space"
 id = "openCommandPalette"
 
 [[hotkeys]]
-binding = "Option+Shift+R"
+binding = "Unassigned"
 id = "raiseAllFloatingWindows"
 
 [[hotkeys]]
@@ -997,7 +997,7 @@ binding = "Option+Shift+O"
 id = "toggleOverview"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Control+Grave"
 id = "toggleSystemStats"
 
 [[workspaces]]
