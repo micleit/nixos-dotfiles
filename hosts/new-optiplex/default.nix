@@ -4,7 +4,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     # ../../modules/systems/linux/ollama.nix
@@ -18,6 +19,7 @@
     ../../modules/systems/server/nixflix.nix
     ../../modules/systems/server/pia-vpn.nix
     ../../modules/systems/server/slskd.nix
+    ../../modules/systems/server/zennotes.nix
     inputs.self.nixosModules.substack-rss
   ];
 
@@ -26,8 +28,8 @@
   # ============================================================================
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = ["fuse"];
-  boot.kernelModules = ["snd_hda_intel"];
+  boot.supportedFilesystems = [ "fuse" ];
+  boot.kernelModules = [ "snd_hda_intel" ];
   hardware.enableAllFirmware = true;
 
   # ============================================================================
@@ -35,7 +37,7 @@
   # ============================================================================
   networking.hostName = "new-optiplex";
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [8096];
+  networking.firewall.allowedTCPPorts = [ 8096 ];
   networking.resolvconf.enable = true;
   networking.dhcpcd.extraConfig = "nohook resolv.conf";
   networking.nameservers = [
@@ -82,11 +84,11 @@
   # rsync without sudo
   security.sudo.extraRules = [
     {
-      users = ["mic"];
+      users = [ "mic" ];
       commands = [
         {
           command = "/run/current-system/sw/bin/rsync";
-          options = ["NOPASSWD"];
+          options = [ "NOPASSWD" ];
         }
       ];
     }
@@ -105,13 +107,13 @@
   '';
 
   # Ensure PipeWire starts and stays running without a monitor/active session
-  systemd.user.services.pipewire.wantedBy = ["default.target"];
-  systemd.user.services.wireplumber.wantedBy = ["default.target"];
+  systemd.user.services.pipewire.wantedBy = [ "default.target" ];
+  systemd.user.services.wireplumber.wantedBy = [ "default.target" ];
 
   # ============================================================================
   # GRAPHICS & NVIDIA
   # ============================================================================
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
     enable = true;
@@ -170,7 +172,7 @@
     usbutils
     alsa-utils
     vlc # VLC with ncurses/terminal interface (nvlc)
-    (mpv-unwrapped.override {cddaSupport = true;})
+    (mpv-unwrapped.override { cddaSupport = true; })
   ];
 
   # ============================================================================
