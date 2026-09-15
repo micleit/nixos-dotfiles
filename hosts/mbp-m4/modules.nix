@@ -2,13 +2,14 @@
   inputs,
   pkgs,
   ...
-}: {
-  imports = [];
+}:
+{
+  imports = [ ];
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     users.mic = {
       imports = [
         ../../home/mic/default.nix
@@ -40,8 +41,6 @@
         isort
         ruff
         go
-        R
-        rstudio
         obsidian
         (sioyek.overrideAttrs (oldAttrs: {
           postInstall = ''
@@ -63,5 +62,5 @@
   };
 
   # Host-specific packages can be declared here or in default.nix
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [ ];
 }

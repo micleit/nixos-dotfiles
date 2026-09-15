@@ -56,7 +56,7 @@ animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
 hyperKeyModifiers = "Control+Option+Shift+Command"
-ipcEnabled = false
+ipcEnabled = true
 preventSleepEnabled = false
 systemHyperTrigger = "None"
 updateChecksEnabled = true
@@ -81,7 +81,7 @@ rehideIntervalSeconds = 5.0
 
 [mouseWarp]
 constrainToArrangement = false
-enabled = true
+enabled = false
 margin = 1
 
 [niri]

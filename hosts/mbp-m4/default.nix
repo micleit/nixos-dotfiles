@@ -75,6 +75,7 @@
     "tableau"
     "y3owk1n/tap/neru"
     "zennotes/tap/zennotes"
+    "rstudio"
   ];
   homebrew.brews = [
     "switchaudio-osx"
@@ -85,6 +86,11 @@
     "python@3.12"
     "node"
     "rclone"
+    "r"
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-41.10.6"
   ];
 
   # macOS System Settings
