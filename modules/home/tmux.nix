@@ -15,6 +15,8 @@
         extraConfig = ''
           set -g @resurrect-capture-pane-contents 'on'
           set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-save 'S'
+          set -g @resurrect-restore 'R'
         '';
       }
       {
@@ -149,6 +151,9 @@
 
       # Modes
       set -g mode-style "fg=''${thm_yellow} bg=''${thm_black4} bold"
+
+      # Re-hook continuum so auto-save interpolation is not clobbered by status-right
+      run-shell ${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/continuum.tmux
     '';
   };
 }
