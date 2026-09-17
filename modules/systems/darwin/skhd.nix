@@ -25,7 +25,7 @@
       hyper - b : /usr/bin/open -na "Brave Browser"
 
       # open finder (opens home folder in new window)
-      hyper - f : /usr/bin/open -na "Swift Salamander"
+      hyper - f : /usr/bin/open -na "Finder"
 
       # open che in ghostty
       hyper - y : ghostty -e che

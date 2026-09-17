@@ -104,4 +104,7 @@ vim.keymap.set("x", "m", function()
   require("which-key").show({ keys = "m", mode = "x" })
 end, { desc = "Surround Menu" })
 
+-- Markdown Preview
+vim.keymap.set("n", "<leader>mp", "<CMD>MarkdownPreviewToggle<CR>", { desc = "Markdown: Toggle Preview" })
+
 
