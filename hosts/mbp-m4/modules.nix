@@ -57,6 +57,7 @@
         sunshine
         prismlauncher
         feishin
+        docker
       ];
     };
   };
