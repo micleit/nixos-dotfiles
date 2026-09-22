@@ -1,0 +1,363 @@
+// Niri configuration migrated from Hyprland & Omniwm
+// https://niri-wm.github.io/niri/Configuration:-Introduction
+
+// ============================================================================
+// INPUT CONFIGURATION
+// ============================================================================
+input {
+    keyboard {
+        xkb {
+            layout "us,us,us"
+            variant ",colemak_dh,dvorak"
+            options "altwin:swap_lalt_lwin,lv3:ralt_alt"
+        }
+        numlock
+    }
+
+    // Unify all Mod binds to Right Alt (Alt / mod1)
+    mod-key "Alt"
+
+    touchpad {
+        tap
+        // Natural scroll off as in hyprland
+        // natural-scroll
+        accel-speed -0.6
+    }
+
+    mouse {
+        accel-speed -0.6
+    }
+
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// ============================================================================
+// OUTPUT CONFIGURATION
+// ============================================================================
+output "DP-2" {
+    mode "1920x1080@144"
+    scale 1
+    position x=0 y=0
+}
+
+// ============================================================================
+// LAYOUT CONFIGURATION
+// ============================================================================
+layout {
+    gaps 16
+    center-focused-column "never"
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+        proportion 1.0
+    }
+
+    default-column-width { proportion 1.0; }
+
+    focus-ring {
+        width 2
+        active-color "#ffb2b8"
+        inactive-color "#131313"
+    }
+
+    border {
+        off
+    }
+}
+
+// Ask clients to omit client-side decorations
+prefer-no-csd
+
+// ============================================================================
+// CURSOR & ENVIRONMENT
+// ============================================================================
+cursor {
+    xcursor-theme "macOS"
+    xcursor-size 24
+}
+
+environment {
+    DISPLAY ":0"
+    NIXOS_OZONE_WL "1"
+    LIBVA_DRIVER_NAME "nvidia"
+    __GLX_VENDOR_LIBRARY_NAME "nvidia"
+    NVD_BACKEND "direct"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+
+// ============================================================================
+// AUTOSTART
+// ============================================================================
+spawn-at-startup "noctalia"
+spawn-at-startup "systemctl" "--user" "start" "hyprpolkitagent"
+
+// ============================================================================
+// WINDOW RULES
+// ============================================================================
+window-rule {
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id="com.mitchellh.ghostty"
+    opacity 0.95
+}
+
+window-rule {
+    match app-id="Alacritty"
+    opacity 0.85
+}
+
+window-rule {
+    match app-id="brave-browser"
+    opacity 0.95
+}
+
+window-rule {
+    match app-id="steam"
+    opacity 0.85
+}
+
+window-rule {
+    match app-id="obsidian"
+    opacity 0.7
+}
+
+window-rule {
+    match title="^che-float$"
+    open-floating true
+    default-column-width { fixed 1000; }
+    default-window-height { fixed 700; }
+}
+
+// ============================================================================
+// LAYER RULES
+// ============================================================================
+layer-rule {
+    match namespace="^noctalia"
+    opacity 0.9
+}
+
+// ============================================================================
+// KEY BINDINGS (All using Right Alt / Mod)
+// ============================================================================
+binds {
+    // ------------------------------------------------------------------------
+    // Overlay & Help
+    // ------------------------------------------------------------------------
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    // ------------------------------------------------------------------------
+    // Application Launchers (Hyprland + Omniwm on Right Alt)
+    // ------------------------------------------------------------------------
+    Mod+Return { spawn "ghostty"; }
+    Mod+B      { spawn "brave"; }
+    Mod+Ctrl+Super+Shift+F      { spawn "nautilus"; }
+
+    // Noctalia Shell Controls (IPC)
+    Mod+Space           { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+Ctrl+Space      { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    Mod+Comma           { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Mod+Equal           { spawn "noctalia" "msg" "settings-toggle"; }
+    Mod+Period          { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
+
+    // Che floating terminal / Quake terminal
+    Mod+O     { spawn "bash" "-c" "alacritty --title che-float -e fish -c \"y\""; }
+    Mod+grave { spawn "bash" "-c" "alacritty --title che-float -e fish -c \"y\""; }
+
+    // Layout Switching
+    Mod+Backspace { switch-layout "next"; }
+
+    // Window / Session Management
+    Mod+Q         repeat=false { close-window; }
+    Mod+Shift+Q   repeat=false { quit; }
+    Mod+Shift+H   repeat=false { quit; }
+    Ctrl+Alt+Delete            { quit; }
+
+    // Fullscreen & Floating
+    Mod+Shift+Return   { fullscreen-window; }
+    Mod+V              { toggle-window-floating; }
+    Mod+Shift+V        { switch-focus-between-floating-and-tiling; }
+
+    // ------------------------------------------------------------------------
+    // Focus Navigation (Right Alt + WASD / Arrows / Vim HJKL / Omniwm)
+    // ------------------------------------------------------------------------
+    // Focus Left
+    Mod+R      { focus-column-left; }
+    Mod+Left   { focus-column-left; }
+
+    // Focus Right
+    Mod+T      { focus-column-right; }
+    Mod+Right  { focus-column-right; }
+
+    // Focus Up
+    Mod+F      { focus-window-up; }
+    Mod+Up     { focus-window-up; }
+
+    // Focus Down
+    Mod+S     { focus-window-down; }
+    Mod+Down   { focus-window-down; }
+
+    // Column Edge Focus & History
+    Mod+Home      { focus-column-first; }
+    Mod+End       { focus-column-last; }
+    Mod+Shift+Tab { focus-window-previous; }
+
+    // ------------------------------------------------------------------------
+    // Move Window / Column (Right Alt + Shift / Ctrl)
+    // ------------------------------------------------------------------------
+    // Move Left
+    Mod+Shift+R             { move-column-left; }
+    Mod+Ctrl+Left           { move-column-left; }
+
+    // Move Right
+    Mod+Shift+T             { move-column-right; }
+    Mod+Ctrl+Right          { move-column-right; }
+
+    // Move Up
+    Mod+Shift+F             { move-window-up; }
+    Mod+Ctrl+Up             { move-window-up; }
+
+    // Move Down
+    Mod+Shift+S             { move-window-down; }
+    Mod+Ctrl+Down           { move-window-down; }
+
+    // Move Column to Edges
+    Mod+Ctrl+Home           { move-column-to-first; }
+    Mod+Ctrl+End            { move-column-to-last; }
+
+    // ------------------------------------------------------------------------
+    // Omniwm Sizing & Layout Controls (Right Alt)
+    // ------------------------------------------------------------------------
+    // Cycle Column Size Presets
+    Mod+P                   { switch-preset-column-width; }
+    Mod+Shift+P             { switch-preset-column-width-back; }
+
+    // Maximize Column
+    Mod+M                   { maximize-column; }
+    Mod+Shift+M                   { maximize-window-to-edges; }
+
+    // Expand Column to Available Width
+    // Mod+Ctrl+F              { expand-column-to-available-width; }
+
+    // Reset Window Height
+    Mod+Ctrl+R              { reset-window-height; }
+
+    // Fine Column Width Adjustments (+/- 10%)
+    Mod+Minus               { set-column-width "-10%"; }
+    Mod+Plus                { set-column-width "+10%"; }
+
+    // Fine Window Height Adjustments (+/- 10%)
+    Mod+Shift+Minus         { set-window-height "-10%"; }
+    Mod+Shift+Equal         { set-window-height "+10%"; }
+    Mod+Shift+Plus          { set-window-height "+10%"; }
+
+    // Center / Balance
+    Mod+Shift+B             { center-visible-columns; }
+    Mod+Ctrl+C              { center-visible-columns; }
+    Mod+C                   { center-column; }
+
+    // Tabbed Column Display (Omniwm Option+T)
+    Mod+Shift+Ctrl+T             { toggle-column-tabbed-display; }
+
+    // Overview (Omniwm Option+Shift+O)
+    Mod+Shift+O             { toggle-overview; }
+
+    // Consume & Expel Window from Column
+    Mod+BracketLeft         { consume-or-expel-window-left; }
+    Mod+BracketRight        { consume-or-expel-window-right; }
+
+    // ------------------------------------------------------------------------
+    // Workspaces (Right Alt + 1..9, 0)
+    // ------------------------------------------------------------------------
+    Mod+1        { focus-workspace 1; }
+    Mod+2        { focus-workspace 2; }
+    Mod+3        { focus-workspace 3; }
+    Mod+4        { focus-workspace 4; }
+    Mod+5        { focus-workspace 5; }
+    Mod+6        { focus-workspace 6; }
+    Mod+7        { focus-workspace 7; }
+    Mod+8        { focus-workspace 8; }
+    Mod+9        { focus-workspace 9; }
+    Mod+0        { focus-workspace 10; }
+
+    Mod+Shift+1  { move-column-to-workspace 1; }
+    Mod+Shift+2  { move-column-to-workspace 2; }
+    Mod+Shift+3  { move-column-to-workspace 3; }
+    Mod+Shift+4  { move-column-to-workspace 4; }
+    Mod+Shift+5  { move-column-to-workspace 5; }
+    Mod+Shift+6  { move-column-to-workspace 6; }
+    Mod+Shift+7  { move-column-to-workspace 7; }
+    Mod+Shift+8  { move-column-to-workspace 8; }
+    Mod+Shift+9  { move-column-to-workspace 9; }
+    Mod+Shift+0  { move-column-to-workspace 10; }
+
+    // Workspace Back and Forth
+    Mod+Tab      { focus-workspace-previous; }
+
+    // Moving columns / workspaces up/down
+    Mod+Ctrl+Page_Up           { move-column-to-workspace-up; }
+    Mod+Ctrl+Page_Down         { move-column-to-workspace-down; }
+    Mod+Page_Up                { focus-workspace-up; }
+    Mod+Page_Down              { focus-workspace-down; }
+    Mod+Shift+Page_Up          { move-workspace-up; }
+    Mod+Shift+Page_Down        { move-workspace-down; }
+
+    // ------------------------------------------------------------------------
+    // Monitors
+    // ------------------------------------------------------------------------
+    Mod+Shift+Left             { focus-monitor-left; }
+    Mod+Shift+Right            { focus-monitor-right; }
+    Mod+Shift+Ctrl+Left        { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Right       { move-column-to-monitor-right; }
+
+    // ------------------------------------------------------------------------
+    // Mouse Wheel Bindings (Right Alt + Wheel)
+    // ------------------------------------------------------------------------
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // ------------------------------------------------------------------------
+    // Media, Audio & Hardware Controls
+    // ------------------------------------------------------------------------
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute        allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86MonBrightnessUp  allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    XF86AudioNext  allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPrev  allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioPlay  allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPause allow-when-locked=true { spawn "playerctl" "play-pause"; }
+
+    // ------------------------------------------------------------------------
+    // Screenshots & Power
+    // ------------------------------------------------------------------------
+    Print                      { screenshot; }
+    Ctrl+Print                 { screenshot-screen; }
+    Mod+Print                  { screenshot-window; }
+    Mod+Shift+Ctrl+P                { power-off-monitors; }
+
+    // Inhibitor escape hatch
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+}
+
+
+include "noctalia.kdl"
