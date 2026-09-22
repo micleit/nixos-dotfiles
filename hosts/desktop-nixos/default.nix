@@ -123,13 +123,18 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
   };
 
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
   };
 
   programs.hyprland = {
@@ -208,10 +213,15 @@
     curl
     mosh
     inputs.slippi.packages.${pkgs.stdenv.hostPlatform.system}.default
+    nvtopPackages.nvidia
+    vulkan-tools
   ];
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    NVD_BACKEND = "direct";
   };
 
   # ============================================================================

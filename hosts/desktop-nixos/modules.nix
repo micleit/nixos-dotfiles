@@ -69,6 +69,7 @@
         moonlight-qt 
         protontricks
         orca-slicer
+        eden
       ];
     };
   };
