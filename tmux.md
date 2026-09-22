@@ -11,6 +11,8 @@ This cheatsheet reflects the custom configuration found in `modules/home/tmux.ni
 |-----|--------|
 | `Prefix` + `r` | Reload tmux configuration |
 | `Prefix` + `t` | **Sesh** (Session Manager) - fuzzy find and connect to sessions |
+| `Prefix` + `S` | **Save** session state manually (tmux-resurrect) |
+| `Prefix` + `R` | **Restore** session state manually (tmux-resurrect) |
 | `Prefix` + `:` | Enter command mode |
 | `Prefix` + `[` | Enter copy mode (vi-style) |
 

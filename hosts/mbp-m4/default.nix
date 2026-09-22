@@ -5,7 +5,7 @@
 
 {
   imports = [
-    ../../modules/systems/darwin/yabai.nix
+    ../../modules/systems/darwin/omniwm.nix
     ../../modules/systems/darwin/skhd.nix
   ];
 
@@ -55,7 +55,6 @@
   homebrew.enable = true;
   # Homebrew configuration (per-host customization)
   homebrew.taps = [
-    "felixkratz/formulae"
     "asmvik/formulae"
     "y3owk1n/tap"
   ];
@@ -67,7 +66,6 @@
     "font-sf-mono"
     "sf-symbols"
     "font-hack-nerd-font"
-    "font-sketchybar-app-font"
     "colemak-dh"
     "docker-desktop" # Docker Desktop GUI
     "antigravity-ide"
@@ -77,9 +75,10 @@
     "tableau"
     "y3owk1n/tap/neru"
     "zennotes/tap/zennotes"
+    "rstudio"
+    "miniconda"
   ];
   homebrew.brews = [
-    "sketchybar" # Often better from brew for permissions/updates
     "switchaudio-osx"
     "nowplaying-cli"
     "lua"
@@ -88,6 +87,11 @@
     "python@3.12"
     "node"
     "rclone"
+    "r"
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-41.10.6"
   ];
 
   # macOS System Settings

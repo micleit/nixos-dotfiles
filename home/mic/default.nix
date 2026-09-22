@@ -37,6 +37,8 @@
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/opencode";
     "nvim".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/nvim";
+    "niri".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/niri";
   };
 
   # Manual symlink for hypr directory
@@ -45,6 +47,14 @@
       rm -rf "$HOME/.config/hypr"
     fi
     ln -s "$HOME/nixos-dotfiles/config/hypr" "$HOME/.config/hypr"
+  '';
+
+  # Manual symlink for niri directory
+  home.activation.linkNiriConfig = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    if [ -d "$HOME/.config/niri" ] && [ ! -L "$HOME/.config/niri" ]; then
+      rm -rf "$HOME/.config/niri"
+    fi
+    ln -sfn "$HOME/nixos-dotfiles/config/niri" "$HOME/.config/niri"
   '';
 
   # Let Home Manager install and manage itself.

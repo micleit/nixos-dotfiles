@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # macOS specific Home Manager settings
@@ -11,8 +16,8 @@
     # Add any other macOS specific CLI tools here
   ];
 
-  # Symlink sketchybar config (not tracked in git, uses mkOutOfStoreSymlink)
-  xdg.configFile = {
+  # Symlink sketchybar config (disabled when omniwm is enabled)
+  xdg.configFile = lib.mkIf (!config.programs.omniwm.enable) {
     "sketchybar".source =
       config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos-dotfiles/config/sketchybar";
   };
