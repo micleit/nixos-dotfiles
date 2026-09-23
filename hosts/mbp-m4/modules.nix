@@ -55,7 +55,6 @@
         }))
         moonlight-qt
         sunshine
-        prismlauncher
         feishin
         docker
       ];

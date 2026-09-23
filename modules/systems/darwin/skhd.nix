@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   omniwmctl = "${pkgs.omniwm}/bin/omniwmctl";
@@ -95,8 +95,8 @@ in
       ralt + shift - space : ${omniwmctl} command toggle-focused-window-floating
 
       # column sizing & tabbed toggle
-      ralt - 0x2F : ${omniwmctl} command cycle-size forward
-      ralt - 0x2B : ${omniwmctl} command cycle-size backward
+      ralt - p : ${omniwmctl} command cycle-size forward
+      ralt + shift - p : ${omniwmctl} command cycle-size backward
       ralt + ctrl - f : ${omniwmctl} command toggle-container-full-primary-span
       ralt + ctrl - r : ${omniwmctl} command reset-window-secondary-span
       ralt + ctrl - t : ${omniwmctl} command toggle-column-tabbed
@@ -104,7 +104,7 @@ in
 
       # layout toggles
       ralt + shift - l : ${omniwmctl} command toggle-workspace-layout
-      ralt + shift - o : ${omniwmctl} command toggle-overview
+      ralt - o : ${omniwmctl} command toggle-overview
 
       # monitor focus
       ralt + cmd - tab : ${omniwmctl} command focus-monitor next
@@ -116,4 +116,20 @@ in
       ralt + ctrl + shift - r : ${omniwmctl} command raise-all-floating-windows
     '';
   };
+
+  launchd.user.agents.skhd.serviceConfig = {
+    StandardOutPath = "/tmp/skhd.out.log";
+    StandardErrorPath = "/tmp/skhd.err.log";
+    EnvironmentVariables = {
+      PATH = lib.mkForce "/etc/profiles/per-user/mic/bin:/Users/mic/.nix-profile/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    };
+  };
+
+  system.activationScripts.postActivation.text = ''
+    CONSOLE_USER=$(/usr/bin/stat -f "%Su" /dev/console 2>/dev/null || echo "")
+    if [ -n "$CONSOLE_USER" ] && [ "$CONSOLE_USER" != "root" ]; then
+      CONSOLE_UID=$(/usr/bin/id -u "$CONSOLE_USER")
+      /bin/launchctl kickstart -k "gui/$CONSOLE_UID/org.nixos.skhd" 2>/dev/null || true
+    fi
+  '';
 }

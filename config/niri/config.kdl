@@ -127,12 +127,6 @@ window-rule {
     opacity 0.7
 }
 
-window-rule {
-    match title="^che-float$"
-    open-floating true
-    default-column-width { fixed 1000; }
-    default-window-height { fixed 700; }
-}
 
 // ============================================================================
 // LAYER RULES
@@ -165,9 +159,6 @@ binds {
     Mod+Equal           { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Period          { spawn "noctalia" "msg" "panel-toggle" "wallpaper"; }
 
-    // Che floating terminal / Quake terminal
-    Mod+O     { spawn "bash" "-c" "alacritty --title che-float -e fish -c \"y\""; }
-    Mod+grave { spawn "bash" "-c" "alacritty --title che-float -e fish -c \"y\""; }
 
     // Layout Switching
     Mod+Backspace { switch-layout "next"; }
@@ -265,7 +256,7 @@ binds {
     Mod+Shift+Ctrl+T             { toggle-column-tabbed-display; }
 
     // Overview (Omniwm Option+Shift+O)
-    Mod+Shift+O             { toggle-overview; }
+    Mod+O             { toggle-overview; }
 
     // Consume & Expel Window from Column
     Mod+BracketLeft         { consume-or-expel-window-left; }
