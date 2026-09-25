@@ -217,7 +217,6 @@
     gnumake
     curl
     mosh
-    inputs.slippi.packages.${pkgs.stdenv.hostPlatform.system}.default
     nvtopPackages.nvidia
     vulkan-tools
   ];
