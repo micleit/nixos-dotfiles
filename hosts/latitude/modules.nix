@@ -21,6 +21,7 @@
         ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
+        ../../modules/home/slippi.nix
       ];
       programs.noctalia = {
         enable = true;

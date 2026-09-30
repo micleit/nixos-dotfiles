@@ -61,8 +61,7 @@
       ssh = "[ \"$TERM\" = \"xterm-kitty\" ] && kitty +kitten ssh || command ssh";
       btw = "echo I use nixos, btw";
       lg = "lazygit";
-      kanata-off = "sudo launchctl bootout system /Library/LaunchDaemons/org.nixos.kanata.plist";
-      kanata-on = "sudo launchctl bootstrap system /Library/LaunchDaemons/org.nixos.kanata.plist";
+      balatro = "'/Users/mic/Library/Application Support/Steam/steamapps/common/Balatro/run_lovely_macos.sh'";
     };
 
     # History configuration (crucial for Zsh to feel good)

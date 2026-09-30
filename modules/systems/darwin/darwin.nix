@@ -12,7 +12,6 @@
     moonlight-qt
     iina
     docker-client # CLI client for Docker daemon via Colima
-    dolphin-emu
     # Add any other macOS specific CLI tools here
   ];
 

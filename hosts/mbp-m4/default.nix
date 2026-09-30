@@ -76,6 +76,7 @@
     "y3owk1n/tap/neru"
     "zennotes/tap/zennotes"
     "rstudio"
+    "miniconda"
   ];
   homebrew.brews = [
     "switchaudio-osx"
