@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -93,6 +99,7 @@
 
     jellyfin = {
       enable = true;
+      network.localNetworkAddresses = [ ];
       apiKey._secret = "/var/lib/nixflix/secrets/jellyfin_api_key";
       users.admin = {
         policy.isAdministrator = true;
@@ -117,4 +124,11 @@
       LOG_LEVEL = "info";
     };
   };
+
+  # Ensure Jellyfin enables legacy authorization for older/homebrew clients (e.g. WiiFin)
+  systemd.services.jellyfin.preStart = lib.mkAfter ''
+    if [ -f /var/lib/jellyfin/config/system.xml ]; then
+      ${pkgs.gnused}/bin/sed -i 's/<EnableLegacyAuthorization>false<\/EnableLegacyAuthorization>/<EnableLegacyAuthorization>true<\/EnableLegacyAuthorization>/' /var/lib/jellyfin/config/system.xml
+    fi
+  '';
 }
