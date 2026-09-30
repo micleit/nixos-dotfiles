@@ -62,7 +62,7 @@ systemHyperTrigger = "None"
 updateChecksEnabled = true
 
 [gestures]
-fingerCount = 3
+fingerCount = 4
 invertDirection = true
 mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
