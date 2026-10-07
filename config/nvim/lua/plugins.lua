@@ -396,19 +396,24 @@ local plugins = {
     config = function()
       require("jupynium").setup({
         default_notebook_URL = "localhost:8888/nbclassic",
-        use_default_keybindings = false,
+        use_default_keybindings = true,
+        textobjects = {
+          use_default_keybindings = true,
+        },
       })
     end,
     keys = {
       { "<leader>js", "<cmd>JupyniumStartAndAttachToServer<CR>", desc = "Jupynium: Start & Attach" },
       { "<leader>ja", "<cmd>JupyniumAttachToServer<CR>", desc = "Jupynium: Attach to Server" },
+      { "<leader>jy", "<cmd>JupyniumStartSync<CR>", desc = "Jupynium: Start Sync" },
       { "<leader>jx", "<cmd>JupyniumExecuteSelectedCells<CR>", desc = "Jupynium: Execute Cell" },
-      { "<leader>jc", "<cmd>JupyniumClearOutput<CR>", desc = "Jupynium: Clear Output" },
+      { "<leader>jc", "<cmd>JupyniumClearSelectedCellsOutputs<CR>", desc = "Jupynium: Clear Outputs" },
       { "<leader>jk", "<cmd>JupyniumKernelSelect<CR>", desc = "Jupynium: Select Kernel" },
-      { "<leader>jr", "<cmd>JupyniumRestartKernel<CR>", desc = "Jupynium: Restart Kernel" },
-      { "<leader>jw", "<cmd>JupyniumSaveNotebook<CR>", desc = "Jupynium: Save Notebook" },
-      { "]c", "<cmd>JupyniumSelectNextCell<CR>", desc = "Jupynium: Next Cell" },
-      { "[c", "<cmd>JupyniumSelectPrevCell<CR>", desc = "Jupynium: Prev Cell" },
+      { "<leader>jr", "<cmd>JupyniumKernelRestart<CR>", desc = "Jupynium: Restart Kernel" },
+      { "<leader>jw", "<cmd>JupyniumSaveIpynb<CR>", desc = "Jupynium: Save Notebook" },
+      { "<leader>jd", "<cmd>JupyniumDownloadIpynb<CR>", desc = "Jupynium: Download Ipynb" },
+      { "]j", "<cmd>lua require'jupynium.textobj'.goto_next_cell_separator()<CR>", desc = "Jupynium: Next Cell" },
+      { "[j", "<cmd>lua require'jupynium.textobj'.goto_previous_cell_separator()<CR>", desc = "Jupynium: Prev Cell" },
     },
   },
 }
