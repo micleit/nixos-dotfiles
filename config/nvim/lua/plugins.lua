@@ -392,7 +392,6 @@ local plugins = {
   -- Jupynium (Two-way sync with Jupyter Notebook in browser)
   {
     "kiyoon/jupynium.nvim",
-    build = "pip3 install --user --upgrade .",
     event = "VeryLazy",
     config = function()
       require("jupynium").setup({

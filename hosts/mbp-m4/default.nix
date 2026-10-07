@@ -62,6 +62,7 @@
     # "bitwarden" can't do browser integration without mac app store version.
     "anki"
     "brave-browser"
+    "firefox"
     "font-sf-pro"
     "font-sf-mono"
     "sf-symbols"
