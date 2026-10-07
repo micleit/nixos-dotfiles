@@ -4,7 +4,12 @@
   home.packages =
     with pkgs;
     [
-      neovim
+      (neovim.override {
+        withPython3 = true;
+        extraPython3Packages = p: with p; [
+          pynvim
+        ];
+      })
 
       # Language Servers
       nil
@@ -33,6 +38,8 @@
       nodejs
       python3
       python3Packages.debugpy
+      python3Packages.pynvim
+      geckodriver
     ]
     ++ (lib.optionals pkgs.stdenv.isLinux [
       zathura

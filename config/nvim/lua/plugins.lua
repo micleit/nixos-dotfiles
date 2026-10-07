@@ -388,6 +388,30 @@ local plugins = {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
   },
+
+  -- Jupynium (Two-way sync with Jupyter Notebook in browser)
+  {
+    "kiyoon/jupynium.nvim",
+    build = "pip3 install --user --upgrade .",
+    event = "VeryLazy",
+    config = function()
+      require("jupynium").setup({
+        default_notebook_URL = "localhost:8888/nbclassic",
+        use_default_keybindings = false,
+      })
+    end,
+    keys = {
+      { "<leader>js", "<cmd>JupyniumStartAndAttachToServer<CR>", desc = "Jupynium: Start & Attach" },
+      { "<leader>ja", "<cmd>JupyniumAttachToServer<CR>", desc = "Jupynium: Attach to Server" },
+      { "<leader>jx", "<cmd>JupyniumExecuteSelectedCells<CR>", desc = "Jupynium: Execute Cell" },
+      { "<leader>jc", "<cmd>JupyniumClearOutput<CR>", desc = "Jupynium: Clear Output" },
+      { "<leader>jk", "<cmd>JupyniumKernelSelect<CR>", desc = "Jupynium: Select Kernel" },
+      { "<leader>jr", "<cmd>JupyniumRestartKernel<CR>", desc = "Jupynium: Restart Kernel" },
+      { "<leader>jw", "<cmd>JupyniumSaveNotebook<CR>", desc = "Jupynium: Save Notebook" },
+      { "]c", "<cmd>JupyniumSelectNextCell<CR>", desc = "Jupynium: Next Cell" },
+      { "[c", "<cmd>JupyniumSelectPrevCell<CR>", desc = "Jupynium: Prev Cell" },
+    },
+  },
 }
 
 require("lazy").setup(plugins)
