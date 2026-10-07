@@ -4,7 +4,14 @@
   home.packages =
     with pkgs;
     [
-      neovim
+      (neovim.override {
+        withPython3 = true;
+        extraPython3Packages = p: with p; [
+          pynvim
+          jupyter-client
+          ipykernel
+        ];
+      })
 
       # Language Servers
       nil
