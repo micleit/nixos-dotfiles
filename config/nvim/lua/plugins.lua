@@ -388,6 +388,60 @@ local plugins = {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
   },
+
+  -- Jupytext (.ipynb transparent two-way sync)
+  {
+    "GCBallesteros/jupytext.nvim",
+    lazy = false,
+    opts = {
+      style = "hydrogen",
+      output_extension = "py",
+      force_ft = "python",
+    },
+  },
+
+  -- Molten (interactive Jupyter kernel execution)
+  {
+    "benlubas/molten-nvim",
+    version = "^1.0.0",
+    build = ":UpdateRemotePlugins",
+    init = function()
+      vim.g.molten_image_provider = "image.nvim"
+      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_auto_open_output = false
+      vim.g.molten_wrap_output = true
+    end,
+    keys = {
+      { "<leader>mi", ":MoltenInit<CR>", desc = "Molten: Init Kernel" },
+      { "<leader>me", ":MoltenEvaluateOperator<CR>", desc = "Molten: Evaluate Operator" },
+      { "<leader>ml", ":MoltenEvaluateLine<CR>", desc = "Molten: Evaluate Line" },
+      { "<leader>mr", ":MoltenReevaluateCell<CR>", desc = "Molten: Re-evaluate Cell" },
+      { "<leader>mv", ":<C-u>MoltenEvaluateVisual<CR>gv", mode = "v", desc = "Molten: Evaluate Visual" },
+      { "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", desc = "Molten: Enter Output Window" },
+      { "<leader>mh", ":MoltenHideOutput<CR>", desc = "Molten: Hide Output Window" },
+      { "<leader>md", ":MoltenDelete<CR>", desc = "Molten: Delete Output" },
+    },
+  },
+
+  -- Notebook Navigator (cell navigation & execution)
+  {
+    "GCBallesteros/NotebookNavigator.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "benlubas/molten-nvim",
+    },
+    keys = {
+      { "]c", function() require("notebook-navigator").move_cell("d") end, desc = "Notebook: Next Cell" },
+      { "[c", function() require("notebook-navigator").move_cell("u") end, desc = "Notebook: Previous Cell" },
+      { "<leader>mc", function() require("notebook-navigator").run_cell() end, desc = "Notebook: Run Cell" },
+      { "<leader>mn", function() require("notebook-navigator").run_and_move() end, desc = "Notebook: Run Cell and Move" },
+    },
+    config = function()
+      require("notebook-navigator").setup({
+        repl_provider = "molten",
+      })
+    end,
+  },
 }
 
 require("lazy").setup(plugins)

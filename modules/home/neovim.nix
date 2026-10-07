@@ -33,6 +33,10 @@
       nodejs
       python3
       python3Packages.debugpy
+      python3Packages.pynvim
+      python3Packages.jupyter-client
+      python3Packages.ipykernel
+      jupytext
     ]
     ++ (lib.optionals pkgs.stdenv.isLinux [
       zathura
