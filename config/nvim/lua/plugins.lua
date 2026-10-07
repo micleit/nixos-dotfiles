@@ -402,34 +402,30 @@ local plugins = {
         },
       })
 
-      -- Clean up empty Untitled notebooks on exit
+      -- Clean up any Untitled notebooks on exit or on demand
+      local function cleanup_untitled()
+        local dir = vim.fn.expand("%:p:h")
+        if dir == "" or dir == "." then
+          dir = vim.fn.getcwd()
+        end
+        local files = vim.fn.globpath(dir, "Untitled*.ipynb", false, true)
+        for _, f in ipairs(files) do
+          vim.fn.delete(f)
+        end
+      end
+
+      vim.api.nvim_create_user_command("JupyniumDeleteUntitled", cleanup_untitled, { desc = "Delete Untitled*.ipynb files" })
+
       vim.api.nvim_create_autocmd("VimLeavePre", {
         group = vim.api.nvim_create_augroup("JupyniumCleanup", { clear = true }),
-        callback = function()
-          local files = vim.fn.glob("Untitled*.ipynb", false, true)
-          for _, f in ipairs(files) do
-            if vim.fn.getfsize(f) <= 100 then
-              vim.fn.delete(f)
-            end
-          end
-        end,
+        callback = cleanup_untitled,
       })
     end,
     keys = {
       { "<leader>js", "<cmd>JupyniumStartAndAttachToServer<CR>", desc = "Jupynium: Start & Attach" },
       { "<leader>ja", "<cmd>JupyniumAttachToServer<CR>", desc = "Jupynium: Attach to Server" },
-      {
-        "<leader>jy",
-        function()
-          local name = vim.fn.expand("%:t:r:r")
-          if name ~= "" and name ~= "." then
-            vim.cmd("JupyniumStartSync " .. vim.fn.fnameescape(name .. ".ipynb"))
-          else
-            vim.cmd("JupyniumStartSync")
-          end
-        end,
-        desc = "Jupynium: Start Sync (companion notebook)",
-      },
+      { "<leader>jy", "<cmd>JupyniumStartSync<CR>", desc = "Jupynium: Start Sync" },
+      { "<leader>ju", "<cmd>JupyniumDeleteUntitled<CR>", desc = "Jupynium: Delete Untitled Notebooks" },
       { "<leader>jx", "<cmd>JupyniumExecuteSelectedCells<CR>", desc = "Jupynium: Execute Cell" },
       { "<leader>jc", "<cmd>JupyniumClearSelectedCellsOutputs<CR>", desc = "Jupynium: Clear Outputs" },
       { "<leader>jk", "<cmd>JupyniumKernelSelect<CR>", desc = "Jupynium: Select Kernel" },

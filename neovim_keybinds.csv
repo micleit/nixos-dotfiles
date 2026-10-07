@@ -66,3 +66,4 @@
 "Jupynium: Download latest .ipynb from browser","<leader>jd"
 "Jupynium: Next cell separator","]j"
 "Jupynium: Previous cell separator","[j"
+"Jupynium: Delete Untitled*.ipynb notebooks","<leader>ju"
