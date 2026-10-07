@@ -401,11 +401,35 @@ local plugins = {
           use_default_keybindings = true,
         },
       })
+
+      -- Clean up empty Untitled notebooks on exit
+      vim.api.nvim_create_autocmd("VimLeavePre", {
+        group = vim.api.nvim_create_augroup("JupyniumCleanup", { clear = true }),
+        callback = function()
+          local files = vim.fn.glob("Untitled*.ipynb", false, true)
+          for _, f in ipairs(files) do
+            if vim.fn.getfsize(f) <= 100 then
+              vim.fn.delete(f)
+            end
+          end
+        end,
+      })
     end,
     keys = {
       { "<leader>js", "<cmd>JupyniumStartAndAttachToServer<CR>", desc = "Jupynium: Start & Attach" },
       { "<leader>ja", "<cmd>JupyniumAttachToServer<CR>", desc = "Jupynium: Attach to Server" },
-      { "<leader>jy", "<cmd>JupyniumStartSync<CR>", desc = "Jupynium: Start Sync" },
+      {
+        "<leader>jy",
+        function()
+          local name = vim.fn.expand("%:t:r:r")
+          if name ~= "" and name ~= "." then
+            vim.cmd("JupyniumStartSync " .. vim.fn.fnameescape(name .. ".ipynb"))
+          else
+            vim.cmd("JupyniumStartSync")
+          end
+        end,
+        desc = "Jupynium: Start Sync (companion notebook)",
+      },
       { "<leader>jx", "<cmd>JupyniumExecuteSelectedCells<CR>", desc = "Jupynium: Execute Cell" },
       { "<leader>jc", "<cmd>JupyniumClearSelectedCellsOutputs<CR>", desc = "Jupynium: Clear Outputs" },
       { "<leader>jk", "<cmd>JupyniumKernelSelect<CR>", desc = "Jupynium: Select Kernel" },
