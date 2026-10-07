@@ -36,7 +36,7 @@
       python3Packages.pynvim
       python3Packages.jupyter-client
       python3Packages.ipykernel
-      jupytext
+      python3Packages.jupytext
     ]
     ++ (lib.optionals pkgs.stdenv.isLinux [
       zathura
