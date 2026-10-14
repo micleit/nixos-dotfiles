@@ -1,10 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   # The physical interface and gateway (gathered from `ip route`)
   # In a dynamic environment, it's better to fetch this dynamically, but for NixOS
   # we can use a script that finds the default route.
-  
+
   setupRouting = pkgs.writeShellScriptBin "setup-vpn-routing" ''
     # Find the default gateway and interface
     DEFAULT_GW=$(ip route show default | grep -v tun | awk '{print $3}' | head -n 1)
@@ -43,16 +48,16 @@ let
 
     # Since tailscaled and cloudflared run as root, we can't just match by UID.
     # We will match by cgroup path.
-    
-    # Enable cgroup v2 matching
-    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/cloudflared-tunnel-*.scope" -j MARK --set-mark 0x100
-    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/cloudflared.service" -j MARK --set-mark 0x100
-    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/tailscaled.service" -j MARK --set-mark 0x100
-    
-    # Also bypass local network traffic (don't route 10.0.0.0/8, 192.168.0.0/16, etc. out the VPN)
+
+    # Bypass local network traffic (don't route 10.0.0.0/8, 192.168.0.0/16, etc. out the VPN)
     iptables -t mangle -A VPN_BYPASS -d 10.0.0.0/8 -j RETURN
     iptables -t mangle -A VPN_BYPASS -d 192.168.0.0/16 -j RETURN
     iptables -t mangle -A VPN_BYPASS -d 172.16.0.0/12 -j RETURN
+
+    # Enable cgroup v2 matching to bypass Tailscale and Cloudflare
+    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/cloudflared-tunnel-*.scope" -j MARK --set-mark 0x100
+    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/cloudflared.service" -j MARK --set-mark 0x100
+    iptables -t mangle -A VPN_BYPASS -m cgroup --path "system.slice/tailscaled.service" -j MARK --set-mark 0x100
   '';
 in
 {
@@ -72,9 +77,19 @@ in
   # 2. Setup the Split Routing rules when the network comes up
   systemd.services.vpn-split-routing = {
     description = "Setup VPN Split Routing for Tailscale and Cloudflare";
-    after = [ "network-online.target" "openvpn-pia.service" ];
+    after = [
+      "network-online.target"
+      "openvpn-pia.service"
+    ];
     wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+    path = [
+      pkgs.iproute2
+      pkgs.gawk
+      pkgs.gnugrep
+      pkgs.coreutils
+      pkgs.iptables
+    ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;

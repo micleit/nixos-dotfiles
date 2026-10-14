@@ -30,30 +30,49 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "snd_hda_intel" ];
+  boot.kernelParams = [ "pcie_aspm=off" ];
   hardware.enableAllFirmware = true;
 
   # ============================================================================
   # NETWORKING & SERVICES
   # ============================================================================
   networking.hostName = "new-optiplex";
+  networking.useDHCP = false;
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [ 8096 ];
   networking.resolvconf.enable = true;
-  networking.dhcpcd.extraConfig = "nohook resolv.conf";
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+  networking.firewall.allowedTCPPorts = [
+    8096
+    8282
+  ];
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
   ];
-  # allows network bridge from mic-debian to explicitly use vpn ip
-  networking.interfaces.eno1 = {
-    useDHCP = true;
-    ipv4.routes = [
-      {
-        address = "212.102.59.242"; # Replace with your VPN's IP
-        prefixLength = 32; # Explictly targets just this single IP
-        via = "10.42.0.1";
-      }
-    ];
+
+  # Intel I219-V hardware hang mitigation: disable TSO, GSO, GRO offloads
+  systemd.services.e1000e-fix = {
+    description = "Disable e1000e offloads to prevent I219-V hardware hang";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.ethtool}/bin/ethtool -K eno1 tso off gso off gro off";
+      RemainAfterExit = true;
+    };
+  };
+
+  # Prevent server from sleeping or suspending
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleSuspendKey = "ignore";
+    HandleHibernateKey = "ignore";
+    IdleAction = "ignore";
   };
 
   virtualisation.docker.enable = true;
