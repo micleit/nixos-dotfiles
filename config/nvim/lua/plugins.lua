@@ -388,6 +388,54 @@ local plugins = {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
   },
+
+  -- Jupynium (Two-way sync with Jupyter Notebook in browser)
+  {
+    "kiyoon/jupynium.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("jupynium").setup({
+        default_notebook_URL = "localhost:8888/nbclassic",
+        use_default_keybindings = true,
+        textobjects = {
+          use_default_keybindings = true,
+        },
+      })
+
+      -- Clean up any Untitled notebooks on exit or on demand
+      local function cleanup_untitled()
+        local dir = vim.fn.expand("%:p:h")
+        if dir == "" or dir == "." then
+          dir = vim.fn.getcwd()
+        end
+        local files = vim.fn.globpath(dir, "Untitled*.ipynb", false, true)
+        for _, f in ipairs(files) do
+          vim.fn.delete(f)
+        end
+      end
+
+      vim.api.nvim_create_user_command("JupyniumDeleteUntitled", cleanup_untitled, { desc = "Delete Untitled*.ipynb files" })
+
+      vim.api.nvim_create_autocmd("VimLeavePre", {
+        group = vim.api.nvim_create_augroup("JupyniumCleanup", { clear = true }),
+        callback = cleanup_untitled,
+      })
+    end,
+    keys = {
+      { "<leader>js", "<cmd>JupyniumStartAndAttachToServer<CR>", desc = "Jupynium: Start & Attach" },
+      { "<leader>ja", "<cmd>JupyniumAttachToServer<CR>", desc = "Jupynium: Attach to Server" },
+      { "<leader>jy", "<cmd>JupyniumStartSync<CR>", desc = "Jupynium: Start Sync" },
+      { "<leader>ju", "<cmd>JupyniumDeleteUntitled<CR>", desc = "Jupynium: Delete Untitled Notebooks" },
+      { "<leader>jx", "<cmd>JupyniumExecuteSelectedCells<CR>", desc = "Jupynium: Execute Cell" },
+      { "<leader>jc", "<cmd>JupyniumClearSelectedCellsOutputs<CR>", desc = "Jupynium: Clear Outputs" },
+      { "<leader>jk", "<cmd>JupyniumKernelSelect<CR>", desc = "Jupynium: Select Kernel" },
+      { "<leader>jr", "<cmd>JupyniumKernelRestart<CR>", desc = "Jupynium: Restart Kernel" },
+      { "<leader>jw", "<cmd>JupyniumSaveIpynb<CR>", desc = "Jupynium: Save Notebook" },
+      { "<leader>jd", "<cmd>JupyniumDownloadIpynb<CR>", desc = "Jupynium: Download Ipynb" },
+      { "]j", "<cmd>lua require'jupynium.textobj'.goto_next_cell_separator()<CR>", desc = "Jupynium: Next Cell" },
+      { "[j", "<cmd>lua require'jupynium.textobj'.goto_previous_cell_separator()<CR>", desc = "Jupynium: Prev Cell" },
+    },
+  },
 }
 
 require("lazy").setup(plugins)

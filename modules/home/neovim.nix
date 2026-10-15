@@ -1,10 +1,19 @@
 { pkgs, lib, ... }:
 
+let
+  jupynium = pkgs.callPackage ../../pkgs/jupynium/package.nix { };
+in
 {
   home.packages =
     with pkgs;
     [
-      neovim
+      (neovim.override {
+        withPython3 = true;
+        extraPython3Packages = p: with p; [
+          pynvim
+          jupynium
+        ];
+      })
 
       # Language Servers
       nil
@@ -33,10 +42,17 @@
       nodejs
       python3
       python3Packages.debugpy
+      python3Packages.pynvim
+      python3Packages.notebook
+      python3Packages.nbclassic
+      python3Packages.ipykernel
+      jupynium
+      geckodriver
     ]
     ++ (lib.optionals pkgs.stdenv.isLinux [
       zathura
       xdotool
+      firefox
     ]);
 
   home.sessionVariables = {
