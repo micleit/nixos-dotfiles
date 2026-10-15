@@ -1,0 +1,26 @@
+#:schema https://github.com/joshmedeski/sesh/raw/main/sesh.schema.json
+
+[[session]]
+name = "desktop-nixos"
+path = "~"
+startup_command = "ssh mic@100.69.4.32"
+
+[[session]]
+name = "new-optiplex"
+path = "~"
+startup_command = "ssh mic@100.126.42.11"
+
+[[session]]
+name = "optiplex-server"
+path = "~"
+startup_command = "ssh mic@100.91.229.67"
+
+[[session]]
+name = "headlessm1"
+path = "~"
+startup_command = "ssh mic@100.76.49.47"
+
+[[session]]
+name = "acer-debian"
+path = "~"
+startup_command = "ssh mic@100.127.236.36"
