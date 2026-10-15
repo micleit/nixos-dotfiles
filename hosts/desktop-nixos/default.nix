@@ -220,6 +220,10 @@
     nvtopPackages.nvidia
     vulkan-tools
   ];
+  programs.appimage = {
+  enable = true;
+  binfmt = true;
+};
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
