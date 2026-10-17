@@ -30,8 +30,19 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "fuse" ];
   boot.kernelModules = [ "snd_hda_intel" ];
-  boot.kernelParams = [ "pcie_aspm=off" ];
+  boot.kernelParams = [
+    "pcie_aspm=off"
+    "nvme_core.default_ps_max_latency_us=0"
+    "intel_idle.max_cstate=1"
+    "processor.max_cstate=1"
+  ];
   hardware.enableAllFirmware = true;
+
+  # Hardware watchdog: auto-reboots machine if kernel or systemd hangs
+  systemd.settings.Manager = {
+    RuntimeWatchdogSec = "30s";
+    RebootWatchdogSec = "10min";
+  };
 
   # ============================================================================
   # NETWORKING & SERVICES
