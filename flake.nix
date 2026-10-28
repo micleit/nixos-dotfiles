@@ -35,7 +35,7 @@
         (final: prev: {
           che = prev.callPackage ./pkgs/che/package.nix { };
           wf-recorder = prev.wf-recorder.override { ffmpeg_8 = prev.ffmpeg_6-headless; };
-          moonlight-qt = prev.moonlight-qt.override { ffmpeg_8 = prev.ffmpeg_6; };
+          moonlight-qt = prev.moonlight-qt.override { ffmpeg = prev.ffmpeg_6; };
         })
       ];
       sharedModules = [
