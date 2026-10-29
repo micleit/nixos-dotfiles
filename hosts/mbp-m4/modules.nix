@@ -33,10 +33,16 @@
         neovim-remote
         inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
         sesh
-        python3
-        python3Packages.pip
-        python3Packages.virtualenv
-        python3Packages.debugpy
+        (python3.withPackages (
+          ps: with ps; [
+            pip
+            virtualenv
+            matplotlib
+            numpy
+            python-docx
+            pandas
+          ]
+        ))
         black
         isort
         ruff

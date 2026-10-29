@@ -9,10 +9,11 @@ in
     [
       (neovim.override {
         withPython3 = true;
-        extraPython3Packages = p: with p; [
-          pynvim
-          jupynium
-        ];
+        extraPython3Packages =
+          p: with p; [
+            pynvim
+            jupynium
+          ];
       })
 
       # Language Servers
@@ -40,7 +41,6 @@ in
       lazygit
       neovim-remote
       nodejs
-      python3
       python3Packages.debugpy
       python3Packages.pynvim
       python3Packages.notebook
