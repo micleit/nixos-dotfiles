@@ -27,7 +27,7 @@ in
       hyper - b : /usr/bin/open -na "Brave Browser"
 
       # open finder (opens home folder in new window)
-      hyper - f : /usr/bin/open -na "Finder"
+      hyper - f : /usr/bin/osascript -e 'tell application "Finder" to make new Finder window to (path to home folder)' -e 'tell application "Finder" to activate'
 
       # open che in ghostty
       hyper - y : ghostty -e che
