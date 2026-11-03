@@ -1,10 +1,31 @@
 local plugins = {
   -- Theme
   {
-    "ellisonleao/gruvbox.nvim",
+    "sainnhe/gruvbox-material",
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd("colorscheme gruvbox")
+      vim.g.gruvbox_material_background = "hard"
+      vim.g.gruvbox_material_foreground = "material"
+      vim.g.gruvbox_material_ui_contrast = "high"
+      vim.g.gruvbox_material_enable_italic = 1
+      vim.g.gruvbox_material_better_performance = 1
+      vim.cmd("colorscheme gruvbox-material")
+    end,
+  },
+
+  -- Auto theme switcher based on macOS light/dark mode
+  {
+    "cormacrelf/dark-notify",
+    cond = vim.fn.has("mac") == 1 and vim.fn.executable("dark-notify") == 1,
+    priority = 999,
+    config = function()
+      require("dark_notify").run({
+        schemes = {
+          dark = { background = "dark", colorscheme = "gruvbox-material" },
+          light = { background = "light", colorscheme = "gruvbox-material" },
+        },
+      })
     end,
   },
 
@@ -288,7 +309,7 @@ local plugins = {
     config = function()
       require("lualine").setup({
         options = {
-          theme = "gruvbox",
+          theme = "gruvbox-material",
         },
       })
     end,

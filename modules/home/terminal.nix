@@ -20,7 +20,7 @@
       confirm-close-surface = false;
 
       # Theme
-      theme = "Gruvbox Dark";
+      theme = "light:Gruvbox Material Light,dark:Gruvbox Material Dark";
 
       # Padding
       window-padding-x = 6;

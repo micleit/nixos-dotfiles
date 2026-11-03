@@ -56,6 +56,7 @@
   # Homebrew configuration (per-host customization)
   homebrew.taps = [
     "asmvik/formulae"
+    "cormacrelf/tap"
     "y3owk1n/tap"
   ];
   homebrew.casks = [
@@ -89,6 +90,7 @@
     "node"
     "rclone"
     "r"
+    "dark-notify"
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
