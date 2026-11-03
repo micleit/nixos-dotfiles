@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 
 {
@@ -83,11 +82,19 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver
+    ];
   };
 
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+  };
+
+  programs.niri = {
+    enable = true;
   };
 
   xdg.portal = {
