@@ -75,7 +75,6 @@
     "localsend"
     "openmtp"
     "tableau"
-    "y3owk1n/tap/neru"
     "zennotes/tap/zennotes"
     "rstudio"
     "miniconda"

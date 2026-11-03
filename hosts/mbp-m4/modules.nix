@@ -16,13 +16,12 @@
         ../../modules/systems/darwin/darwin.nix
         ../../modules/home/shell.nix
         ../../modules/home/terminal.nix
-        # ../../modules/home/aerc.nix  # disabled due to arm64 mailutils issue
-        ../../modules/home/yazi.nix
+        # ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
-        ../../modules/home/anki-cli.nix
+        # ../../modules/home/anki-cli.nix
       ];
-      programs.anki-cli.enable = true;
+      # programs.anki-cli.enable = true;
       home.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         curl
