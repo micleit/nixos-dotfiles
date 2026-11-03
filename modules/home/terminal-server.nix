@@ -13,6 +13,7 @@
   };
 
   home.packages = with pkgs; [
+    ghostty.terminfo
     lazygit
     speedtest-cli
   ];
