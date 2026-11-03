@@ -33,7 +33,6 @@
     let
       overlays = [
         (final: prev: {
-          che = prev.callPackage ./pkgs/che/package.nix { };
           wf-recorder = prev.wf-recorder.override { ffmpeg_8 = prev.ffmpeg_6-headless; };
           moonlight-qt = prev.moonlight-qt.override { ffmpeg = prev.ffmpeg_6; };
         })
@@ -49,12 +48,8 @@
             system:
             let
               pkgs = nixpkgs.legacyPackages.${system};
-              fsrs = pkgs.python3Packages.callPackage ./pkgs/fsrs/package.nix { };
-              anki-cli = pkgs.callPackage ./pkgs/anki-cli/package.nix { inherit fsrs; };
             in
             {
-              inherit fsrs anki-cli;
-              che = pkgs.callPackage ./pkgs/che/package.nix { };
               substack-rss = pkgs.callPackage ./pkgs/substack-rss/package.nix { };
               default = self.packages.${system}.substack-rss;
             }

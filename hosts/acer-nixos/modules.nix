@@ -15,7 +15,6 @@
         ../../modules/home/terminal.nix
         ../../modules/home/aerc.nix
         ../../modules/home/linux.nix
-        ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
       ];

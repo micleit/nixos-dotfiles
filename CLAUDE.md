@@ -90,11 +90,10 @@ flake.nix                           # Entry point (uses Flake Parts)
 │       └── default.nix             # User profile (Home Manager) - imported by ALL hosts
 ├── modules/
 │   ├── home/                       # Home Manager modules (cross-platform, user-level)
-│   │   ├── shell.nix               # Zsh, Git, Yazi, CLI utils
+│   │   ├── shell.nix               # Zsh, Git, CLI utils
 │   │   ├── terminal.nix            # Ghostty, Btop
 │   │   ├── shared.nix              # Fonts, cross-platform packages (obsidian, sioyek, etc)
 │   │   ├── nixvim.nix              # Neovim via Nixvim
-│   │   ├── yazi.nix                # File manager config
 │   │   └── caveman.nix             # Caveman CLI tools
 │   └── systems/                    # System-level configurations (NixOS/Darwin)
 │       ├── darwin/                 # macOS-specific modules
@@ -117,7 +116,6 @@ flake.nix                           # Entry point (uses Flake Parts)
 ├── config/                         # Non-Nix source configs (symlinked)
 │   ├── noctalia/                   # Hyprland/Waybar themes
 │   ├── btop/
-│   ├── yazi/
 │   └── ...
 └── scripts/                        # Custom helper scripts
 ```
@@ -150,7 +148,6 @@ imports = [
   ../../modules/home/shell.nix
   ../../modules/home/terminal.nix
   ../../modules/home/shared.nix
-  ../../modules/home/yazi.nix
   ../../modules/home/nixvim.nix
   ../../modules/home/caveman.nix
   inputs.nixvim.homeModules.nixvim
@@ -164,7 +161,7 @@ System-level modules are imported in host configs or parts files:
 
 ### 3.4 Symlinked Configs
 
-Large configs (Hyprland, Yazi, Btop) live in `config/` and are symlinked:
+Large configs (Hyprland, Btop) live in `config/` and are symlinked:
 
 ```nix
 xdg.configFile."noctalia".source = config.lib.file.mkOutOfStoreSymlink 

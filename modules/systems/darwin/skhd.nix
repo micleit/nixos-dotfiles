@@ -29,9 +29,6 @@ in
       # open finder (opens home folder in new window)
       hyper - f : /usr/bin/osascript -e 'tell application "Finder" to make new Finder window to (path to home folder)' -e 'tell application "Finder" to activate'
 
-      # open che in ghostty
-      hyper - y : ghostty -e che
-
       # open system preferences
       hyper - s : /usr/bin/open -na '/System/Applications/System Settings.app'
 

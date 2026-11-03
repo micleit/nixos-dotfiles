@@ -61,16 +61,15 @@ home-manager build --flake .#mic@nixos-btw
   - `headless-m1/`: Headless M1 Mac (Darwin)
 - **home/mic/**: User profile (Home Manager). Imports all user-facing modules.
 - **modules/**: Shared reusable configurations
-  - `shell.nix`: Fish shell, Git, Yazi, CLI utilities
+  - `shell.nix`: Fish shell, Git, CLI utilities
   - `terminal.nix`: Ghostty, Btop
   - `nixvim.nix`: Neovim via Nixvim
   - `shared.nix`: Fonts, cross-platform packages
-  - `yazi.nix`: File manager
   - `darwin/`: macOS-specific modules (Yabai, Skhd, Darwin system settings)
   - `server/`: Self-hosted services (Immich, Nextcloud, Samba, Navidrome)
 - **config/**: Non-Nix source configs (symlinked via `xdg.configFile`)
   - `noctalia/`: Hyprland/Waybar theme config
-  - `btop/`, `yazi/`, `drift/`: CLI tool configs
+  - `btop/`, `drift/`: CLI tool configs
 
 ### Platform-Specific Logic
 
@@ -132,7 +131,7 @@ Both tools are available in the shell. Default preference: **nixfmt**.
 
 ### Symlinked Configs
 
-Large config files (Hyprland, Yazi, Btop) are stored in `config/` and symlinked via:
+Large config files (Hyprland, Btop) are stored in `config/` and symlinked via:
 ```nix
 xdg.configFile."noctalia".source = config.lib.file.mkOutOfStoreSymlink 
   "${config.home.homeDirectory}/nixos-dotfiles/config/noctalia";

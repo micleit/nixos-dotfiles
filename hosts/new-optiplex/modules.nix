@@ -13,7 +13,6 @@
         ../../home/mic/server.nix
         ../../modules/home/shell-server.nix
         ../../modules/home/terminal-server.nix
-        ../../modules/home/yazi-server.nix
         ../../modules/home/neovim-server.nix
       ];
     };

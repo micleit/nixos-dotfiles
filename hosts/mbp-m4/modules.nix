@@ -16,12 +16,9 @@
         ../../modules/systems/darwin/darwin.nix
         ../../modules/home/shell.nix
         ../../modules/home/terminal.nix
-        # ../../modules/home/yazi.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
-        # ../../modules/home/anki-cli.nix
       ];
-      # programs.anki-cli.enable = true;
       home.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
         curl
