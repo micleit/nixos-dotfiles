@@ -108,9 +108,6 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
-  # Display Manager (TUI)
-  services.displayManager.ly.enable = true;
-
   # rsync without sudo
   security.sudo.extraRules = [
     {
@@ -153,7 +150,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = false;
-    nvidiaSettings = true;
+    nvidiaSettings = false;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
@@ -192,16 +189,13 @@
     wget
     git
     unzip
+    curl
     ffmpeg
     btop
     nvtopPackages.nvidia
-    gcc
-    gnumake
-    curl
     pciutils
     usbutils
     alsa-utils
-    vlc # VLC with ncurses/terminal interface (nvlc)
     (mpv-unwrapped.override { cddaSupport = true; })
   ];
 
@@ -216,11 +210,6 @@
   # nixpkgs.config.permittedInsecurePackages = [
   #   "electron-39.8.10"
   # ];
-
-  environment.pathsToLink = [
-    "/share/applications"
-    "/share/xdg-desktop-portal"
-  ];
 
   services.substack-rss = {
     enable = true;

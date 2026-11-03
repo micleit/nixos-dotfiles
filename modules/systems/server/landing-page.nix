@@ -69,6 +69,9 @@ let
           <ul>
             <li><a href="https://jellyfin.${domain}">[ Jellyfin ]</a> <span class="desc">- Media Server</span></li>
             <li><a href="https://seerr.${domain}">[ Seerr ]</a> <span class="desc">- Media Requests</span></li>
+            <li><a href="https://radarr.${domain}">[ Radarr ]</a> <span class="desc">- Movie Management</span></li>
+            <li><a href="https://sonarr.${domain}">[ Sonarr ]</a> <span class="desc">- TV Show Management</span></li>
+            <li><a href="https://qbittorrent.${domain}">[ qBittorrent ]</a> <span class="desc">- Torrent Client</span></li>
             <li><a href="https://immich.${domain}">[ Immich ]</a> <span class="desc">- Photo Backup</span></li>
             <li><a href="https://navidrome.${domain}">[ Navidrome ]</a> <span class="desc">- Music Streaming</span></li>
             <li><a href="https://lidarr.${domain}">[ Lidarr ]</a> <span class="desc">- Music Management</span></li>

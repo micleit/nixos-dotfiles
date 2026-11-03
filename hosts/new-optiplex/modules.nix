@@ -10,20 +10,17 @@
     extraSpecialArgs = { inherit inputs; };
     users.mic = {
       imports = [
-        ../../home/mic/default.nix
-        ../../modules/home/shell.nix
-        ../../modules/home/terminal.nix
-        ../../modules/home/aerc.nix
-        ../../modules/home/linux.nix
-        ../../modules/home/yazi.nix
-        ../../modules/home/neovim.nix
-        ../../modules/home/caveman.nix
+        ../../home/mic/server.nix
+        ../../modules/home/shell-server.nix
+        ../../modules/home/terminal-server.nix
+        ../../modules/home/yazi-server.nix
+        ../../modules/home/neovim-server.nix
       ];
     };
   };
 
   # Host-specific packages can be declared here or in default.nix
-  environment.systemPackages = with pkgs; [ 
+  environment.systemPackages = with pkgs; [
     inputs.antigravity-nix.packages.${pkgs.stdenv.hostPlatform.system}.google-antigravity-cli
   ];
 }
