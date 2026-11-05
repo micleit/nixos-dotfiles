@@ -18,6 +18,7 @@
         ../../modules/home/linux.nix
         ../../modules/home/neovim.nix
         ../../modules/home/caveman.nix
+        ../../modules/home/lan-mouse.nix
       ];
       programs.noctalia = {
         enable = true;
@@ -39,13 +40,10 @@
         anki
         nautilus
         brave
-        vlc
         translate-shell
-        libreoffice
         bitwarden-desktop
         feishin
         fladder
-        obsidian
       ];
     };
   };

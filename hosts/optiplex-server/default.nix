@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 
 {
@@ -29,6 +30,7 @@
   # ============================================================================
   networking.hostName = "optiplex-server";
   networking.networkmanager.enable = true;
+  networking.firewall.allowedUDPPorts = [ 4242 ];
   networking.nameservers = [
     "1.1.1.1"
     "8.8.8.8"
@@ -93,15 +95,10 @@
     xwayland.enable = true;
   };
 
-  programs.niri = {
-    enable = true;
-  };
-
   xdg.portal = {
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
     ];
     config.common.default = "*";
   };

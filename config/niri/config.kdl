@@ -15,7 +15,7 @@ input {
     }
 
     // Unify all Mod binds to Right Alt (Alt / mod1)
-    mod-key "Alt"
+    mod-key "Super"
 
     touchpad {
         tap

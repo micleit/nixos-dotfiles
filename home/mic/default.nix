@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
+{ config
+, pkgs
+, inputs
+, ...
 }:
 
 {
@@ -54,6 +53,15 @@
     fi
     ln -sfn "$HOME/nixos-dotfiles/config/niri" "$HOME/.config/niri"
   '';
+
+  # ============================================================================
+  # NIX GARBAGE COLLECTION (USER-LEVEL / CROSS-PLATFORM)
+  # ============================================================================
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

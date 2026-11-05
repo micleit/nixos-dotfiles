@@ -23,12 +23,11 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      darwin,
-      ...
+    inputs@{ self
+    , nixpkgs
+    , home-manager
+    , darwin
+    , ...
     }:
     let
       overlays = [
@@ -39,6 +38,9 @@
       ];
       sharedModules = [
         { nixpkgs.overlays = overlays; }
+      ];
+      sharedLinuxModules = [
+        ./modules/systems/linux/maintenance.nix
       ];
     in
     {
@@ -66,7 +68,8 @@
           ./hosts/desktop-nixos/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
       nixosConfigurations.latitude = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
@@ -75,7 +78,8 @@
           ./hosts/latitude/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
 
       nixosConfigurations.acer-nixos = nixpkgs.lib.nixosSystem {
@@ -85,7 +89,8 @@
           ./hosts/acer-nixos/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
 
       nixosConfigurations.optiplex-server = nixpkgs.lib.nixosSystem {
@@ -95,7 +100,8 @@
           ./hosts/optiplex-server/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
 
       nixosConfigurations.new-optiplex = nixpkgs.lib.nixosSystem {
@@ -105,7 +111,8 @@
           ./hosts/new-optiplex/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
 
       nixosConfigurations.ipad-nixos = nixpkgs.lib.nixosSystem {
@@ -115,7 +122,8 @@
           ./hosts/ipad-nixos/modules.nix
           home-manager.nixosModules.home-manager
         ]
-        ++ sharedModules;
+        ++ sharedModules
+        ++ sharedLinuxModules;
       };
 
       darwinConfigurations.mbp-m4 = darwin.lib.darwinSystem {
