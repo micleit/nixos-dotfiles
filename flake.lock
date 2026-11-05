@@ -216,6 +216,26 @@
         "type": "github"
       }
     },
+    "learnharness": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793915878,
+        "narHash": "sha256-NCkyvBDkqamAGhTWNWO8yhD/jzmM91wlKpwQP87NNuY=",
+        "owner": "micleit",
+        "repo": "learnharness",
+        "rev": "f7e64695ee7e7d70db144b85bc18cb05a36ec861",
+        "type": "github"
+      },
+      "original": {
+        "owner": "micleit",
+        "repo": "learnharness",
+        "type": "github"
+      }
+    },
     "mkdocs-catppuccin": {
       "flake": false,
       "locked": {
@@ -447,6 +467,7 @@
         "antigravity-nix": "antigravity-nix",
         "darwin": "darwin",
         "home-manager": "home-manager",
+        "learnharness": "learnharness",
         "neomutt-gmail": "neomutt-gmail",
         "nixflix": "nixflix",
         "nixpkgs": "nixpkgs_5",

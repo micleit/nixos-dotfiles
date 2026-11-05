@@ -21,7 +21,7 @@
     nixflix.url = "github:kiriwalawren/nixflix";
     antigravity-nix.url = "github:jacopone/antigravity-nix";
     learnharness = {
-      url = "git+file:///Users/mic/learnharness";
+      url = "github:micleit/learnharness";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
