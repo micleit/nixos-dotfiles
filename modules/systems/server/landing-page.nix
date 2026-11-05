@@ -79,6 +79,7 @@ let
             <li><a href="https://files.${domain}">[ FileBrowser ]</a> <span class="desc">- Web File Manager</span></li>
             <li><a href="https://vaultwarden.${domain}">[ Vaultwarden ]</a> <span class="desc">- Password Manager</span></li>
             <li><a href="https://zennotes.${domain}">[ ZenNotes ]</a> <span class="desc">- Notes & Knowledge Base</span></li>
+            <li><a href="https://learn.${domain}">[ LearnHarness ]</a> <span class="desc">- Adaptive Teaching & Knowledge Graph</span></li>
           </ul>
 
           <hr>
