@@ -26,5 +26,6 @@
   systemd.tmpfiles.rules = [
     "d /var/secrets 0755 root root -"
     "f /var/secrets/learnharness-password 0600 learnharness learnharness -"
+    "z /var/secrets/learnharness-password 0600 learnharness learnharness -"
   ];
 }
