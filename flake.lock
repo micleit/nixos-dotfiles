@@ -223,11 +223,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793916372,
-        "narHash": "sha256-EbN9oN5V5Ip1ogJlRtsRhD2ghPch2ouJUucFZFKMRKQ=",
+        "lastModified": 1793916641,
+        "narHash": "sha256-IciCf16/FZxh4cNx85zcLLxmDO/jKngUnvJg2hGkvRE=",
         "owner": "micleit",
         "repo": "learnharness",
-        "rev": "7cb8aa456b428ea7b9f435264e1a1e7f34b3f242",
+        "rev": "ad9bd70db5e467f2e1e559fb8a81aec6f26b3675",
         "type": "github"
       },
       "original": {
