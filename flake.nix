@@ -20,10 +20,6 @@
     neomutt-gmail.url = "github:jevy/neomutt-for-gmail";
     nixflix.url = "github:kiriwalawren/nixflix";
     antigravity-nix.url = "github:jacopone/antigravity-nix";
-    learnharness = {
-      url = "github:micleit/learnharness";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
