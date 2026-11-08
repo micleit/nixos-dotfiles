@@ -16,7 +16,7 @@
     settings = {
       # Font
       font-family = "JetBrainsMono Nerd Font Propo";
-      font-size = if pkgs.stdenv.isDarwin then 14 else 10;
+      font-size = lib.mkDefault (if pkgs.stdenv.isDarwin then 14 else 10);
       confirm-close-surface = false;
 
       # Theme

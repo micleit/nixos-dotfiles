@@ -23,6 +23,9 @@
       programs.noctalia = {
         enable = true;
       };
+      programs.ghostty.settings = {
+        font-size = 20;
+      };
       home.packages = with pkgs; [
         apple-cursor
         pavucontrol
