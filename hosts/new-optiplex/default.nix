@@ -20,6 +20,7 @@
     ../../modules/systems/server/pia-vpn.nix
     ../../modules/systems/server/slskd.nix
     ../../modules/systems/server/zennotes.nix
+    ../../modules/systems/server/learnharness.nix
     inputs.self.nixosModules.substack-rss
   ];
 
