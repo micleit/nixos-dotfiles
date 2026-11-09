@@ -19,6 +19,9 @@
         # Port 8484 on host (7878 in container) to avoid conflict with Radarr on 7878
         ports = [ "8484:7878" ];
         user = "1000:100"; # Run as user 'mic' (1000) and 'users' group (100)
+        environmentFiles = [
+          "/var/lib/zennotes/data/zennotes-mcp.env"
+        ];
         environment = {
           ZENNOTES_BIND = "0.0.0.0:7878";
           ZENNOTES_CONFIG_PATH = "/data/server.json";
@@ -28,6 +31,8 @@
           ZENNOTES_BEHIND_TLS = "1";
           ZENNOTES_PERSIST_SESSIONS = "1";
           ZENNOTES_ALLOWED_ORIGINS = "https://zennotes.53729123.xyz,http://localhost:8484,http://127.0.0.1:8484,http://new-optiplex:8484";
+          ZENNOTES_MCP_ENABLED = "1";
+          ZENNOTES_MCP_ACCESS = "write";
         };
         volumes = [
           "/var/lib/zennotes/vault:/workspace"
@@ -44,13 +49,19 @@
     "d /var/lib/zennotes/vault 0755 mic users -"
   ];
 
-  # Pre-start script to automatically initialize auth token if not already created
+  # Pre-start script to automatically initialize tokens if not already created
   systemd.services.docker-zennotes = {
     preStart = ''
       if [ ! -f /var/lib/zennotes/data/auth-token ]; then
         ${pkgs.openssl}/bin/openssl rand -hex 32 > /var/lib/zennotes/data/auth-token
         chown mic:users /var/lib/zennotes/data/auth-token
         chmod 600 /var/lib/zennotes/data/auth-token
+      fi
+
+      if [ ! -f /var/lib/zennotes/data/zennotes-mcp.env ]; then
+        echo "ZENNOTES_MCP_TOKEN=$(${pkgs.openssl}/bin/openssl rand -hex 32)" > /var/lib/zennotes/data/zennotes-mcp.env
+        chown mic:users /var/lib/zennotes/data/zennotes-mcp.env
+        chmod 600 /var/lib/zennotes/data/zennotes-mcp.env
       fi
     '';
   };
