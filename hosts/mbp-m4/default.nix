@@ -77,7 +77,6 @@
     "tableau"
     "zennotes/tap/zennotes"
     "rstudio"
-    "miniconda"
   ];
   homebrew.brews = [
     "switchaudio-osx"

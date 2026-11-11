@@ -42,6 +42,7 @@
         black
         isort
         ruff
+        uv
         go
         obsidian
         (sioyek.overrideAttrs (oldAttrs: {
