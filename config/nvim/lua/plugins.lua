@@ -416,7 +416,8 @@ local plugins = {
     event = "VeryLazy",
     config = function()
       require("jupynium").setup({
-        default_notebook_URL = "localhost:8888/nbclassic",
+        default_notebook_URL = "http://localhost:8888/nbclassic",
+        jupyter_command = { "uv", "run", "jupyter" },
         use_default_keybindings = true,
         textobjects = {
           use_default_keybindings = true,
