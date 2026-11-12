@@ -65,9 +65,19 @@
             definitionName = "thepiratebay";
           }
           {
-            enable = true;
+            enable = false;
             name = "TorrentDownload";
             definitionName = "torrentdownload";
+          }
+          {
+            enable = true;
+            name = "Nyaa.si";
+            definitionName = "nyaasi";
+          }
+          {
+            enable = true;
+            name = "Anime Tosho";
+            definitionName = "animetosho-xyz";
           }
         ];
       };
