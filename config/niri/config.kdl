@@ -15,7 +15,7 @@ input {
     }
 
     // Unify all Mod binds to Right Alt (Alt / mod1)
-    mod-key "Super"
+    mod-key "Alt"
 
     touchpad {
         tap
@@ -352,3 +352,5 @@ binds {
 
 
 // include "noctalia.kdl"
+
+include "noctalia.kdl"
