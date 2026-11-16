@@ -29,7 +29,7 @@
     "f /var/secrets/learnharness-password 0600 learnharness learnharness -"
     "z /var/secrets/learnharness-password 0600 learnharness learnharness -"
     "d /var/lib/learnharness/learnharness 0755 learnharness learnharness -"
-    "a+ /home/mic - - - - user:learnharness:--x"
+    "a+ /home/mic - - - - user:learnharness:--x,mask::--x"
     "A+ /home/mic/learnharness - - - - user:learnharness:r-X,default:user:learnharness:r-X"
   ];
 
