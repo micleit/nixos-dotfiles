@@ -47,6 +47,7 @@
         bitwarden-desktop
         feishin
         fladder
+        moonlight-qt
       ];
     };
   };

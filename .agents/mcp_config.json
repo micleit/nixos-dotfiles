@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "remoteshell": {
+      "command": "uvx",
+      "args": [
+        "remoteshell-mcp"
+      ],
+      "env": {
+        "PATH": "/Users/mic/.local/bin:/run/current-system/sw/bin:/etc/profiles/per-user/mic/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
+    }
+  }
+}

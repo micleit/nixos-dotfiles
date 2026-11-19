@@ -65,5 +65,8 @@
   };
 
   # Host-specific packages can be declared here or in default.nix
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    just
+    nixos-rebuild
+  ];
 }

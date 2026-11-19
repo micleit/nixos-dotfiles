@@ -68,11 +68,10 @@
   };
 
   # Generate completion file specifically for Zsh
-  xdg.configFile."zsh/completions/_sesh".text = builtins.readFile (
+  xdg.configFile."zsh/completions/_sesh".source =
     pkgs.runCommand "sesh-completion" { } ''
       ${pkgs.sesh}/bin/sesh completion zsh > $out
-    ''
-  );
+    '';
 
   # Update zoxide integration for Zsh
   programs.zoxide = {

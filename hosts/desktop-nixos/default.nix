@@ -22,7 +22,6 @@
 
   # Silent Boot / Plymouth
   boot.consoleLogLevel = 0;
-  boot.initrd.verbose = false;
   boot.plymouth = {
     enable = true;
     theme = "breeze";
