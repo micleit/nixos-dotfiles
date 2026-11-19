@@ -20,10 +20,6 @@
     neomutt-gmail.url = "github:jevy/neomutt-for-gmail";
     nixflix.url = "github:kiriwalawren/nixflix";
     antigravity-nix.url = "github:jacopone/antigravity-nix";
-    lan-mouse = {
-      url = "github:feschber/lan-mouse";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     learnharness = {
       url = "github:micleit/learnharness";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,7 +38,6 @@
         (final: prev: {
           wf-recorder = prev.wf-recorder.override { ffmpeg_8 = prev.ffmpeg_6-headless; };
           moonlight-qt = prev.moonlight-qt.override { ffmpeg = prev.ffmpeg_6; };
-          lan-mouse = inputs.lan-mouse.packages.${prev.stdenv.hostPlatform.system}.default;
         })
       ];
       sharedModules = [
