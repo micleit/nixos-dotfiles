@@ -72,6 +72,18 @@
     capSysAdmin = true;
     openFirewall = true;
   };
+
+  # Keep Sunshine running persistently across headless boot and restarts
+  systemd.user.services.sunshine = {
+    wantedBy = [
+      "graphical-session.target"
+      "default.target"
+    ];
+    serviceConfig = {
+      Restart = lib.mkForce "always";
+      RestartSec = "5s";
+    };
+  };
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -130,6 +142,7 @@
   # ============================================================================
   users.users.mic = {
     isNormalUser = true;
+    linger = true;
     extraGroups = [
       "wheel"
       "uinput"

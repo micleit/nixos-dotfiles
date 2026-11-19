@@ -109,6 +109,15 @@
     capSysAdmin = true;
     openFirewall = true;
   };
+
+  # Keep Sunshine running and auto-restart on any failure
+  systemd.user.services.sunshine = {
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      Restart = lib.mkForce "always";
+      RestartSec = "5s";
+    };
+  };
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -177,6 +186,7 @@
   # ============================================================================
   users.users.mic = {
     isNormalUser = true;
+    linger = true;
     extraGroups = [
       "wheel"
       "optical"

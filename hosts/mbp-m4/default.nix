@@ -78,6 +78,7 @@
     "tableau"
     "zennotes/tap/zennotes"
     "rstudio"
+    "moonlight"
   ];
   homebrew.brews = [
     "switchaudio-osx"
