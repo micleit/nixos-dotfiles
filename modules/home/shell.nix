@@ -19,7 +19,7 @@
       path+=("$HOME/.spicetify" "$HOME/go/bin" "$HOME/.cargo/bin")
 
       # Only inject Homebrew on macOS hosts
-      ${lib.optionalString pkgs.stdenv.isDarwin ''
+      ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
         if [[ -f /opt/homebrew/bin/brew ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
@@ -129,7 +129,7 @@
       fastfetch
       tree
     ]
-    ++ (lib.optionals stdenv.isLinux [
+    ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [
       wl-clipboard
     ]);
 }

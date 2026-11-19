@@ -12,11 +12,11 @@
 
   programs.ghostty = {
     enable = true;
-    package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     settings = {
       # Font
       font-family = "JetBrainsMono Nerd Font Propo";
-      font-size = lib.mkDefault (if pkgs.stdenv.isDarwin then 14 else 10);
+      font-size = lib.mkDefault (if pkgs.stdenv.hostPlatform.isDarwin then 14 else 10);
       confirm-close-surface = false;
 
       # Theme
