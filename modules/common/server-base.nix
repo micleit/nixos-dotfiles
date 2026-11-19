@@ -9,7 +9,8 @@
   services.openssh.enable = lib.mkDefault true;
   services.tailscale.enable = lib.mkDefault true;
 
-  # Non-interactive rsync for fast transfers/backups
+  # Non-interactive rsync and passwordless wheel sudo for automated deployments
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
   security.sudo.extraRules = [
     {
       users = [ "mic" ];

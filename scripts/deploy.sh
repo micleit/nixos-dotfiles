@@ -66,10 +66,18 @@ else
   REBUILD_CMD="nix run .#darwinConfigurations.mbp-m4.pkgs.nixos-rebuild --"
 fi
 
+# Determine sudo elevation flags based on whether target requires password
+ELEVATE_ARGS=()
+if ssh -o BatchMode=yes -o ConnectTimeout=5 "$TARGET_USER@$TARGET_IP" "sudo -n true" 2>/dev/null; then
+  ELEVATE_ARGS=("--elevate=sudo")
+else
+  ELEVATE_ARGS=("--ask-sudo-password")
+fi
+
 # Execute remote rebuild; building on remote target avoids aarch64-darwin cross-compile
 exec $REBUILD_CMD "$ACTION" \
   --flake ".#$FLAKE_ATTR" \
   --target-host "$TARGET_USER@$TARGET_IP" \
   --build-host "$TARGET_USER@$TARGET_IP" \
-  --use-remote-sudo \
+  "${ELEVATE_ARGS[@]}" \
   "$@"
