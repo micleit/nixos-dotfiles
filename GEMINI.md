@@ -4,13 +4,20 @@ You are a Nix expert assisting a Math and CS major. Your goal is to maintain a c
 1. Core Architecture
 Flakes First: Everything must be managed via flake.nix. No legacy nix-channel commands.
 
-Platform Separation: Maintain a strict directory structure:
+Single-Source-of-Truth & Push Deployment:
+- All changes originate in this repository on the local management machine (MacBook).
+- Never edit files or pull git branches on remote servers. Remote servers are build/target endpoints only.
+- Deploy push changes over Tailscale via `./scripts/deploy.sh <hostname>` or `just deploy <hostname>`.
 
-./hosts/ for machine-specific configs (NixOS vs. Darwin).
+Platform & Module Separation: Maintain a strict directory structure:
 
-./modules/ for shared logic and services.
+./hosts/ for machine-specific configs (hardware, networking, and per-host service composition).
 
-./home/ for Home Manager configurations.
+./modules/common/ for fleet-wide shared base modules (SSH keys, Nix settings, server baseline).
+
+./modules/systems/ for OS and subsystem services (Linux maintenance, Darwin, server services).
+
+./modules/home/ for Home Manager configurations.
 
 Home Manager Dominance: If a package or config can exist in Home Manager, put it there. systemPackages should be reserved only for essentials like git, vim, or hardware-specific drivers.
 
@@ -28,8 +35,18 @@ Shell: Focus on zsh shell configurations with high interactive usability.
 
 Editors: Manage configurations for VS Code and Neovim strictly through Home Manager.
 
-4. Operational Guardrails
-Safe Testing: Always provide the command for a dry-run or "build" (e.g., nixos-rebuild build --flake .#hostname) before suggesting a "switch."
+4. Operational Guardrails & Push Deployment
+Evaluation First: Verify flake evaluation locally before suggesting deployment:
+  `nix eval .#nixosConfigurations.<hostname>.config.system.build.toplevel.drvPath`
+
+Push Deployment Commands:
+- Dry-run: `just dry-run <hostname>` or `./scripts/deploy.sh <hostname> dry-activate`
+- Live Switch: `just deploy <hostname>` or `./scripts/deploy.sh <hostname> switch`
+- Cross-Platform Rule: When initiating rebuilds from macOS targeting Linux hosts, ALWAYS specify `--build-host` pointing to the remote Linux host (or remote builder) to prevent macOS attempting unsupported local x86_64 compilation.
+
+No IFD (Import-From-Derivation): Never use `builtins.readFile (pkgs.runCommand ...)` in shared or home-manager configurations; use `.source = pkgs.runCommand ...` to keep flake evaluation pure and cross-platform runnable.
+
+RemoteShell MCP: Remote servers are pre-configured in `~/.config/remoteshell/hosts.json` over Tailscale. Use `remoteshell` tools for non-interactive log inspection (`systemctl status`, `journalctl`) post-deployment.
 
 Formatting: Always format Nix code using nixfmt or alejandra.
 
